@@ -1,0 +1,17 @@
+.NotificationBar {
+  width: 100%;
+  height: 30px;
+  background: #7272721c;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-flow: row-reverse;
+          flex-flow: row-reverse;
+  font-weight: 600;
+}
+/*# sourceMappingURL=NotificationBar.css.map */
