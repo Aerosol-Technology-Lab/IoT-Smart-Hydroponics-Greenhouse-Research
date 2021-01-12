@@ -1,0 +1,151 @@
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+const url = require('url');
+const SerialPort = require('serialport');
+
+const isDev = true ? require('electron-is-dev') : false;
+
+var Config = require('./Config');
+
+// main app window
+var mainWindow;
+var quitOnAllWindowClosed = true;
+
+// app window settings
+var appSettings = {
+  width: 800, 
+  height: 480,
+  webPreferences: {
+    nodeIntegration: true
+  },
+  transparent: true,
+  // resizable: false,
+  // fullscreen: true
+};
+
+// Arduino
+var arduino = null;
+
+function createWindow() {
+  mainWindow = new BrowserWindow(appSettings);
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  mainWindow.on('closed', () => mainWindow = null);
+}
+
+ipcMain.handle('my-invokable-ipc', async (event, ...args) => {
+  return "hello"
+})
+
+ipcMain.handle('cwd', async (event, ...args) => {
+  return process.cwd();
+});
+
+ipcMain.handle('serialport', async (event, ...args) => {
+  if (arduino) {
+    return 'connected';
+  }
+  else {
+    return 'no-connection';
+  }
+});
+
+const reconnectArduino = async function() {
+
+    
+  var port = new SerialPort(Config.serial_directory, {
+    baudRate: Config.baudRate,
+  });
+
+  port.on("error", (err) => {
+    if (err.toString().startsWith("Error: Error: Permission denied")) {
+      console.log(
+        `Run script to enable device [${err.toString().substr(45)}]`
+      );
+    } else {
+      console.log(`${err}`);
+    }
+
+    if (err) {
+        setTimeout(reconnectArduino, 3000);
+    }
+  });
+
+  
+  port.on("open", () => {
+    arduino = port;
+    
+    console.log("Port is opened");
+
+    mainWindow.webContents.send('serialport', {state: 'connected'});
+    
+    arduino.on("data", (data) => {
+      console.log(data);
+    });
+
+    arduino.on("readable", () => {
+      let s = arduino.read();
+      console.log(s.toString());
+    });
+
+    arduino.on("close", () => {
+      arduino = null;
+      console.log('Arduino is closed');
+      if (mainWindow) {
+        mainWindow.webContents.send('serialport', {state: 'disconnected'});
+      }
+      reconnectArduino();
+    });
+
+    // port.on('data', function(data) {
+    //     console.log('Data: ', data);
+    // });
+
+    arduino.write(Buffer.from("HELLO"));
+
+    setInterval(() => {
+      if (arduino) {
+        arduino.write("PH\0");
+      }
+    }, 3000);
+  });
+
+
+}
+
+reconnectArduino();
+
+app.on('ready', createWindow);
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin' && quitOnAllWindowClosed) {
+    app.quit();
+  }
+});
+
+app.on('activate', () => {
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
+
+/*** IPC ***/
+ipcMain.handle('get-time', async (event, ...args) => {
+  return new Date();
+});
+
+/*** ROUTINES ***/
+
+// Resets main window after a period of time defined in Config.js
+// This prevents memory leak. In normal browser use, this is not
+// needed because a web page does not last for a long period of time.
+// This app needs to run 24/7 so this is necessary
+setInterval(() => {
+  if (mainWindow) {
+    quitOnAllWindowClosed = false;
+    mainWindow.close();
+    // setTimeout(() => createWindow(), 1000);
+    createWindow();
+    quitOnAllWindowClosed = true;
+  }
+  
+}, Config.refreshWindow * 1000);
