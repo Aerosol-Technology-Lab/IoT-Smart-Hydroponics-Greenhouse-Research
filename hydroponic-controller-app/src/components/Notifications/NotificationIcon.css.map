@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,iBAAiB,CAAC;EACd,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,KAAK;CAChB;;AAED,AAAA,iBAAiB,AAAA,SAAS,CAAC;EACvB,KAAK,EAAE,GAAG;EACV,QAAQ,EAAE,MAAM;CACnB",
+    "sources": [
+        "NotificationIcon.scss"
+    ],
+    "names": [],
+    "file": "NotificationIcon.css"
+}
