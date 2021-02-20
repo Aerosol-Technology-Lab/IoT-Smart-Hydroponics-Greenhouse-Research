@@ -41,6 +41,7 @@ var appSettings = {
 
 // check for operating system
 Config.runtime.platform = os.platform();
+
 if (Config.runtime.platform != 'linux') {
   console.log(`Warning! The system ${Config.runtime.platform} is not officially supported.
   This has been developed for Linux operating systems.`);
@@ -49,6 +50,7 @@ else {
   // this is linux, so store PID in runtime
   Config.runtime.pid = process.pid;
 }
+
 
 // check for platform
 Config.runtime.arch = process.arch;
@@ -79,7 +81,11 @@ function createWindow() {
 
 ipcMain.handle('my-invokable-ipc', async (event, ...args) => {
   return "hello"
-})
+});
+
+ipcMain.handle('enable-cursor', async (event, ...args) => {
+  return Config.runtime.cursor;
+});
 
 ipcMain.handle('cwd', async (event, ...args) => {
   return process.cwd();
