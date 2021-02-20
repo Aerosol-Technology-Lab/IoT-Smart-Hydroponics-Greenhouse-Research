@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const DEFAUTL_CONFIG_PATH = './DefaultConfig.json';
+
 class ConfigLoader
 {
     constructor(filepath='./Config.json') {
@@ -24,6 +26,11 @@ class ConfigLoader
     load() {
         if (this.exists()) {
             return require(this.filepath);
+        }
+        else {
+            let data = require(DEFAUTL_CONFIG_PATH);
+            this.write(data);
+            return data;
         }
 
         return null
