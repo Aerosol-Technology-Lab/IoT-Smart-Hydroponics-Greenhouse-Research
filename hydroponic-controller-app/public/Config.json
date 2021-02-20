@@ -1,0 +1,11 @@
+{
+    "serial_directory": "/dev/ttyACM0",
+    "baudRate": 57600,
+    "refreshWindow": 86400,
+    "runtime": {
+        "platform": "linux",
+        "pid": 228400,
+        "arch": "x64",
+        "cursor": true
+    }
+}
