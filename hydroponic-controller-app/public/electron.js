@@ -10,7 +10,6 @@ const usb = require('usb');
 
 // App imports
 const ConfigLoader = require('./ConfigLoader');
-const { resourceUsage } = require('process');
 
 const isDev = true ? require('electron-is-dev') : false;
 
@@ -43,7 +42,7 @@ var appSettings = {
 // check for operating system
 Config.runtime.platform = os.platform();
 
-if (Config.runtime.platform != 'linux') {
+if (Config.runtime.platform !== 'linux') {
   console.log(`Warning! The system ${Config.runtime.platform} is not officially supported.
   This has been developed for Linux operating systems.`);
 }
@@ -55,7 +54,7 @@ else {
 
 // check for platform
 Config.runtime.arch = process.arch;
-if (Config.runtime.arch == 'arm64') { // set defaults for raspberry pi
+if (Config.runtime.arch === 'arm64') { // set defaults for raspberry pi
   appSettings.fullscreen = true;
   appSettings.frame = false;
   Config.runtime.cursor = false;
@@ -160,7 +159,7 @@ const reconnectArduino = async function() {
     console.log("Port is opened");
     parser = arduino.pipe(new ReadLine({ delimiter: '\0' }));
     parser.on('data', (data) => {
-      comms = data.split(' ');
+      let comms = data.split(' ');
 
       if (comms[0] === 'PHVAL') {
         console.log('Got here');
