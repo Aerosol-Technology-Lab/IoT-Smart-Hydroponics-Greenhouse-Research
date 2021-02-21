@@ -1,0 +1,78 @@
+@font-face {
+  font-family: 'icomoon-test2';
+  src:  url('fonts/icomoon-test2.eot?q7xoi9');
+  src:  url('fonts/icomoon-test2.eot?q7xoi9#iefix') format('embedded-opentype'),
+    url('fonts/icomoon-test2.ttf?q7xoi9') format('truetype'),
+    url('fonts/icomoon-test2.woff?q7xoi9') format('woff'),
+    url('fonts/icomoon-test2.svg?q7xoi9#icomoon-test2') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon-test2' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dashboard:before {
+  content: "\e903";
+}
+.icon-github:before {
+  content: "\e904";
+}
+.icon-wifi-off:before {
+  content: "\e905";
+}
+.icon-wifi:before {
+  content: "\e906";
+}
+.icon-warning:before {
+  content: "\e902";
+}
+.icon-line-graph:before {
+  content: "\e907";
+}
+.icon-home:before {
+  content: "\e908";
+}
+.icon-information-outline:before {
+  content: "\e909";
+}
+.icon-notification:before {
+  content: "\e90a";
+}
+.icon-usb1:before {
+  content: "\e901";
+}
+.icon-usb:before {
+  content: "\e900";
+}
+.icon-flash:before {
+  content: "\e900";
+}
+.icon-drive:before {
+  content: "\e900";
+}
+.icon-box-add:before {
+  content: "\e95e";
+}
+.icon-cog:before {
+  content: "\e994";
+}
+.icon-stats-dots:before {
+  content: "\e99b";
+}
+.icon-arrow-left2:before {
+  content: "\ea40";
+}

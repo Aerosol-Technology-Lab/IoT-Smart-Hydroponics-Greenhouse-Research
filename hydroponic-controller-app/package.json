@@ -1,8 +1,11 @@
 {
   "name": "hydroponic-controller-app",
   "version": "0.1.0",
+  "author": "Charlemagne Wong <charlemagnew13@gmail.com>",
+  "description": "TODO",
   "private": true,
   "main": "public/electron.js",
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -21,7 +24,27 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "rebuild": "electron-rebuild -f -w fs"
+    "electron-build": "electron-builder node-gyp-rebuild --linux",
+    "postinstall": "electron-builder install-app-deps",
+    "elc-rebuild": "electron-rebuild -f -w serialport, fs"
+  },
+  "build": {
+    "appId": "com.cmasterx.hydroponic-greenhouse",
+    "files": [
+      "node_modules/**/*",
+      "app/**/*",
+      "package.json",
+      {
+        "from": "build/static/**/*",
+        "to": "static/**/*"
+      }
+    ],
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility"
+    }
   },
   "eslintConfig": {
     "extends": [

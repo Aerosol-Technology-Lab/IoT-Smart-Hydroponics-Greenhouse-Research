@@ -1,6 +1,6 @@
 import React from 'react';
 import './Navigation.css';
-
+import '../style.css'
 class Navigation extends React.Component {
     constructor(props) {
         super(props);
@@ -9,7 +9,10 @@ class Navigation extends React.Component {
     render() {
         return(
             <div className={"Navigation"}>
-                <p>Hello</p>
+                <span className='icon icon-dashboard'></span>
+                <span className='icon icon-stats-dots'></span>
+                <span className='icon icon-usb'></span>
+                <span className='icon icon-cog'></span>
             </div>
         );
     }
