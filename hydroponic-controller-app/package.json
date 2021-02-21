@@ -16,6 +16,7 @@
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
     "serialport": "^9.0.4",
+    "usb": "^1.6.5",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -26,7 +27,7 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "electron-builder node-gyp-rebuild --linux",
     "postinstall": "electron-builder install-app-deps",
-    "elc-rebuild": "electron-rebuild -f -w serialport, fs"
+    "elc-rebuild": "electron-rebuild -f -w serialport, fs, usb"
   },
   "build": {
     "appId": "com.cmasterx.hydroponic-greenhouse",

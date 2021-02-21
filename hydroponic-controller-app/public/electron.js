@@ -6,6 +6,7 @@ const path = require('path');
 const url = require('url');
 const SerialPort = require('serialport');
 const ReadLine = require('@serialport/parser-readline');
+const usb = require('usb');
 
 // App imports
 const ConfigLoader = require('./ConfigLoader');
@@ -98,6 +99,35 @@ ipcMain.handle('serialport', async (event, ...args) => {
   else {
     return 'no-connection';
   }
+});
+
+/**
+ * USB
+ */
+var connectedUSB = 0;
+
+var usbState = () => {
+  console.log(`Connected devices: ${connectedUSB}`);
+  return connectedUSB > 0 ? 'connected' : 'disconnected';
+};
+ 
+usb.on('attach', (device) => {
+  console.log('USB Device is connected!');
+  ++connectedUSB;
+  mainWindow.send('usb', usbState());
+});
+
+usb.on('detach', (device) => {
+  connectedUSB = Math.max(connectedUSB - 1, 0);
+
+  console.log('device disconnected');
+  if (connectedUSB === 0) {
+    mainWindow.send('usb', usbState());
+  }
+});
+
+ipcMain.handle('usb', async (event, args) => {
+  return usbState();
 });
 
 const reconnectArduino = async function() {
