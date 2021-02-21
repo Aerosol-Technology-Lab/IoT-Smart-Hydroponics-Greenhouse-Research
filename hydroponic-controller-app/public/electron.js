@@ -144,7 +144,7 @@ const reconnectArduino = async function() {
       mainWindow.webContents?.send('serialport', {state: 'permission-error'});
     } 
     else {
-      console.log(`${err}`);
+      console.log(`Connection to Arduino error: ${err}`);
     }
 
     if (err) {
