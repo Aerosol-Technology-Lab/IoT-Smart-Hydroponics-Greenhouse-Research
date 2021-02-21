@@ -1,0 +1,10 @@
+.NotificationIcon {
+  width: auto;
+  margin: 0 5px;
+}
+
+.NotificationIcon.disabled {
+  width: 0px;
+  overflow: hidden;
+}
+/*# sourceMappingURL=NotificationIcon.css.map */

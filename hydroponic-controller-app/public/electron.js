@@ -1,11 +1,26 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const os = require('os');
+const process = require('process');
+const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const SerialPort = require('serialport');
+const ReadLine = require('@serialport/parser-readline');
+
+// App imports
+const ConfigLoader = require('./ConfigLoader');
+const { resourceUsage } = require('process');
 
 const isDev = true ? require('electron-is-dev') : false;
 
-var Config = require('./Config');
+/**
+ * Load configurations
+ */
+const configManager = new ConfigLoader('./Config.json');
+var Config = configManager.load();
+console.log(Config);
+Config.runtime = {};    // runtime config variables
+
 
 // main app window
 var mainWindow;
@@ -19,22 +34,58 @@ var appSettings = {
     nodeIntegration: true
   },
   transparent: true,
-  // resizable: false,
-  // fullscreen: true
+  resizable: false,
+  frame: true,
+  fullscreen: false
 };
+
+// check for operating system
+Config.runtime.platform = os.platform();
+
+if (Config.runtime.platform != 'linux') {
+  console.log(`Warning! The system ${Config.runtime.platform} is not officially supported.
+  This has been developed for Linux operating systems.`);
+}
+else {
+  // this is linux, so store PID in runtime
+  Config.runtime.pid = process.pid;
+}
+
+
+// check for platform
+Config.runtime.arch = process.arch;
+if (Config.runtime.arch == 'arm64') { // set defaults for raspberry pi
+  appSettings.fullscreen = true;
+  appSettings.frame = false;
+  Config.runtime.cursor = false;
+}
+else {
+  Config.runtime.cursor = true;
+}
+
+configManager.write(Config);
+
 
 // Arduino
 var arduino = null;
+var parser = null;
 
 function createWindow() {
   mainWindow = new BrowserWindow(appSettings);
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
   mainWindow.on('closed', () => mainWindow = null);
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.webContents.send('enable-cursor', Config.runtime.cursor);
+  })
 }
 
 ipcMain.handle('my-invokable-ipc', async (event, ...args) => {
   return "hello"
-})
+});
+
+ipcMain.handle('enable-cursor', async (event, ...args) => {
+  return Config.runtime.cursor;
+});
 
 ipcMain.handle('cwd', async (event, ...args) => {
   return process.cwd();
@@ -61,7 +112,9 @@ const reconnectArduino = async function() {
       console.log(
         `Run script to enable device [${err.toString().substr(45)}]`
       );
-    } else {
+      mainWindow.webContents?.send('serialport', {state: 'permission-error'});
+    } 
+    else {
       console.log(`${err}`);
     }
 
@@ -75,17 +128,27 @@ const reconnectArduino = async function() {
     arduino = port;
     
     console.log("Port is opened");
+    parser = arduino.pipe(new ReadLine({ delimiter: '\0' }));
+    parser.on('data', (data) => {
+      comms = data.split(' ');
 
+      if (comms[0] === 'PHVAL') {
+        console.log('Got here');
+        mainWindow.webContents.send('ph', comms[1]);
+      }
+      // mainWindow.webContents.send('ph', )
+    });
+    
     mainWindow.webContents.send('serialport', {state: 'connected'});
     
-    arduino.on("data", (data) => {
-      console.log(data);
-    });
+    // arduino.on("data", (data) => {
+    //   console.log(data);
+    // });
 
-    arduino.on("readable", () => {
-      let s = arduino.read();
-      console.log(s.toString());
-    });
+    // arduino.on("readable", () => {
+    //   let s = arduino.read();
+    //   console.log(s.toString());
+    // });
 
     arduino.on("close", () => {
       arduino = null;
