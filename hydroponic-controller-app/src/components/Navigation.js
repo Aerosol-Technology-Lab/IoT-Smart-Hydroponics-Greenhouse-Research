@@ -6,7 +6,7 @@ class Navigation extends React.Component {
         return(
             <div className={"Navigation"}>
                 <span className='icon icon-dashboard'></span>
-                <span className='icon icon-stats-dots'></span>
+                <span className='icon icon-stats-bars'></span>
                 <span className='icon icon-usb'></span>
                 <span className='icon icon-cog'></span>
             </div>
