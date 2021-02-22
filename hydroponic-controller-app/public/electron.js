@@ -23,22 +23,22 @@ if (!fs.existsSync(tmpPath)) fs.mkdirSync(tmpPath);
 
 // check if other instances are running
 
-const uuidName = uuidv4();
-execSync(`mkfifo ${path.join(tmpPath, uuidName)}`);
-execSync(`mkfifo ${path.join(tmpPath, 'controller')}`);
-fs.writeFileSync(path.join(tmpPath, uuidName));
-let fds = fs.createReadStream(path.join(tmpPath, uuidName));
-fds.on('data', (d) => {
-  d = d.toString();
+// const uuidName = uuidv4();
+// execSync(`mkfifo ${path.join(tmpPath, uuidName)}`);
+// execSync(`mkfifo ${path.join(tmpPath, 'controller')}`);
+// fs.writeFileSync(path.join(tmpPath, uuidName));
+// let fds = fs.createReadStream(path.join(tmpPath, uuidName));
+// fds.on('data', (d) => {
+//   d = d.toString();
   
-  if (d !== uuidName) {
-    console.log('Another process is running.');
-    process.exit(0);
-  }
-  else {
-    fds.close();
-  }
-});
+//   if (d !== uuidName) {
+//     console.log('Another process is running.');
+//     process.exit(0);
+//   }
+//   else {
+//     fds.close();
+//   }
+// });
 
 
 
