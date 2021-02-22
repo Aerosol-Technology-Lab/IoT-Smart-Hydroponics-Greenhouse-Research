@@ -1,4 +1,5 @@
 import React from 'react';
+import './SerialTest.css'
 const { ipcRenderer } = window.require('electron');
 
 class SerialTest extends React.Component {
@@ -49,18 +50,20 @@ class SerialTest extends React.Component {
         };
         
         let more = {
-            width: '90%',
-            height: '30px',
-            background: 'white',
-            'border-radius': '5px',
+            // width: '90%',
+            // height: '30px',
+            // background: 'white',
+            // 'border-radius': '5px',
             // 'justify-item': 'center'
         }
         
         return(
-            <div style={styles}>
-                <div style={ more }>
-                Status of serial port: {test}
+            <div className="SerialTest main" style={styles}>
+                <div className="child" style={ more }>
+                <p>Status of serial port: {test}</p>
                 <p>PH: { this.state.ph }</p>
+                <p>Water TEMP-1: { this.state.ph }</p>
+                <p>Air TEMP-1: { this.state.ph }</p>
                 </div>
             </div>
         );
