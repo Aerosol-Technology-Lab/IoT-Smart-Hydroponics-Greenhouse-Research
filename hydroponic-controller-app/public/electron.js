@@ -1,9 +1,12 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, nativeImage } = require('electron');
 const os = require('os');
 const process = require('process');
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const uuidv4 = require('uuid/v4');
+const glob = require('glob');
 const SerialPort = require('serialport');
 const ReadLine = require('@serialport/parser-readline');
 const usb = require('usb');
@@ -12,6 +15,32 @@ const usb = require('usb');
 const ConfigLoader = require('./ConfigLoader');
 
 const isDev = true ? require('electron-is-dev') : false;
+
+// initialize temp dir
+const tmpFolderName = 'IotHydroApp';
+const tmpPath = path.join(os.tmpdir(), tmpFolderName);
+if (!fs.existsSync(tmpPath)) fs.mkdirSync(tmpPath);
+
+// check if other instances are running
+
+const uuidName = uuidv4();
+execSync(`mkfifo ${path.join(tmpPath, uuidName)}`);
+execSync(`mkfifo ${path.join(tmpPath, 'controller')}`);
+fs.writeFileSync(path.join(tmpPath, uuidName));
+let fds = fs.createReadStream(path.join(tmpPath, uuidName));
+fds.on('data', (d) => {
+  d = d.toString();
+  
+  if (d !== uuidName) {
+    console.log('Another process is running.');
+    process.exit(0);
+  }
+  else {
+    fds.close();
+  }
+});
+
+
 
 /**
  * Load configurations
@@ -25,7 +54,8 @@ Config.runtime = {};    // runtime config variables
 // main app window
 var mainWindow;
 var quitOnAllWindowClosed = true;
-
+var appIcon = nativeImage.createFromPath(path.join(__dirname, '../src/logo.svg'));
+console.log(`Dirname: ${__dirname}`);
 // app window settings
 var appSettings = {
   width: 800, 
@@ -36,7 +66,8 @@ var appSettings = {
   transparent: true,
   resizable: false,
   frame: true,
-  fullscreen: false
+  fullscreen: false,
+  icon: appIcon,
 };
 
 // check for operating system
@@ -206,7 +237,9 @@ const reconnectArduino = async function() {
 
 reconnectArduino();
 
+app.allowRendererProcessReuse = false;
 app.on('ready', createWindow);
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin' && quitOnAllWindowClosed) {
@@ -222,6 +255,7 @@ app.on('activate', () => {
 
 /*** IPC ***/
 ipcMain.handle('get-time', async (event, ...args) => {
+  // if (Config.runtime.arch == 'x64')
   return new Date();
 });
 
