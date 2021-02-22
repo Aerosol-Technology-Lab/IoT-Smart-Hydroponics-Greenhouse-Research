@@ -38,7 +38,7 @@ def main(args):
         if not os.path.exists(boot_file_path):
             # read script template
             with open('./core_files/iot-hydroponics', 'r+') as file:
-                boot_script = file.read().format(os.path.join(os.getcwd(), 'core.py'))
+                boot_script = file.read().format('python3', os.path.join(os.getcwd(), 'core.py'))
             
             
             # write to tmp directory
@@ -87,6 +87,7 @@ def main(args):
                 print('\nQuitting')
                 exit(0)
                 
+            # unregister, then clean up
             subprocess.run('sudo update-rc.d -f  {} remove'.format(BOOT_FILE).split())
             subprocess.run('sudo rm {}'.format(os.path.join(BOOT_PATH, BOOT_FILE)).split())
 

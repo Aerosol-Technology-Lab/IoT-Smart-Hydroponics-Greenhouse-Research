@@ -18,7 +18,7 @@ case "$1" in
   start)
     echo "Starting Iot Hydroponics App"
     # run application you want to start
-    {0}
+    {0} {1}
     ;;
   stop)
     echo "Stopping Iot Hydroponics App"
