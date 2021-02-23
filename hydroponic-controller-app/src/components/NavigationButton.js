@@ -7,7 +7,7 @@ function NavigationButton({href, icon}) {
     var className = 'icon ' + icon;
     
     return (
-        <Link to={href}  className='NavigationButton'>
+        <Link to={href} className='NavigationButton'>
             <span className={ className } ></span>
         </Link>
     )
