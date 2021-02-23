@@ -13,6 +13,11 @@
 }
 
 .NavigationButton .focus {
-    color: #972beb;
+    // color: linear-gradient(#a12cfa, #972beb);
+    text-shadow: none;
+    background-image: linear-gradient(#a734ff, #a02ef7);
+    color:transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
     font-size: 50px;
 }
