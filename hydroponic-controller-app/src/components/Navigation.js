@@ -35,7 +35,7 @@ function Navigation({ id=undefined }) {
     const unfocusAll = () => {
         for (id in buttonIDs.current) {
             console.log(`Removing ${buttonIDs.current[id]}`);
-            document.getElementById(buttonIDs.current[id]).classList.remove('focus');
+            document.getElementById(buttonIDs.current[id])?.classList.remove('focus');
         }
     }
     
@@ -58,7 +58,7 @@ function Navigation({ id=undefined }) {
     
     return(
         <div id={id} className={"Navigation"}>
-            { debugView ? <NavigationButton id='debug-button' href='#' icon='icon-bug'/> : null }
+            { debugView ? <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='debug-button' href='#' icon='icon-bug'/> : null }
             <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='dashboard-button' href='./' icon='icon-dashboard'/>
             <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='data-button' href='#' icon='icon-stats-bars'/>
             <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='export-button'href='#' icon='icon-usb'/>
