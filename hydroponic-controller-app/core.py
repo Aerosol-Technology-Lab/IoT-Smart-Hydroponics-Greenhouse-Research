@@ -11,8 +11,16 @@ BOOT_FILE = 'iot-hydroponics'
 def main(args):
     args_len = len(args)
     
+    # checks if this script is ran before
+    initialized = os.path.exists('./core_files/init')
+    # creates file to remember that it has been ran before
+    if not initialized:
+        with open('./core_files/init', 'w+') as _:
+            pass
+        
     # pull repo
-    subprocess.run(['git', 'pull'])
+    pullRes = subprocess.run(['git', 'pull'], stdout=subprocess.PIPE).stdout.decode('ascii')
+    requireRebuild = pullRes != 'Already up to date.\n'
     
     # check if raspberry pi
     uname = os.uname()
@@ -32,7 +40,7 @@ def main(args):
     # install app to run on boot
     if install:
         boot_file_path = os.path.join(BOOT_PATH, BOOT_FILE)
-        tmp_dir_path = os.path.join(tempfile.gettempdir(), 'iot-hydroponics')
+        tmp_dir_path = os.path.join('/dev/shm', 'iot-hydroponics')
         tmp_file_path = os.path.join(tmp_dir_path, 'script.sh')
 
         if not os.path.exists(boot_file_path):
@@ -60,12 +68,15 @@ def main(args):
     
     if args_len == 0:
         #install dependencies
-        print('Acquiring dependencies...')
-        subprocess.run('yarn')
-        
-        # rebuild electron
-        print('Rebuilding electron...')
-        subprocess.run(['yarn', 'elc-rebuild'])
+        if requireRebuild or not initialized:
+            print('Updates found, acquiring dependencies and rebuilding electron\n')
+
+            print('Acquiring dependencies...')
+            subprocess.run('yarn')
+            
+            # rebuild electron
+            print('Rebuilding electron...')
+            subprocess.run(['yarn', 'elc-rebuild'])
 
         # open app
         print('Opening App...')
