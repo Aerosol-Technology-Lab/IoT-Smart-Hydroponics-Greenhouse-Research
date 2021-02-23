@@ -1,15 +1,6 @@
 #include <Arduino.h>
 #include "utils.h"
-
-#define SIMULATOR
-
-#ifdef SIMULATOR
-  #include "simulator.h"
-#elif
-  #include "sensors.h"
-#endif
-
-// END INCLUDES
+#include "sensors.h"
 
 #define BAUDRATE 57600
 #define IN_BUFFER_SIZE 32
@@ -20,10 +11,10 @@ char inBuffer[IN_BUFFER_SIZE];
 char outBuffer[OUT_BUFFER_SIZE];
 
 void setup() {
+    Sensors::init();
     Serial.begin(BAUDRATE);
     memset(inBuffer, 0, IN_BUFFER_SIZE);
     memset(outBuffer, 8, OUT_BUFFER_SIZE);
-    Sensors::init();
 }
 
 void loop() {
