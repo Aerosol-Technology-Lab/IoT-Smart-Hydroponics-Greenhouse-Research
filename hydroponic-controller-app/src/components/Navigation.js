@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './Navigation.css';
 import '../style.css'
+import './NavigationButton'
+import NavigationButton from './NavigationButton';
 const { ipcRenderer } = window.require('electron');
 
 function Navigation(props) {
@@ -27,6 +29,7 @@ function Navigation(props) {
     return(
         <div className={"Navigation"}>
             { debugView ? <span className='icon icon-bug'></span> : null }
+            <NavigationButton href='./' icon='icon-usb'/>
             <span className='icon icon-dashboard'></span>
             <span className='icon icon-stats-bars'></span>
             <span className='icon icon-usb'></span>

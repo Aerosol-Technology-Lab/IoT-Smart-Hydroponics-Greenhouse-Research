@@ -190,11 +190,16 @@ const reconnectArduino = async function() {
     console.log("Port is opened");
     parser = arduino.pipe(new ReadLine({ delimiter: '\0' }));
     parser.on('data', (data) => {
+      // console.log(data);
       let comms = data.split(' ');
 
       if (comms[0] === 'PHVAL') {
-        console.log('Got here');
-        mainWindow.webContents.send('ph', comms[1]);
+        // console.log('Got here');
+        mainWindow?.webContents?.send('ph', comms[1]);
+      }
+      else if (comms[0] === 'TEMP') {
+        // console.log('Got TEMP');
+        mainWindow?.webContents?.send('tmp', comms[1]);
       }
       // mainWindow.webContents.send('ph', )
     });
@@ -228,8 +233,9 @@ const reconnectArduino = async function() {
     setInterval(() => {
       if (arduino) {
         arduino.write("PH\0");
+        arduino.write("TEMP\0");
       }
-    }, 3000);
+    }, 500);
   });
 
 
