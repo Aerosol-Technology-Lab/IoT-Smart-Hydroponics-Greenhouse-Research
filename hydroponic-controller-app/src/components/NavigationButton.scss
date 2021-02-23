@@ -1,4 +1,17 @@
 .NavigationButton {
     color: inherit;
     text-decoration: inherit;
+    // align-content: center;
+    text-align: center;
+    // display: flex;
+    padding: 18px;
+    width: 100%;
+}
+
+.NavigationButton .icon {
+    box-sizing: border-box;
+}
+
+.NavigationButton .focus {
+    color: red;
 }
