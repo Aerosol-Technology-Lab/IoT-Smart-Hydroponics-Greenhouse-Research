@@ -11,6 +11,7 @@
 }
 
 .NavigationButton .focus {
-  color: red;
+  color: blue;
+  font-size: 50px;
 }
 /*# sourceMappingURL=NavigationButton.css.map */
