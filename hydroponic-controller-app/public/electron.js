@@ -85,7 +85,7 @@ else {
 
 // check for platform
 Config.runtime.arch = process.arch;
-if (Config.runtime.arch === 'arm64') { // set defaults for raspberry pi
+if (Config.runtime.arch === 'arm') { // set defaults for raspberry pi
   appSettings.fullscreen = true;
   appSettings.frame = false;
   Config.runtime.cursor = false;
