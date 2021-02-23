@@ -6,6 +6,7 @@ import NotificationBar from './Notifications/NotificationBar'
 import Scene from './Scenes/Scene';
 import SerialTest from './test/SerialTest'
 import Test from './Scenes/Test'
+import Settings from './Scenes/Settings/Settings'
 import App from '../App'
 
 const { ipcRenderer } = window.require('electron');
@@ -13,13 +14,14 @@ const { ipcRenderer } = window.require('electron');
 class Main extends React.Component {
     constructor(props) {
         super(props);
+        this.Scenes = {
+            SerialTest: SerialTest
+        }
+
         this.state = {
-            Scene: SerialTest,
+            Scene: this.Scenes['SerialTest'],
             SceneID: 'SerialTest'
         };
-        this.Scenes = {
-            Test: 'sdfs'
-        }
 
         this.notificationBar = React.createElement(NotificationBar);
         App.notificationBar = this.notificationBar;
@@ -44,6 +46,7 @@ class Main extends React.Component {
                 {/* < Scene scene={ this.state.Scene } /> */}
                 <Switch >
                     <Route exact path='/dashboard' component={ this.state.Scene } />
+                    <Route exact path='/settings' component={ Settings } />
                     <Route exact path='/'>
                         <Redirect to='/dashboard' />
                     </Route>

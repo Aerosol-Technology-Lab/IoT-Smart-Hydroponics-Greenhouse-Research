@@ -59,10 +59,10 @@ function Navigation({ id=undefined }) {
     return(
         <div id={id} className={"Navigation"}>
             { debugView ? <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='debug-button' href='#' icon='icon-bug'/> : null }
-            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='dashboard-button' href='./' icon='icon-dashboard'/>
-            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='data-button' href='#' icon='icon-stats-bars'/>
-            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='export-button'href='#' icon='icon-usb'/>
-            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='settings-button'href='#' icon='icon-cog'/>
+            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='dashboard-button'  href='./'   icon='icon-dashboard' focus={true}/>
+            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='data-button'       href='#'    icon='icon-stats-bars'/>
+            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='export-button'     href='#'    icon='icon-usb'       />
+            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='settings-button'   href='/settings'    icon='icon-cog'       />
         </div>
     );
 };
