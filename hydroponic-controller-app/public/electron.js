@@ -122,6 +122,10 @@ ipcMain.handle('cwd', async (event, ...args) => {
   return process.cwd();
 });
 
+ipcMain.handle('app-shutdown', async(event, ...args) => {
+  app.quit();
+});
+
 ipcMain.handle('serialport', async (event, ...args) => {
   if (arduino) {
     return 'connected';
