@@ -75,6 +75,13 @@ size_t Utils::sendSerial(const char *cstr) {
     return count + 1;
 }
 
+char * Utils::movePointer(char *ptr, int move) {
+    if (move) {
+        ptr[move - 1] = ' ';
+        return ptr + move;
+    }
+}
+
 bool Utils::equals(const char *a, const char *b) {
     
     while (true) {

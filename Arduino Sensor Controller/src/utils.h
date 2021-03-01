@@ -44,8 +44,11 @@ namespace Utils {
 
     size_t sendSerial(const char *cstring);
     
+    char * movePointer(char *ptr, int move);
+        
     /**
      * @deprecated
+     * This does not even work
      */
     bool equals(const char *a, const char *b);
 }

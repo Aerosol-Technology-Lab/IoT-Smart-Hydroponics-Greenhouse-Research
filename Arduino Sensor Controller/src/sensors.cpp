@@ -22,6 +22,10 @@ namespace Sensors {
 
 void Sensors::init() {
     randomSeed(analogRead(0));
+
+    // initialize temperature sensors
+    oneWire0 = OneWire(PIN_TMP0);
+    tmp0 = DallasTemperature(&oneWire0);
     tmp0.begin();
 }
 
@@ -37,6 +41,49 @@ void Sensors::temperature(const char *buffer, size_t buffer_size) {
     sprintf(send, "TEMP %s", str_tmp);
 
     Utils::sendSerial(send);
+}
+
+size_t Sensors::temperature(int sensorIdx, char *buffer) {
+    // bytes written to buffer during this function call
+    size_t totalWritten;
+    
+    // Writes values of all available temperature sensors to the buffer
+    if (sensorIdx == -1) {
+        size_t written = temperature(0, buffer);
+        buffer = Utils::movePointer(buffer, written);
+        totalWritten += written;
+
+        written = temperature(1, buffer);
+        buffer = Utils::movePointer(buffer, written);
+        totalWritten += written;
+
+        written = temperature(2, buffer);
+        totalWritten += written;
+    }
+    // Writes value of particular sensor index to the buffer
+    else if (sensorIdx >= 0 && sensorIdx < 3) {
+        char tmpBuff[32];
+        DallasTemperature *temp;
+        switch (sensorIdx)
+        {
+        case 0:
+            temp = &tmp0;
+            break;
+        case 1:
+            temp = &tmp1;
+            break;
+        case 2:
+            temp = &tmp2;
+            break;
+        }
+
+        temp->requestTemperatures();
+        float reading = temp->getTempFByIndex(0);
+        sprintf(buffer, "TMP:0 %.2f", temp);
+        totalWritten = strlen(buffer) + 1;
+    }
+    
+    return totalWritten;
 }
 
 // this is still simulated

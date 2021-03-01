@@ -5,6 +5,9 @@
 #define BAUDRATE 57600
 #define IN_BUFFER_SIZE 32
 #define OUT_BUFFER_SIZE 32
+#ifndef ALL_BUFFER
+    #define ALL_BUFFER 128
+#endif
 #define COMMAND_SIZE 8
 
 char inBuffer[IN_BUFFER_SIZE];
@@ -46,7 +49,24 @@ void loop() {
     
 
         // temperature command
-        if (strcmp(command, "TEMP") == 0) {
+        if (strcmp(command, "ALL")) {
+            char buffer[ALL_BUFFER];
+            char *ptr = buffer;
+
+            // tracker for number of bytes written
+            size_t written = 0;
+            
+            // temperature
+            Sensors::temperature(ptr,-1);       // get reading of all temperature sensors
+            ptr = Utils::movePointer(ptr, written);
+
+            // ends string (last character from movePointer should be ' ' instead of '\0')
+            ptr[-1] = 0;
+            
+            // send via usb
+            Utils::sendSerial(buffer);
+        }
+        else if (strcmp(command, "TEMP") == 0) {
             Sensors::temperature(inBuffer, IN_BUFFER_SIZE);
         }
         // pH command

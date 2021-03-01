@@ -27,7 +27,11 @@ namespace Sensors {
   // DallasTemperature tmp0;
 
   extern OneWire oneWire0;
+  extern OneWire oneWire1;
+  extern OneWire oneWire2;
   extern DallasTemperature tmp0;
+  extern DallasTemperature tmp1;
+  extern DallasTemperature tmp2;
 
 #endif
   
@@ -39,11 +43,13 @@ namespace Sensors {
    * @param buffer: message from UART
    * @param buffer_size: maximum size of buffer
    */
-  void temperature(const char *buffer, size_t buffer_size);
+  size_t temperature(const char *buffer, size_t buffer_size, char *out=0, size_t offset=0);
 
-  void ph(const char *buffer, size_t buffer_size);
+  size_t temperature(int sensorIdx, char *buffer);
+  
+  size_t ph(const char *buffer, size_t buffer_size, char *out=nullptr, size_t offset=0);
 
-  void ping(const char *buffer, size_t buffer_size);
+  size_t ping(const char *buffer, size_t buffer_size, char *out=nullptr, size_t offset=0);
 
-  void echo(const char *buffer, size_t buffer_size);
+  size_t echo(const char *buffer, size_t buffer_size, char *out=nullptr, size_t offset=0);
 }
