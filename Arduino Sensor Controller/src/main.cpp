@@ -50,8 +50,8 @@ void loop() {
 
         // temperature command
         if (strcmp(command, "ALL")) {
-            char buffer[ALL_BUFFER];
-            char *ptr = buffer;
+            char buffer[ALL_BUFFER] = "ALL";
+            char *ptr = Utils::movePointer(buffer, 4);
 
             // tracker for number of bytes written
             size_t written = 0;
