@@ -43,13 +43,13 @@ namespace Sensors {
    * @param buffer: message from UART
    * @param buffer_size: maximum size of buffer
    */
-  size_t temperature(const char *buffer, size_t buffer_size, char *out=0, size_t offset=0);
+  void temperature(const char *buffer, size_t buffer_size, bool unused=false);
 
   size_t temperature(int sensorIdx, char *buffer);
   
-  size_t ph(const char *buffer, size_t buffer_size, char *out=nullptr, size_t offset=0);
+  void ph(const char *buffer, size_t buffer_size);
 
-  size_t ping(const char *buffer, size_t buffer_size, char *out=nullptr, size_t offset=0);
+  void  ping(const char *buffer, size_t buffer_size);
 
-  size_t echo(const char *buffer, size_t buffer_size, char *out=nullptr, size_t offset=0);
+  void echo(const char *buffer, size_t buffer_size);
 }

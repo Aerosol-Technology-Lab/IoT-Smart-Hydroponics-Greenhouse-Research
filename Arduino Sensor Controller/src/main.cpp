@@ -42,7 +42,7 @@ void loop() {
 
         char command[COMMAND_SIZE];
         Utils::nextWord(inBuffer, 0, IN_BUFFER_SIZE, command, COMMAND_SIZE);
-        unsigned int bytesWritten = 0;
+        // unsigned int bytesWritten = 0;
         char tmp[32];
         sprintf(tmp, "The command is [%s]", command);
         Utils::println(tmp);

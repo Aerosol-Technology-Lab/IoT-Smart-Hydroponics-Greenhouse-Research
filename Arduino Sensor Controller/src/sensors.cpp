@@ -29,7 +29,7 @@ void Sensors::init() {
     tmp0.begin();
 }
 
-void Sensors::temperature(const char *buffer, size_t buffer_size) {
+void Sensors::temperature(const char *buffer, size_t buffer_size, bool unused) {
     // char next[8];
     // Utils::nextWord(buffer, 5, 8, next, 8);
 
@@ -45,7 +45,7 @@ void Sensors::temperature(const char *buffer, size_t buffer_size) {
 
 size_t Sensors::temperature(int sensorIdx, char *buffer) {
     // bytes written to buffer during this function call
-    size_t totalWritten;
+    size_t totalWritten = 0;
     
     // Writes values of all available temperature sensors to the buffer
     if (sensorIdx == -1) {
@@ -62,7 +62,6 @@ size_t Sensors::temperature(int sensorIdx, char *buffer) {
     }
     // Writes value of particular sensor index to the buffer
     else if (sensorIdx >= 0 && sensorIdx < 3) {
-        char tmpBuff[32];
         DallasTemperature *temp;
         switch (sensorIdx)
         {
@@ -79,7 +78,7 @@ size_t Sensors::temperature(int sensorIdx, char *buffer) {
 
         temp->requestTemperatures();
         float reading = temp->getTempFByIndex(0);
-        sprintf(buffer, "TMP:0 %.2f", temp);
+        sprintf(buffer, "TMP:0 %.2f", reading);
         totalWritten = strlen(buffer) + 1;
     }
     
