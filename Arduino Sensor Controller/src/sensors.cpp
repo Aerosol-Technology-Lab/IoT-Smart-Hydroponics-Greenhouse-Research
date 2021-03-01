@@ -78,7 +78,7 @@ size_t Sensors::temperature(int sensorIdx, char *buffer) {
 
         temp->requestTemperatures();
         float reading = temp->getTempFByIndex(0);
-        sprintf(buffer, "TMP:0 %.2f", reading);
+        sprintf(buffer, "TMP:%d %.2f", sensorIdx, reading);
         totalWritten = strlen(buffer) + 1;
     }
     
