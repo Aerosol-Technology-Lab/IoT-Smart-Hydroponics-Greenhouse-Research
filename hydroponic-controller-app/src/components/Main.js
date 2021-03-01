@@ -45,7 +45,7 @@ class Main extends React.Component {
                 { this.notificationBar }
                 {/* < Scene scene={ this.state.Scene } /> */}
                 <Switch >
-                    <Route exact path='/dashboard' component={ this.state.Scene } />
+                    <Route exact path='/dashboard' component={ this.Scenes.SerialTest } />
                     <Route exact path='/settings' component={ Settings } />
                     <Route exact path='/'>
                         <Redirect to='/dashboard' />

@@ -18,6 +18,20 @@ class NotificationBar extends React.Component {
         }
     }
 
+    componentDidMount() {
+        window.setNavName = async (name) => {
+            this.setState({ navname: name });
+        };
+
+        window.removeNavName = async (name) => {
+            window.setNavName?.('');
+        };
+    }
+    
+    componentWillUnmount() {
+        window.setNavName = undefined;
+    }
+
     addNotification(id, element) {
         this.state.notifications[id] = element;
         this.setState({notifications: this.state.notifications});
@@ -50,6 +64,7 @@ class NotificationBar extends React.Component {
                 }
                 <ArduinoState />
                 <USBState />
+                <p>{this.state.navname}</p>
             </div>
         );
     }

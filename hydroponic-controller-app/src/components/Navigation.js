@@ -10,16 +10,18 @@ function Navigation({ id=undefined }) {
     const debug = useRef(0);
     const buttonIDs = useRef([]);
 
+    // Focuses navbutton with matching id
     const addButtonFocus = (id) => {
         if (!(id in buttonIDs.current)) {
-            console.log(`Registering id: ${id}`);
             buttonIDs.current.push(id);
-            console.log(`button IDs are ${buttonIDs.current}`);
             return true;
         }
+
+        // if this reaches here, that means id already exists
         return false;
     }
 
+    // Removes focus for particular navbutton id
     const removeButtonFocus = (id) => {
         if (id in buttonIDs.current) {
             for (let i = 0; i < buttonIDs.current.length; ++i) {
@@ -32,9 +34,9 @@ function Navigation({ id=undefined }) {
         return false;
     }
 
+    // Unfocuses all buttons in the navbar
     const unfocusAll = () => {
         for (id in buttonIDs.current) {
-            console.log(`Removing ${buttonIDs.current[id]}`);
             document.getElementById(buttonIDs.current[id])?.classList.remove('focus');
         }
     }

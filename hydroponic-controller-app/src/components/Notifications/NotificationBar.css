@@ -17,4 +17,11 @@
   -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
           box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+.NotificationBar p {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding-left: 35px;
+}
 /*# sourceMappingURL=NotificationBar.css.map */

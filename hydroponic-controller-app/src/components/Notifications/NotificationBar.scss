@@ -11,3 +11,8 @@
     // flex-direction: row;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+.NotificationBar p {
+    flex-grow: 1;
+    padding-left: 35px;
+}

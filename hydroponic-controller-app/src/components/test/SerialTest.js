@@ -42,6 +42,10 @@ class SerialTest extends React.Component {
     //     this.setState({}[command] = value);
     // }
 
+    componentDidMount() {
+        console.log('I did mount!');
+        window.setNavName?.('Dashboard');
+    }
     
     componentWillUnmount() {
 
