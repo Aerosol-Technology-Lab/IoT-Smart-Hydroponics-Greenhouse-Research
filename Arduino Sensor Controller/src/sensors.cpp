@@ -16,25 +16,27 @@ char *dtostrf (double val, signed char width, unsigned char prec, char *sout) {
 #endif
 
 namespace Sensors {
-    OneWire oneWire0(PIN_TMP0);
-    DallasTemperature tmp0(&oneWire0);
+    OneWire oneWireTMP[3];
+    DallasTemperature tmpSensors[3];
 }
 
 void Sensors::init() {
     randomSeed(analogRead(0));
 
     // initialize temperature sensors
-    oneWire0 = OneWire(PIN_TMP0);
-    tmp0 = DallasTemperature(&oneWire0);
-    tmp0.begin();
+    for (int i = 0; i < NUM_TEMP_SENSORS; ++i) {
+        oneWireTMP[i] = OneWire(TMP_PINS[i]);
+        tmpSensors[i] = DallasTemperature(&oneWireTMP[i]);
+        tmpSensors[i].begin();
+    }
 }
 
 void Sensors::temperature(const char *buffer, size_t buffer_size, bool unused) {
     // char next[8];
     // Utils::nextWord(buffer, 5, 8, next, 8);
 
-    tmp0.requestTemperatures();
-    float temp = tmp0.getTempFByIndex(0);
+    tmpSensors[0].requestTemperatures();
+    float temp = tmpSensors[0].getTempFByIndex(0);
     char send[64];
     char str_tmp[16];
     dtostrf(temp, 4, 2, str_tmp);
@@ -62,19 +64,7 @@ size_t Sensors::temperature(int sensorIdx, char *buffer) {
     }
     // Writes value of particular sensor index to the buffer
     else if (sensorIdx >= 0 && sensorIdx < 3) {
-        DallasTemperature *temp;
-        switch (sensorIdx)
-        {
-        case 0:
-            temp = &tmp0;
-            break;
-        case 1:
-            temp = &tmp1;
-            break;
-        case 2:
-            temp = &tmp2;
-            break;
-        }
+        DallasTemperature *temp = tmpSensors + sensorIdx;
 
         temp->requestTemperatures();
         float reading = temp->getTempFByIndex(0);

@@ -10,6 +10,8 @@
 
 #endif
 
+#define NUM_TEMP_SENSORS 3
+
 namespace Sensors {
   
   /**
@@ -17,21 +19,15 @@ namespace Sensors {
    */
 
 #ifndef SIMULATOR
-  const unsigned int PIN_TMP0 = 22;
-  const unsigned int PIN_TMP1 = 24;
-  const unsigned int PIN_TMP2 = 26;
+  const unsigned int TMP_PINS[NUM_TEMP_SENSORS] = {22, 24, 26};
 
   // OneWire oneWire0(PIN_TMP0);
   // DallasTemperature tmp0(&oneWire0);
   // OneWire oneWire0;
   // DallasTemperature tmp0;
 
-  extern OneWire oneWire0;
-  extern OneWire oneWire1;
-  extern OneWire oneWire2;
-  extern DallasTemperature tmp0;
-  extern DallasTemperature tmp1;
-  extern DallasTemperature tmp2;
+  extern OneWire oneWireTMP[NUM_TEMP_SENSORS];
+  extern DallasTemperature tmpSensors[3];
 
 #endif
   
