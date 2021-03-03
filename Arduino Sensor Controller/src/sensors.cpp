@@ -31,7 +31,7 @@ void Sensors::init() {
     }
 }
 
-void Sensors::temperature(const char *buffer, size_t buffer_size, bool unused) {
+void Sensors::waterTemperature(const char *buffer, size_t buffer_size, bool unused) {
     // char next[8];
     // Utils::nextWord(buffer, 5, 8, next, 8);
 
@@ -45,21 +45,21 @@ void Sensors::temperature(const char *buffer, size_t buffer_size, bool unused) {
     Utils::sendSerial(send);
 }
 
-size_t Sensors::temperature(int sensorIdx, char *buffer) {
+size_t Sensors::waterTemperature(int sensorIdx, char *buffer) {
     // bytes written to buffer during this function call
     size_t totalWritten = 0;
     
     // Writes values of all available temperature sensors to the buffer
     if (sensorIdx == -1) {
-        size_t written = temperature(0, buffer);
+        size_t written = waterTemperature(0, buffer);
         buffer = Utils::movePointer(buffer, written);
         totalWritten += written;
 
-        written = temperature(1, buffer);
+        written = waterTemperature(1, buffer);
         buffer = Utils::movePointer(buffer, written);
         totalWritten += written;
 
-        written = temperature(2, buffer);
+        written = waterTemperature(2, buffer);
         totalWritten += written;
     }
     // Writes value of particular sensor index to the buffer

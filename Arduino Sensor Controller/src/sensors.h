@@ -39,9 +39,9 @@ namespace Sensors {
    * @param buffer: message from UART
    * @param buffer_size: maximum size of buffer
    */
-  void temperature(const char *buffer, size_t buffer_size, bool unused=false);
+  void waterTemperature(const char *buffer, size_t buffer_size, bool unused=false);
 
-  size_t temperature(int sensorIdx, char *buffer);
+  size_t waterTemperature(int sensorIdx, char *buffer);
   
   void ph(const char *buffer, size_t buffer_size);
 

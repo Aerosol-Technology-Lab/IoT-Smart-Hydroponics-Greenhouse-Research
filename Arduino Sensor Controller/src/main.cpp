@@ -57,7 +57,7 @@ void loop() {
             size_t written = 0;
             
             // temperature
-            Sensors::temperature(ptr,-1);       // get reading of all temperature sensors
+            Sensors::waterTemperature(ptr,-1);       // get reading of all temperature sensors
             ptr = Utils::movePointer(ptr, written);
 
             // ends string (last character from movePointer should be ' ' instead of '\0')
@@ -67,7 +67,7 @@ void loop() {
             Utils::sendSerial(buffer);
         }
         else if (strcmp(command, "TEMP") == 0) {
-            Sensors::temperature(inBuffer, IN_BUFFER_SIZE);
+            Sensors::waterTemperature(inBuffer, IN_BUFFER_SIZE);
         }
         // pH command
         else if (strcmp(command, "PH") == 0) {

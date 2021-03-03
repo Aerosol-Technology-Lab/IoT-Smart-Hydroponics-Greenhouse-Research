@@ -21,12 +21,12 @@ void Sensors::init() {
 randomSeed(analogRead(0));
 }
 
-void Sensors::temperature(const char *buffer, size_t buffer_size, bool unused) {
+void Sensors::waterTemperature(const char *buffer, size_t buffer_size, bool unused) {
     char next[8];
     Utils::nextWord(buffer, 5, 8, next, 8);
 }
 
-size_t temperature(int sensorIdx, char *buffer) {
+size_t waterTemperature(int sensorIdx, char *buffer) {
     sprintf(buffer, "TMP:0 %.2f TMP:1 %.2f TMP:2 %.2f", random(5000, 10000) * 0.01, random(5000, 10000) * 0.01, random(5000, 10000) * 0.01);
     return strlen(buffer);
 }
