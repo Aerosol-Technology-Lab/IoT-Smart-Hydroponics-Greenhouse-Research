@@ -18,6 +18,7 @@ char *dtostrf (double val, signed char width, unsigned char prec, char *sout) {
 namespace Sensors {
     OneWire oneWireTMP[3];
     DallasTemperature tmpSensors[3];
+    Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
 }
 
 void Sensors::init() {
@@ -28,6 +29,14 @@ void Sensors::init() {
         oneWireTMP[i] = OneWire(TMP_PINS[i]);
         tmpSensors[i] = DallasTemperature(&oneWireTMP[i]);
         tmpSensors[i].begin();
+    }
+
+    // initilize bme280 sensors
+    for (int i = 0; i < NUM_BME_SENSORS; ++i) {
+        bmeSensors[i] = Pair<I2CBUS, Adafruit_BME280>(Sensors::BME280_BUS[i], Adafruit_BME280());
+        Adafruit_BME280 &bme = bmeSensors[i].second;
+        i2cmux(bmeSensors[i].first);
+        bme.begin(BME280_ADDRESS_LIST[i]);
     }
 }
 
@@ -73,6 +82,40 @@ size_t Sensors::waterTemperature(int sensorIdx, char *buffer) {
     }
     
     return totalWritten;
+}
+
+size_t Sensors::bme280(char *buffer, int sensorIdx)
+{
+    size_t bytesWritten = 0;    // bytes written to buffer
+    
+    // if -1, return all sensors
+    if (sensorIdx == -1) {
+        for (unsigned int i = 0; i < NUM_BME_SENSORS - 1; ++i) {
+            size_t written = bme280(buffer, i);
+            buffer = Utils::movePointer(buffer, written);
+            bytesWritten += written;
+        }
+
+        // last item, no need to move buffer pointer
+        bytesWritten += bme280(buffer, NUM_BME_SENSORS - 1);
+    }
+    //else if 0 <= sensorIdx < MAX_NUMBER_SENSORS, return only that selected sensor
+    else if (sensorIdx >= 0 && sensorIdx < NUM_BME_SENSORS) {
+        // selects i2c mux
+        i2cmux(bmeSensors[sensorIdx].first);
+
+        // reads sensor
+        Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
+        float temperature = (bme.readTemperature() * 9.0f / 5.0f ) + 32.0f;
+        float pressure = bme.readPressure() / 100.0f;
+        float humidity = bme.readHumidity();
+        
+        // write to buffer
+        sprintf(buffer, "BME:0 %.4f %.4f %.4f", temperature, pressure, humidity);
+        bytesWritten = strlen(buffer) + 1;
+    }
+
+    return bytesWritten;
 }
 
 // this is still simulated

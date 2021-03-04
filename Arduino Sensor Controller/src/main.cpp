@@ -60,6 +60,9 @@ void loop() {
             Sensors::waterTemperature(ptr,-1);       // get reading of all temperature sensors
             ptr = Utils::movePointer(ptr, written);
 
+            // bme280
+            Sensors::bme280(ptr, -1);
+            
             // ends string (last character from movePointer should be ' ' instead of '\0')
             ptr[-1] = 0;
             
