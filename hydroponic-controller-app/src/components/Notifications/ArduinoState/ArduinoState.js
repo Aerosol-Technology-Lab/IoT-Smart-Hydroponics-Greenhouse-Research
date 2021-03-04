@@ -26,7 +26,7 @@ class ArduinoState extends Component {
     }
     
     render() {
-        if (this.state.connected == 'connected') {
+        if (this.state.connected === 'connected') {
             return (null)
         }
         

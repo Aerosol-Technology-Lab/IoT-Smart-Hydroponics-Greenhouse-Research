@@ -1,10 +1,14 @@
 .NotificationIcon {
   width: auto;
-  margin: 0 5px;
+  margin: 0 0 0 6px;
 }
 
 .NotificationIcon.disabled {
   width: 0px;
   overflow: hidden;
+}
+
+.icon-flash {
+  font-size: 21px;
 }
 /*# sourceMappingURL=NotificationIcon.css.map */

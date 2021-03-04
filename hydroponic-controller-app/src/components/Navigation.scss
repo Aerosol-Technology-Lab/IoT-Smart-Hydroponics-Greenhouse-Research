@@ -1,6 +1,6 @@
 .Navigation {
     /* background: linear-gradient(#2B2B2B,#292929); */
-    background: #222838;
+    background: linear-gradient(#2B2B2B, #292929);
     height: 100vh;
     width: 100px;
     color: white;
@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-
+    overflow-y: auto;
     /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
 }
 
@@ -27,4 +27,25 @@
     // text-shadow: 3px 4px 7px rgba(81,67,21,0.8);
     // text-shadow: 2px 3px 7px rgba(0,0,0,0.61);
     text-shadow: 2px 3px 5px #000000;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

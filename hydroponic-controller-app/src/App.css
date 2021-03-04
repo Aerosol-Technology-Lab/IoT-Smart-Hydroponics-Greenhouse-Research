@@ -5,13 +5,15 @@
 
 .App {
   /* text-align: center; */
-  background: #2A2F43;
+  /* background: #2A2F43; */
+  background: linear-gradient(#1f1e1e, #292929);
   /* background: linear-gradient(to top,#212121, #1d1d1d); */
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: row;
   color:white;
+  /* cursor: grab; */
 }
 
 .no-cursor {

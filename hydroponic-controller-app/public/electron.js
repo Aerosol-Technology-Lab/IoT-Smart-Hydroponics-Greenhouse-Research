@@ -1,17 +1,46 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, nativeImage } = require('electron');
 const os = require('os');
 const process = require('process');
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const uuidv4 = require('uuid/v4');
+const glob = require('glob');
 const SerialPort = require('serialport');
 const ReadLine = require('@serialport/parser-readline');
+const usb = require('usb');
 
 // App imports
 const ConfigLoader = require('./ConfigLoader');
-const { resourceUsage } = require('process');
 
 const isDev = true ? require('electron-is-dev') : false;
+
+// initialize temp dir
+const tmpFolderName = 'IotHydroApp';
+const tmpPath = path.join(os.tmpdir(), tmpFolderName);
+if (!fs.existsSync(tmpPath)) fs.mkdirSync(tmpPath);
+
+// check if other instances are running
+
+// const uuidName = uuidv4();
+// execSync(`mkfifo ${path.join(tmpPath, uuidName)}`);
+// execSync(`mkfifo ${path.join(tmpPath, 'controller')}`);
+// fs.writeFileSync(path.join(tmpPath, uuidName));
+// let fds = fs.createReadStream(path.join(tmpPath, uuidName));
+// fds.on('data', (d) => {
+//   d = d.toString();
+  
+//   if (d !== uuidName) {
+//     console.log('Another process is running.');
+//     process.exit(0);
+//   }
+//   else {
+//     fds.close();
+//   }
+// });
+
+
 
 /**
  * Load configurations
@@ -25,7 +54,8 @@ Config.runtime = {};    // runtime config variables
 // main app window
 var mainWindow;
 var quitOnAllWindowClosed = true;
-
+var appIcon = nativeImage.createFromPath(path.join(__dirname, '../src/logo.svg'));
+console.log(`Dirname: ${__dirname}`);
 // app window settings
 var appSettings = {
   width: 800, 
@@ -36,13 +66,14 @@ var appSettings = {
   transparent: true,
   resizable: false,
   frame: true,
-  fullscreen: false
+  fullscreen: false,
+  icon: appIcon,
 };
 
 // check for operating system
 Config.runtime.platform = os.platform();
 
-if (Config.runtime.platform != 'linux') {
+if (Config.runtime.platform !== 'linux') {
   console.log(`Warning! The system ${Config.runtime.platform} is not officially supported.
   This has been developed for Linux operating systems.`);
 }
@@ -54,7 +85,7 @@ else {
 
 // check for platform
 Config.runtime.arch = process.arch;
-if (Config.runtime.arch == 'arm64') { // set defaults for raspberry pi
+if (Config.runtime.arch === 'arm') { // set defaults for raspberry pi
   appSettings.fullscreen = true;
   appSettings.frame = false;
   Config.runtime.cursor = false;
@@ -91,6 +122,10 @@ ipcMain.handle('cwd', async (event, ...args) => {
   return process.cwd();
 });
 
+ipcMain.handle('app-shutdown', async(event, ...args) => {
+  app.quit();
+});
+
 ipcMain.handle('serialport', async (event, ...args) => {
   if (arduino) {
     return 'connected';
@@ -98,6 +133,35 @@ ipcMain.handle('serialport', async (event, ...args) => {
   else {
     return 'no-connection';
   }
+});
+
+/**
+ * USB
+ */
+var connectedUSB = 0;
+
+var usbState = () => {
+  console.log(`Connected devices: ${connectedUSB}`);
+  return connectedUSB > 0 ? 'connected' : 'disconnected';
+};
+ 
+usb.on('attach', (device) => {
+  console.log('USB Device is connected!');
+  ++connectedUSB;
+  mainWindow.send('usb', usbState());
+});
+
+usb.on('detach', (device) => {
+  connectedUSB = Math.max(connectedUSB - 1, 0);
+
+  console.log('device disconnected');
+  if (connectedUSB === 0) {
+    mainWindow.send('usb', usbState());
+  }
+});
+
+ipcMain.handle('usb', async (event, args) => {
+  return usbState();
 });
 
 const reconnectArduino = async function() {
@@ -115,7 +179,7 @@ const reconnectArduino = async function() {
       mainWindow.webContents?.send('serialport', {state: 'permission-error'});
     } 
     else {
-      console.log(`${err}`);
+      console.log(`Connection to Arduino error: ${err}`);
     }
 
     if (err) {
@@ -130,11 +194,16 @@ const reconnectArduino = async function() {
     console.log("Port is opened");
     parser = arduino.pipe(new ReadLine({ delimiter: '\0' }));
     parser.on('data', (data) => {
-      comms = data.split(' ');
+      // console.log(data);
+      let comms = data.split(' ');
 
       if (comms[0] === 'PHVAL') {
-        console.log('Got here');
-        mainWindow.webContents.send('ph', comms[1]);
+        // console.log('Got here');
+        mainWindow?.webContents?.send('ph', comms[1]);
+      }
+      else if (comms[0] === 'TEMP') {
+        // console.log('Got TEMP');
+        mainWindow?.webContents?.send('tmp', comms[1]);
       }
       // mainWindow.webContents.send('ph', )
     });
@@ -168,8 +237,9 @@ const reconnectArduino = async function() {
     setInterval(() => {
       if (arduino) {
         arduino.write("PH\0");
+        arduino.write("TEMP\0");
       }
-    }, 3000);
+    }, 500);
   });
 
 
@@ -177,7 +247,9 @@ const reconnectArduino = async function() {
 
 reconnectArduino();
 
+app.allowRendererProcessReuse = false;
 app.on('ready', createWindow);
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin' && quitOnAllWindowClosed) {
@@ -193,6 +265,7 @@ app.on('activate', () => {
 
 /*** IPC ***/
 ipcMain.handle('get-time', async (event, ...args) => {
+  // if (Config.runtime.arch == 'x64')
   return new Date();
 });
 

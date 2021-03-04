@@ -32,8 +32,6 @@ class ConfigLoader
             this.write(data);
             return data;
         }
-
-        return null
     }
 
     async write(data, callback=()=>{}) {

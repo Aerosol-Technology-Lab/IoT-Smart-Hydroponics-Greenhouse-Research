@@ -1,0 +1,22 @@
+.NavigationButton {
+  color: inherit;
+  text-decoration: inherit;
+  text-align: center;
+  padding: 18px;
+}
+
+.NavigationButton .icon {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.NavigationButton .focus {
+  text-shadow: none;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#a734ff), to(#a02ef7));
+  background-image: linear-gradient(#a734ff, #a02ef7);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 50px;
+}
+/*# sourceMappingURL=NavigationButton.css.map */

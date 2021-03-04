@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Scene.css'
 class Scene extends React.Component {
     constructor(props) {
         super(props);
@@ -8,7 +8,7 @@ class Scene extends React.Component {
     render() {
 
         return(
-            <div>
+            <div className="Scene">
                 < this.props.scene />
             </div>
         );

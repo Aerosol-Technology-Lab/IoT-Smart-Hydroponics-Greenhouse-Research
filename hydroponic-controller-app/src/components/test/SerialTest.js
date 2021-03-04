@@ -1,11 +1,15 @@
 import React from 'react';
+import './SerialTest.css'
 const { ipcRenderer } = window.require('electron');
 
 class SerialTest extends React.Component {
     constructor(props) {
         super(props);
         console.log('Im here');
-        this.state = { serialState: null };
+        this.state = { 
+            serialState: null,
+            tmp: 'none'
+        };
         // this.init();
 
         ipcRenderer.removeAllListeners('serialport');
@@ -19,6 +23,11 @@ class SerialTest extends React.Component {
             console.log(`BLEH Stuff: ${args}`);
             this.setState({ph: args});
         });
+
+        ipcRenderer.on('tmp', (event, args) => {
+            console.log(`Got temp: ${args}`);
+            this.setState({ tmp: args});
+        })
     }
 
     async init() {
@@ -33,6 +42,10 @@ class SerialTest extends React.Component {
     //     this.setState({}[command] = value);
     // }
 
+    componentDidMount() {
+        console.log('I did mount!');
+        window.setNavName?.('Dashboard');
+    }
     
     componentWillUnmount() {
 
@@ -49,18 +62,20 @@ class SerialTest extends React.Component {
         };
         
         let more = {
-            width: '90%',
-            height: '30px',
-            background: 'white',
-            'border-radius': '5px',
+            // width: '90%',
+            // height: '30px',
+            // background: 'white',
+            // 'border-radius': '5px',
             // 'justify-item': 'center'
         }
         
         return(
-            <div style={styles}>
-                <div style={ more }>
-                Status of serial port: {test}
+            <div className="SerialTest main" style={styles}>
+                <div className="child" style={ more }>
+                <p>Status of serial port: {test}</p>
                 <p>PH: { this.state.ph }</p>
+                <p>Water TEMP-1: { this.state.ph }</p>
+                <p>Air TEMP-1: { this.state.tmp }</p>
                 </div>
             </div>
         );

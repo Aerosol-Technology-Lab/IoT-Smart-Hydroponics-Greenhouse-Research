@@ -6,6 +6,7 @@ import '../../style.css'
 
 // Notifications
 import ArduinoState from './ArduinoState/ArduinoState'
+import USBState from "./USBState/USBState";
 
 class NotificationBar extends React.Component {
     constructor(props) {
@@ -15,6 +16,20 @@ class NotificationBar extends React.Component {
                 'arduino-state': React.createElement(ArduinoState)
             }
         }
+    }
+
+    componentDidMount() {
+        window.setNavName = async (name) => {
+            this.setState({ navname: name });
+        };
+
+        window.removeNavName = async (name) => {
+            window.setNavName?.('');
+        };
+    }
+    
+    componentWillUnmount() {
+        window.setNavName = undefined;
     }
 
     addNotification(id, element) {
@@ -44,10 +59,12 @@ class NotificationBar extends React.Component {
                 <Clock />
                 {
                     notifications.map((notification, idx) => {
-                        { console.log('hello')}
+                        console.log('hello')
                     })
                 }
                 <ArduinoState />
+                <USBState />
+                <p>{this.state.navname}</p>
             </div>
         );
     }
