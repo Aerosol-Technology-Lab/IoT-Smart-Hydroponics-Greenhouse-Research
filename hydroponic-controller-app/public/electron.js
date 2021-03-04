@@ -96,6 +96,8 @@ else {
 
 configManager.write(Config);
 
+// current sensor reading
+var readings = {};
 
 // Arduino
 var arduino = null;
@@ -197,7 +199,23 @@ const reconnectArduino = async function() {
       // console.log(data);
       let comms = data.split(' ');
 
-      if (comms[0] === 'PHVAL') {
+      if (comms[0] === 'ALL') {
+        let newReadings = {};
+        
+        newReadings['time'] = new Date().toISOString();
+
+        // parse the remaining input from the arduino
+        for (let i = 1; i < comms.length; ++i) {
+          let testCommand = comms[i];
+
+          if (testCommand.startsWith('TMP')) {
+            let sensorIdx = testCommand.split(':')[1];
+            newReadings[sensorIdx] = comms[i + 1];
+            ++i;
+          }
+        }
+      }
+      else if (comms[0] === 'PHVAL') {
         // console.log('Got here');
         mainWindow?.webContents?.send('ph', comms[1]);
       }
