@@ -1,3 +1,4 @@
+
 #include "utils.h"
 #include <Arduino.h>
 
@@ -72,6 +73,13 @@ size_t Utils::sendSerial(const char *cstr) {
     }
     Serial.write((byte) 0);
     return count + 1;
+}
+
+char * Utils::movePointer(char *ptr, int move) {
+    if (move) {
+        ptr[move - 1] = ' ';
+        return ptr + move;
+    }
 }
 
 bool Utils::equals(const char *a, const char *b) {

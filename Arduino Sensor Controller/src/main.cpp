@@ -1,29 +1,23 @@
 #include <Arduino.h>
 #include "utils.h"
-
-#define SIMULATOR
-
-#ifdef SIMULATOR
-  #include "simulator.h"
-#elif
-  #include "sensors.h"
-#endif
-
-// END INCLUDES
+#include "sensors.h"
 
 #define BAUDRATE 57600
 #define IN_BUFFER_SIZE 32
 #define OUT_BUFFER_SIZE 32
+#ifndef ALL_BUFFER
+    #define ALL_BUFFER 128
+#endif
 #define COMMAND_SIZE 8
 
 char inBuffer[IN_BUFFER_SIZE];
 char outBuffer[OUT_BUFFER_SIZE];
 
 void setup() {
+    Sensors::init();
     Serial.begin(BAUDRATE);
     memset(inBuffer, 0, IN_BUFFER_SIZE);
     memset(outBuffer, 8, OUT_BUFFER_SIZE);
-    Sensors::init();
 }
 
 void loop() {
@@ -48,15 +42,35 @@ void loop() {
 
         char command[COMMAND_SIZE];
         Utils::nextWord(inBuffer, 0, IN_BUFFER_SIZE, command, COMMAND_SIZE);
-        unsigned int bytesWritten = 0;
+        // unsigned int bytesWritten = 0;
         char tmp[32];
         sprintf(tmp, "The command is [%s]", command);
         Utils::println(tmp);
     
 
         // temperature command
-        if (strcmp(command, "TEMP") == 0) {
-            Sensors::temperature(inBuffer, IN_BUFFER_SIZE);
+        if (strcmp(command, "ALL")) {
+            char buffer[ALL_BUFFER] = "ALL";
+            char *ptr = Utils::movePointer(buffer, 4);
+
+            // tracker for number of bytes written
+            size_t written = 0;
+            
+            // temperature
+            Sensors::waterTemperature(ptr,-1);       // get reading of all temperature sensors
+            ptr = Utils::movePointer(ptr, written);
+
+            // bme280
+            Sensors::bme280(ptr, -1);
+            
+            // ends string (last character from movePointer should be ' ' instead of '\0')
+            ptr[-1] = 0;
+            
+            // send via usb
+            Utils::sendSerial(buffer);
+        }
+        else if (strcmp(command, "TEMP") == 0) {
+            Sensors::waterTemperature(inBuffer, IN_BUFFER_SIZE);
         }
         // pH command
         else if (strcmp(command, "PH") == 0) {
