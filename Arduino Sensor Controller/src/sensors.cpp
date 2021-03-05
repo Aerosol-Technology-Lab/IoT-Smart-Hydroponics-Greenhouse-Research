@@ -111,7 +111,7 @@ size_t Sensors::bme280(char *buffer, int sensorIdx)
         float humidity = bme.readHumidity();
         
         // write to buffer
-        sprintf(buffer, "BME:0 %.4f %.4f %.4f", temperature, pressure, humidity);
+        sprintf(buffer, "BME:%d %.4f %.4f %.4f", sensorIdx, temperature, pressure, humidity);
         bytesWritten = strlen(buffer) + 1;
     }
 
