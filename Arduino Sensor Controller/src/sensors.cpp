@@ -60,16 +60,11 @@ size_t Sensors::waterTemperature(int sensorIdx, char *buffer) {
     
     // Writes values of all available temperature sensors to the buffer
     if (sensorIdx == -1) {
-        size_t written = waterTemperature(0, buffer);
-        buffer = Utils::movePointer(buffer, written);
-        totalWritten += written;
-
-        written = waterTemperature(1, buffer);
-        buffer = Utils::movePointer(buffer, written);
-        totalWritten += written;
-
-        written = waterTemperature(2, buffer);
-        totalWritten += written;
+        for (int i = 0; i < NUM_TEMP_SENSORS; ++i) {
+            size_t written = waterTemperature(i, buffer);
+            buffer = Utils::movePointer(buffer, written);
+            totalWritten += written;
+        }
     }
     // Writes value of particular sensor index to the buffer
     else if (sensorIdx >= 0 && sensorIdx < 3) {
