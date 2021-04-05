@@ -10,6 +10,7 @@
 #endif
 #define COMMAND_SIZE 8
 
+
 char inBuffer[IN_BUFFER_SIZE];
 char outBuffer[OUT_BUFFER_SIZE];
 
@@ -18,6 +19,8 @@ void setup() {
     Serial.begin(BAUDRATE);
     memset(inBuffer, 0, IN_BUFFER_SIZE);
     memset(outBuffer, 8, OUT_BUFFER_SIZE);
+
+    analogReadResolution(RESOLUTION_BITS);
 }
 
 void loop() {

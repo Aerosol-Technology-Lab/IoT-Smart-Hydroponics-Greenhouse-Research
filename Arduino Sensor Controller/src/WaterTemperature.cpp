@@ -4,6 +4,8 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
+WaterTemperature::WaterTemperature() {}
+
 WaterTemperature::WaterTemperature(uint8_t pin, bool initialize)
     : oneWire(pin), sensor(&oneWire)
 {
@@ -14,8 +16,10 @@ WaterTemperature::WaterTemperature(uint8_t pin, bool initialize)
 
 void WaterTemperature::init()
 {
-    sensor.begin();
-    initialized = true;
+    if (!initialized) {
+        sensor.begin();
+        initialized = true;
+    }
 }
 
 float WaterTemperature::read(uint8_t idx)

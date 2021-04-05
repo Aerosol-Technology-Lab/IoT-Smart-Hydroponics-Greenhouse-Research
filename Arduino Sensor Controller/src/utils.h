@@ -1,6 +1,19 @@
 #pragma once
 
 #include <Arduino.h>
+
+#ifdef DUE
+    #define RESOLUTION_BITS 12
+    #define VREF 3.3f
+    #define ANALOG_RESOLUTION 4095.0f
+#elif UNO
+    #define VREF 5.0f
+    #define ANALOG_RESOLUTION 1023.0f
+#else
+    #define VREF 5.0f
+    #define ANALOG_RESOLUTION 1023.0f
+#endif
+
 // #define DEBUG
 
 namespace Utils {

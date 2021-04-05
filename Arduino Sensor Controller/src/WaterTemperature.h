@@ -11,7 +11,7 @@
 class WaterTemperature
 {
 public:
-    const char const *DEFAULT_ID = "_";
+    const char *DEFAULT_ID = "_";
 
 private:
 
@@ -20,6 +20,17 @@ private:
     bool initialized = false;
 
 public:
+    /**
+     * @brief Unsafe construction of WaterTemperature object
+     * 
+     */
+    WaterTemperature();
+    /**
+     * @brief Construct a new Water Temperature object
+     * 
+     * @param pin digital pin connected to data bus of temperature sensor
+     * @param initialize should constructor initialize the object
+     */
     WaterTemperature(uint8_t pin, bool initialize=true);
 
     void init();
