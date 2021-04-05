@@ -6,8 +6,9 @@
 
 #ifndef SIMULATOR
 
-#include <OneWire.h>
-#include <DallasTemperature.h>
+// #include <OneWire.h>
+// #include <DallasTemperature.h>
+#include "WaterTemperature.h"
 #include "i2cmux.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
@@ -35,8 +36,8 @@ namespace Sensors {
   // DallasTemperature tmp0;
 
   // temperature sensors
-  extern OneWire oneWireTMP[NUM_TEMP_SENSORS];
-  extern DallasTemperature tmpSensors[3];
+  // extern OneWire oneWireTMP[NUM_TEMP_SENSORS];
+  extern WaterTemperature tmpSensors[3];
 
 
   // bme280

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdlib.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
@@ -9,6 +10,9 @@
  */
 class WaterTemperature
 {
+public:
+    const char const *DEFAULT_ID = "_";
+
 private:
 
     OneWire oneWire;
@@ -20,5 +24,7 @@ public:
 
     void init();
     
-    float read(uint idx=0);
+    float read(uint8_t idx=0);
+
+    size_t write(char *buffer, const char *id=nullptr);
 };

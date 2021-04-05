@@ -2,8 +2,9 @@
 
 #include "sensors.h"
 #include <Arduino.h>
-#include "utils.h"
 #include <stdlib.h>
+#include "utils.h"
+#include "WaterTemperature.h"
 
 #if defined(DTOSTRF_EXT_LIB) || defined(DUE)
 char *dtostrf (double val, signed char width, unsigned char prec, char *sout) {
@@ -16,8 +17,7 @@ char *dtostrf (double val, signed char width, unsigned char prec, char *sout) {
 #endif
 
 namespace Sensors {
-    OneWire oneWireTMP[3];
-    DallasTemperature tmpSensors[3];
+    WaterTemperature tmpSensors[3];
     Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
 }
 
@@ -26,9 +26,7 @@ void Sensors::init() {
 
     // initialize temperature sensors
     for (int i = 0; i < NUM_TEMP_SENSORS; ++i) {
-        oneWireTMP[i] = OneWire(TMP_PINS[i]);
-        tmpSensors[i] = DallasTemperature(&oneWireTMP[i]);
-        tmpSensors[i].begin();
+        tmpSensors[i] = WaterTemperature(TMP_PINS[i]);
     }
 
     // initilize bme280 sensors
@@ -44,8 +42,7 @@ void Sensors::waterTemperature(const char *buffer, size_t buffer_size, bool unus
     // char next[8];
     // Utils::nextWord(buffer, 5, 8, next, 8);
 
-    tmpSensors[0].requestTemperatures();
-    float temp = tmpSensors[0].getTempFByIndex(0);
+    float temp = tmpSensors[0].read();
     char send[64];
     char str_tmp[16];
     dtostrf(temp, 4, 2, str_tmp);
@@ -68,12 +65,10 @@ size_t Sensors::waterTemperature(int sensorIdx, char *buffer) {
     }
     // Writes value of particular sensor index to the buffer
     else if (sensorIdx >= 0 && sensorIdx < 3) {
-        DallasTemperature *temp = tmpSensors + sensorIdx;
+        WaterTemperature *temp = tmpSensors + sensorIdx;
 
-        temp->requestTemperatures();
-        float reading = temp->getTempFByIndex(0);
-        sprintf(buffer, "TMP:%d %.2f", sensorIdx, reading);
-        totalWritten = strlen(buffer) + 1;
+        char idx[2] = {48 + sensorIdx, 0};
+        totalWritten = temp->write(buffer, idx);
     }
     
     return totalWritten;
