@@ -64,4 +64,34 @@ namespace Utils {
      * This does not even work
      */
     bool equals(const char *a, const char *b);
+
+    template<class T>
+
+    void swap(T&a, T&b);
+    
+    template<class T>
+    T && move(T &t);
+    
+    /**
+     * @brief parition helper for merge sort
+     * @citation https://www.geeksforgeeks.org/quick-sort/
+     * 
+     * @param arr array to sort
+     * @param low low index
+     * @param high high index
+     * @return int location of new partition
+     */
+    template<class T>
+    int partition(T arr[], int low, int high);
+
+    /**
+     * @brief Performs quicksort on arr
+     * 
+     * @tparam T type with comparison operators
+     * @param arr array to sort
+     * @param l starting index to sort
+     * @param r ending index to sort. NOTE - this is the index, not size
+     */
+    template<class T>
+    void quickSort(T arr[],int l,int r);
 }
