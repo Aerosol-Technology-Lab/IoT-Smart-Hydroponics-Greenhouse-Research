@@ -18,7 +18,18 @@
 #endif
 
 #include "DFRobot_PH.h"
-#include <EEPROM.h>
+
+#ifdef DUE
+    #include "utils.h"
+    #define strupr(x) Utils::strupr(x)
+
+    // Due does not have eeprom
+    #include <DueFlashStorage.h>
+    DueFlashStorage EEPROM;
+    
+#else
+    #include <EEPROM.h>
+#endif
 
 #define EEPROM_write(address, p) {int i = 0; byte *pp = (byte*)&(p);for(; i < sizeof(p); i++) EEPROM.write(address+i, pp[i]);}
 #define EEPROM_read(address, p)  {int i = 0; byte *pp = (byte*)&(p);for(; i < sizeof(p); i++) pp[i]=EEPROM.read(address+i);}

@@ -106,6 +106,13 @@ inline T && Utils::move(T &t)
     return static_cast<T&&>(t);
 }
 
+void Utils::strupr(char *str)
+{
+    for (size_t i = 0; i < strlen(str); ++i) {
+        str[i] = toupper(str[i]);
+    }
+}
+
 template<class T>
 int Utils::partition(T arr[], int low, int high)
 {

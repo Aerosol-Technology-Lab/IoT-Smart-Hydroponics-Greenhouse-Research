@@ -71,6 +71,12 @@ namespace Utils {
     
     template<class T>
     T && move(T &t);
+
+    /**
+     * @brief Capitlaizes every character in the c-string
+     * 
+     */
+    void strupr(char *);
     
     /**
      * @brief parition helper for merge sort
