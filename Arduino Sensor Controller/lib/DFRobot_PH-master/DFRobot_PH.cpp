@@ -24,17 +24,18 @@
     #define strupr(x) Utils::strupr(x)
 
     // Due does not have eeprom
+    #define PHVALUEADDR 0x8000                // 32 Kib offset on the second block
     #include <DueFlashStorage.h>
     DueFlashStorage EEPROM;
     
 #else
     #include <EEPROM.h>
+    #define PHVALUEADDR 0x00
 #endif
 
 #define EEPROM_write(address, p) {int i = 0; byte *pp = (byte*)&(p);for(; i < sizeof(p); i++) EEPROM.write(address+i, pp[i]);}
 #define EEPROM_read(address, p)  {int i = 0; byte *pp = (byte*)&(p);for(; i < sizeof(p); i++) pp[i]=EEPROM.read(address+i);}
 
-#define PHVALUEADDR 0x00    //the start address of the pH calibration parameters stored in the EEPROM
 
 
 DFRobot_PH::DFRobot_PH()
