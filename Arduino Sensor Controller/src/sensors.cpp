@@ -67,7 +67,7 @@ size_t Sensors::waterTemperature(int sensorIdx, char *buffer) {
     else if (sensorIdx >= 0 && sensorIdx < 3) {
         WaterTemperature *temp = tmpSensors + sensorIdx;
 
-        char idx[2] = {48 + sensorIdx, 0};
+        char idx[2] = {static_cast<unsigned char>(48 + sensorIdx), 0};
         totalWritten = temp->write(buffer, idx);
     }
     
