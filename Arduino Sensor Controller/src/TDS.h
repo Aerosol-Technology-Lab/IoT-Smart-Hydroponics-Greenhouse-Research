@@ -42,9 +42,29 @@ public:
 
     void init();
 
+    /**
+     * @brief Returns sensor value reading in ppm
+     * 
+     * @param idx unused
+     * @return float sensor reading value in ppm
+     */
     float read(uint8_t idx=0);
     
+    /**
+     * @brief Writes sensor value to char buffer
+     * 
+     * @param buffer target buffer to write data value
+     * @param id sensor ID value
+     * @return size_t size of bytes written to buffer
+     */
     size_t write(char *buffer, const char *id=nullptr);
+
+    /**
+     * @brief Set the Temperature Sensor objectS
+     * 
+     * @param temp temperature sensor object
+     */
+    void setTemperatureSensor(WaterTemperature *temp);
 
     float readTemp();
 

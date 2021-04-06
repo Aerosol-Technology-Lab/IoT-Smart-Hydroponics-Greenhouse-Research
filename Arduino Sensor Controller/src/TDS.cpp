@@ -39,36 +39,24 @@ size_t TDS::write(char *buffer, const char *id) {
     return strlen(buffer) + 1;
 }
 
+void TDS::setTemperatureSensor(WaterTemperature *temp)
+{
+    this->temp = temp;
+}
+
 float TDS::readTemp()
 {
     if   (!temp) return 25.0f;        // no temperature sensor given, just use default value
     else return temp->read();
 }
 
-/**
- * Code source from DFRobot
- */
+// todo: move this to utils
+// note: if avg is true, there is a floating point division. There is a no rounding
+// cast from float to int
 int TDS::getMedianNum(int bArray[], int iFilterLen)
 {
-    int bTab[iFilterLen];
-    for (byte i = 0; i < iFilterLen; i++)
-        bTab[i] = bArray[i];
-    int i, j, bTemp;
-    for (j = 0; j < iFilterLen - 1; j++)
-    {
-        for (i = 0; i < iFilterLen - j - 1; i++)
-        {
-            if (bTab[i] > bTab[i + 1])
-            {
-                bTemp = bTab[i];
-                bTab[i] = bTab[i + 1];
-                bTab[i + 1] = bTemp;
-            }
-        }
-    }
-    if ((iFilterLen & 1) > 0)
-        bTemp = bTab[(iFilterLen - 1) / 2];
-    else
-        bTemp = (bTab[iFilterLen / 2] + bTab[iFilterLen / 2 - 1]) / 2;
-    return bTemp;
+    Utils::quickSort(bArray, 0, iFilterLen - 1);
+    int mid = iFilterLen / 2;
+    bool avg = !(iFilterLen % 2);
+    return avg ? (bArray[mid - 1] + bArray[mid]) / 2.0f : bArray[mid];
 }
