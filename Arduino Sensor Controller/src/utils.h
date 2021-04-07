@@ -3,18 +3,30 @@
 #include <Arduino.h>
 
 #ifdef DUE
-    #define RESOLUTION_BITS 12
-    #define VREF 3.3f
-    #define ANALOG_RESOLUTION 4095.0f
+    #define RESOLUTION_BITS                   12
+    #define VREF                            3.3f
+    #define VREF_MILLI          (VREF * 1000.0f)
+    #define ANALOG_RESOLUTION            4095.0f
 #elif UNO
-    #define VREF 5.0f
-    #define ANALOG_RESOLUTION 1023.0f
+    #define RESOLUTION_BITS                   10
+    #define VREF                            5.0f
+    #define VREF_MILLI          (VREF * 1000.0f)
+    #define ANALOG_RESOLUTION            1023.0f
 #else
-    #define VREF 5.0f
-    #define ANALOG_RESOLUTION 1023.0f
+    #define RESOLUTION_BITS                   10
+    #define VREF                            5.0f
+    #define VREF_MILLI          (VREF * 1000.0f)
+    #define ANALOG_RESOLUTION            1023.0f
+#endif
+
+#ifndef DUE
+    #pragma message "WARNING! This code is not tested on other boards besides the Arduino Due"
 #endif
 
 // #define DEBUG
+#ifdef DEBUG
+    #pragma message "DEBUG mode is enabled!"
+#endif
 
 namespace Utils {
 
@@ -101,3 +113,5 @@ namespace Utils {
     template<class T>
     void quickSort(T arr[],int l,int r);
 }
+
+#include "utils_impl.h"
