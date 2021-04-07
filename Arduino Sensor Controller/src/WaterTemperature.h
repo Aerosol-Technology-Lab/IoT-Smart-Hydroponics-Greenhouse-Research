@@ -31,7 +31,7 @@ public:
      * @param pin digital pin connected to data bus of temperature sensor
      * @param initialize should constructor initialize the object
      */
-    WaterTemperature(uint8_t pin, bool initialize=true);
+    WaterTemperature(uint8_t pin, bool initialize);
 
     void init();
     
