@@ -19,6 +19,8 @@ char *dtostrf (double val, signed char width, unsigned char prec, char *sout) {
 namespace Sensors {
     WaterTemperature tmpSensors[3];
     Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
+    WaterTemperature TDSWaterTemp(PIN_TDS_SENSOR, false);
+    TDS TDSSensor(PIN_TDS_SENSOR, &TDSWaterTemp);
 }
 
 void Sensors::init() {
@@ -26,7 +28,7 @@ void Sensors::init() {
 
     // initialize temperature sensors
     for (int i = 0; i < NUM_TEMP_SENSORS; ++i) {
-        tmpSensors[i] = WaterTemperature(TMP_PINS[i]);
+        tmpSensors[i] = WaterTemperature(TMP_PINS[i], true);
     }
 
     // initilize bme280 sensors
@@ -36,6 +38,10 @@ void Sensors::init() {
         i2cmux(bmeSensors[i].first);
         bme.begin(BME280_ADDRESS_LIST[i]);
     }
+
+    // initialize TDS sensor
+    TDSWaterTemp.init();
+    TDSSensor.init();
 }
 
 void Sensors::waterTemperature(const char *buffer, size_t buffer_size, bool unused) {

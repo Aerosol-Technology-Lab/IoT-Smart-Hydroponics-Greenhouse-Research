@@ -1,8 +1,12 @@
 #include <Arduino.h>
 #include "utils.h"
+#include "DefinableBuffer.h"
+#include "StaticBuffer.h"
 #include "sensors.h"
 
-#define BAUDRATE 57600
+#ifndef BAUDRATE
+    #define BAUDRATE 57600
+#endif
 #define IN_BUFFER_SIZE 32
 #define OUT_BUFFER_SIZE 32
 #ifndef ALL_BUFFER
@@ -10,17 +14,18 @@
 #endif
 #define COMMAND_SIZE 8
 
+DefinableBuffer<2048> staticBuffer;
 
 char inBuffer[IN_BUFFER_SIZE];
 char outBuffer[OUT_BUFFER_SIZE];
 
 void setup() {
-    Sensors::init();
     Serial.begin(BAUDRATE);
+    analogReadResolution(RESOLUTION_BITS);
+    StaticBuffer::global = &staticBuffer;
+    Sensors::init();
     memset(inBuffer, 0, IN_BUFFER_SIZE);
     memset(outBuffer, 8, OUT_BUFFER_SIZE);
-
-    analogReadResolution(RESOLUTION_BITS);
 }
 
 void loop() {

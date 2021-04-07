@@ -8,10 +8,11 @@
 
 // #include <OneWire.h>
 // #include <DallasTemperature.h>
-#include "WaterTemperature.h"
 #include "i2cmux.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
+#include "WaterTemperature.h"
+#include "TDS.h"
 
 #endif
 
@@ -26,10 +27,12 @@ namespace Sensors {
    */
 
 #ifndef SIMULATOR
-  const unsigned int TMP_PINS[NUM_TEMP_SENSORS] = {22, 24, 26};
-  const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS] = { 0x76, 0x77, 0x76};
-  const I2CBUS BME280_BUS[NUM_BME_SENSORS] = { 0x00, 0x00, 0x01};
-
+  const unsigned int TMP_PINS[NUM_TEMP_SENSORS]         = {22, 24, 26};
+  const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]    = { 0x76, 0x77, 0x76};
+  const I2CBUS BME280_BUS[NUM_BME_SENSORS]              = { 0x00, 0x00, 0x01};
+  const uint8_t PIN_TDS_SENSOR                          = A2;
+  const uint8_t PIN_TDS_WATERTEMP                       = 28;
+  
   // OneWire oneWire0(PIN_TMP0);
   // DallasTemperature tmp0(&oneWire0);
   // OneWire oneWire0;
@@ -39,6 +42,8 @@ namespace Sensors {
   // extern OneWire oneWireTMP[NUM_TEMP_SENSORS];
   extern WaterTemperature tmpSensors[3];
 
+  extern WaterTemperature TDSWaterTemp;
+  extern TDS TDSSensor;
 
   // bme280
   extern Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
