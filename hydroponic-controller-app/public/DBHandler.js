@@ -83,10 +83,15 @@ module.exports = class DBHandler {
             template: 'TEMPLATE_READING',
             time: '',
             temperature: {
-              '0': '',
-              '1': '',
-              '2': ''
+              0: '',
+              1: '',
+              2: ''
             },
+            bme: {
+                0: '',
+                1: '',
+                2: ''
+            }
           }
     }
 }
