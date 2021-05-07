@@ -27,6 +27,14 @@ function App() {
       if (key.ctrlKey && key.shiftKey && key.code === 'KeyM') {
         let app = document.getElementById('App');
         app.classList.toggle('no-cursor');
+
+        // a safespace for app globals
+        window.app_globals = {};
+      }
+
+      return () => {
+        // removes global safe space
+        window.app_globals = null;
       }
     })
   }, []);
