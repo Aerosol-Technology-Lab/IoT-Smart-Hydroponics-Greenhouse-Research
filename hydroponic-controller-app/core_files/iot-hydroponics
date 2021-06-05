@@ -5,4 +5,3 @@
 {python3_app_path} {corePath}
 
 # start electron
-# {yarn_path} {electron_app_path} electron-dev

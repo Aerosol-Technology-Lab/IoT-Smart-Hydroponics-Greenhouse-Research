@@ -2,6 +2,7 @@ import sys
 import subprocess
 import os
 import tempfile
+import pwd
 
 BOOT_PATH = '/etc/init.d'
 BOOT_FILE = 'iot-hydroponics'
@@ -39,28 +40,50 @@ def main(args):
     
     # install app to run on boot
     if install:
-        boot_file_path = os.path.join(BOOT_PATH, BOOT_FILE)
-        tmp_dir_path = os.path.join('/dev/shm', 'iot-hydroponics')
-        tmp_file_path = os.path.join(tmp_dir_path, 'script.sh')
+        boot_file_path = os.path.join(pwd.getpwuid(os.getuid()).pw_dir, '.config/autostart/hydro-app.desktop')
 
         if not os.path.exists(boot_file_path):
-            # read script template
-            with open('./core_files/iot-hydroponics', 'r+') as file:
-                boot_script = file.read().format('python3', os.path.join(os.getcwd(), 'core.py'))
+            # get python3 path
+            python3_paths = subprocess.run(['whereis', 'python3'], stdout=subprocess.PIPE).stdout.decode('ascii').split()
+            if len(python3_paths) <= 1:
+                print('Error: cannot find where python3 is installed.')
+                exit(1)
             
+            python3_app_path = python3_paths[1]
             
-            # write to tmp directory
-            if not os.path.exists(tmp_dir_path):
-                os.makedirs(tmp_dir_path)
-            with open(tmp_file_path, 'w+') as file:
-                file.write(boot_script)
+            # get this filepath
+            corePath = os.path.realpath(__file__)
+            
+            # read boot script
+            try:
+                f = open('./core_files/iot-hydroponics', 'r')
+                boot_script = f.read().format(python3_app_path=python3_app_path, corePath=corePath)
+            except Exception as err:
+                print(err)
+                print('Error: Cannot find iot-hydroponics start script. Possible fix might be re-downloading this repository (or a hard reset pull)')
+                exit(1)
+            
+            # saves boot script
+            with open('./iot-hydroponics.sh', 'w+') as f:
+                f.write(boot_script)
+            subprocess.run('sudo chmod 755 ./iot-hydroponics.sh'.split())      # allows script to be executable
+            
 
-            # copies script to boot startup path
-            subprocess.run(['sudo', 'cp', tmp_file_path, boot_file_path])
+            # builds start script
+            try:
+                f = open('./core_files/hydro-app.desktop', 'r')
+                start_script = f.read().format(script_path=os.path.realpath('./iot-hydroponics.sh'))
+            except:
+                print('Error: Cannot find auto-start config. Possible fix might be re-downloading this repository (or a hard reset pull)')
+                exit(1)
             
-            # makes script executable
-            subprocess.run('sudo chmod 755 {}'.format(boot_file_path).split())
+            # adds script as start script
+            with open(boot_file_path, 'w+') as f:
+                f.write(start_script)
             
+        else:
+            print('Not installing, app is already installed.')
+        
             # Register script to run at startup
             subprocess.run('sudo update-rc.d {} defaults'.format(BOOT_FILE).split())
     else:
