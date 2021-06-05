@@ -81,6 +81,7 @@ def main(args):
             with open(boot_file_path, 'w+') as f:
                 f.write(start_script)
             
+
         else:
             print('Not installing, app is already installed.')
         
