@@ -1,8 +1,8 @@
 #! /bin/sh
 ## hydroponics app start script on boot
 
-# check for updates
+# check for updates and run
 {python3_app_path} {corePath}
 
 # start electron
-{yarn_path} {electron_app_path} electron-dev
+# {yarn_path} {electron_app_path} electron-dev
