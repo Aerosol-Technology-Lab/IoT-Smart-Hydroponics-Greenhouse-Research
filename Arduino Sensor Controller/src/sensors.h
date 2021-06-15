@@ -20,6 +20,7 @@
 
 #define NUM_TEMP_SENSORS 3
 #define NUM_BME_SENSORS 3
+#define NUM_AMBIENT_LIGHT_SENSORS 3
 #define SEALEVELPRESSURE_HPA (1013.25)
 
 namespace Sensors {
@@ -29,9 +30,10 @@ namespace Sensors {
    */
 
 #ifndef SIMULATOR
-  const unsigned int TMP_PINS[NUM_TEMP_SENSORS]         = {22, 24, 26};
-  const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]    = { 0x76, 0x77, 0x76};
-  const I2CBUS BME280_BUS[NUM_BME_SENSORS]              = { 0x00, 0x00, 0x01};
+  const unsigned int TMP_PINS[NUM_TEMP_SENSORS]             = {22, 24, 26};
+  const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]        = { 0x76, 0x77, 0x76};
+  const I2CBUS BME280_BUS[NUM_BME_SENSORS]                  = { 0x00, 0x00, 0x01};
+  const uint8_t AMBIENT_LIGHT_GPIO[NUM_AMBIENT_LIGHT_SENSORS] = { A0, A1, A2 };
 
   // sensor probes pin layout
   const uint8_t PIN_SHARED_PROBE_WATERTEMP              = 28;
@@ -64,6 +66,7 @@ namespace Sensors {
   void init();
   
   /**
+   * @deprecated
    * Performs temperature request
    * 
    * @param buffer: message from UART
@@ -71,10 +74,15 @@ namespace Sensors {
    */
   void waterTemperature(const char *buffer, size_t buffer_size, bool unused=false);
 
+  /**
+   * @deprecated
+   */
   size_t waterTemperature(int sensorIdx, char *buffer, bool header=true);
   
+  void waterTemperature(JsonObject &obj, int sensorIndex);
+  
   /**
-   * @ deprecated
+   * @deprecated
    * @brief Writes bme280 sensor reading to byte buffer
    * 
    * @param buffer buffer where sensor readings are written to
@@ -83,7 +91,16 @@ namespace Sensors {
    */
   size_t bme280(char *buffer, int sensorIdx, bool header=true);
   
+  /**
+   * @brief Writes bme280 sensor reading to a json object
+   * 
+   * @param obj Json Object
+   * @param sensorIdx Sensor index to write to Json Object. If -1, a new Json Object is
+   *  inserted to obj with key as the sensor index and all readings pertaining for that sensor
+   */
   void bme280(JsonObject &obj, int sensorIdx=-1);
+  
+  void ambientLight(JsonObject &obj, int sensorIdx);
   
   // @deprecated
   void ph(const char *buffer, size_t buffer_size);

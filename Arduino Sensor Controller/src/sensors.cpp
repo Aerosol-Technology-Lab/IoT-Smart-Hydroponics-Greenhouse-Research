@@ -95,6 +95,17 @@ size_t Sensors::waterTemperature(int sensorIdx, char *buffer, bool header) {
     return totalWritten;
 }
 
+void Sensors::waterTemperature(JsonObject &obj, int sensorIdx)
+{
+    // error handling
+    if (sensorIdx < 0 || sensorIdx >= NUM_TEMP_SENSORS) {
+        obj["error"] = true;
+    }
+    
+    WaterTemperature &waterTemperatureSensor = tmpSensors[sensorIdx];
+    obj["temp"] = waterTemperatureSensor.read();
+}
+
 size_t Sensors::bme280(char *buffer, int sensorIdx, bool header)
 {
     size_t bytesWritten = 0;    // bytes written to buffer
@@ -156,7 +167,12 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
     }
     // request only one specific sensor
     else {
-
+        // error handling
+        if (sensorIdx >= NUM_BME_SENSORS) {
+            obj["error"] = true;
+            return;
+        }
+        
         // selects i2c mux
         i2cmux(bmeSensors[sensorIdx].first);
 
@@ -166,6 +182,11 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
         obj["pres"] = bme.readPressure() / 100.0f;
         obj["hum"]  = bme.readHumidity();
     }
+}
+
+void Sensors::ambientLight(JsonObject &obj, int sensorIdx)
+{
+
 }
 
 // this is still simulated
