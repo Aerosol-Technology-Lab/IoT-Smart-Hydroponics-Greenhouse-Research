@@ -42,6 +42,9 @@ void Sensors::init() {
         bme.begin(BME280_ADDRESS_LIST[i]);
     }
 
+    // initializes water sensors
+    // nothing because there is no setup needed for analog pins
+
     // initialize probes
     sharedProbeWaterTemp.init();
     TDSSensor.init();
@@ -103,7 +106,7 @@ void Sensors::waterTemperature(JsonObject &obj, int sensorIdx)
     }
     
     WaterTemperature &waterTemperatureSensor = tmpSensors[sensorIdx];
-    obj["temp"] = waterTemperatureSensor.read();
+    obj["temp"] = waterTemperatureSensor.read(sensorIdx);
 }
 
 size_t Sensors::bme280(char *buffer, int sensorIdx, bool header)

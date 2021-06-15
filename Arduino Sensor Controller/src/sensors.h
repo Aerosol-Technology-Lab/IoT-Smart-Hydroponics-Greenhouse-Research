@@ -100,6 +100,12 @@ namespace Sensors {
    */
   void bme280(JsonObject &obj, int sensorIdx=-1);
   
+  /**
+   * @brief Returns the raw sensor reading from the ambient light sensor
+   * 
+   * @param obj Json Object
+   * @param sensorIdx select which chamber to read
+   */
   void ambientLight(JsonObject &obj, int sensorIdx);
   
   // @deprecated
