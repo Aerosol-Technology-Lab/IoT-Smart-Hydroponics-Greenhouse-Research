@@ -16,7 +16,7 @@
 
 // #define DEBUG
 
-namespace Utils {
+namespace UtilsDF {
 
     /**
      * Copies the next word from the buffer to the output string

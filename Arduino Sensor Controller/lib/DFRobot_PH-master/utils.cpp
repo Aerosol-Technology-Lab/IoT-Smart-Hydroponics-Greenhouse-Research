@@ -2,7 +2,7 @@
 #include "utils.h"
 #include <Arduino.h>
 
-unsigned int Utils::nextWord(const char *buffer, 
+unsigned int UtilsDF::nextWord(const char *buffer, 
             unsigned int pos,
             size_t buffer_size, 
             char *out,
@@ -24,27 +24,27 @@ unsigned int Utils::nextWord(const char *buffer,
 
 #ifdef DEBUG
 
-size_t Utils::print(const char *c) {
+size_t UtilsDF::print(const char *c) {
     return Serial.print(c);
 }
 
-size_t Utils::println(const char *c) {
+size_t UtilsDF::println(const char *c) {
     return Serial.println(c);
 }
 
 #else
 
-size_t Utils::print(const char *c) {
+size_t UtilsDF::print(const char *c) {
     return 0;
 }
 
-size_t Utils::println(const char *c) {
+size_t UtilsDF::println(const char *c) {
     return 0;
 }
 
 #endif
 
-unsigned int Utils::readSerial(char *buffer, size_t maxSize, bool nullTerminate) {
+unsigned int UtilsDF::readSerial(char *buffer, size_t maxSize, bool nullTerminate) {
     unsigned int bytesRead = 0;
     char *lastByteRead;
     
@@ -64,7 +64,7 @@ unsigned int Utils::readSerial(char *buffer, size_t maxSize, bool nullTerminate)
     return bytesRead;
 }
 
-size_t Utils::sendSerial(const char *cstr) {
+size_t UtilsDF::sendSerial(const char *cstr) {
     size_t count = 0;
     while(*cstr) {
         Serial.write(*cstr);
@@ -75,14 +75,14 @@ size_t Utils::sendSerial(const char *cstr) {
     return count + 1;
 }
 
-char * Utils::movePointer(char *ptr, int move) {
+char * UtilsDF::movePointer(char *ptr, int move) {
     if (move) {
         ptr[move - 1] = ' ';
         return ptr + move;
     }
 }
 
-bool Utils::equals(const char *a, const char *b) {
+bool UtilsDF::equals(const char *a, const char *b) {
     
     while (true) {
         if (*a != *b) return false;
@@ -93,7 +93,7 @@ bool Utils::equals(const char *a, const char *b) {
 }
 
 template<class T>
-void Utils::swap(T&a, T&b)
+void UtilsDF::swap(T&a, T&b)
 {
     T tmp = static_cast<T&&>(a);
     a = static_cast<T&&>(b);
@@ -101,12 +101,12 @@ void Utils::swap(T&a, T&b)
 }
 
 template<class T>
-inline T && Utils::move(T &t)
+inline T && UtilsDF::move(T &t)
 {
     return static_cast<T&&>(t);
 }
 
-void Utils::strupr(char *str)
+void UtilsDF::strupr(char *str)
 {
     for (size_t i = 0; i < strlen(str); ++i) {
         str[i] = toupper(str[i]);
@@ -114,7 +114,7 @@ void Utils::strupr(char *str)
 }
 
 template<class T>
-int Utils::partition(T arr[], int low, int high)
+int UtilsDF::partition(T arr[], int low, int high)
 {
     T pivot = arr[high]; // pivot
     int i = (low - 1); // Index of smaller element and indicates the right position of pivot found so far
@@ -125,15 +125,15 @@ int Utils::partition(T arr[], int low, int high)
         if (arr[j] < pivot)
         {
             i++; // increment index of smaller element
-            Utils::swap(arr[i], arr[j]);
+            UtilsDF::swap(arr[i], arr[j]);
         }
     }
-    Utils::swap(arr[i + 1], arr[high]);
+    UtilsDF::swap(arr[i + 1], arr[high]);
     return (i + 1);
 }
 
 template<class T>
-void Utils::quickSort(T arr[], int low, int high)
+void UtilsDF::quickSort(T arr[], int low, int high)
 {
     if (low < high)
     {
