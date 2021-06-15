@@ -186,7 +186,13 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
 
 void Sensors::ambientLight(JsonObject &obj, int sensorIdx)
 {
+    // error handling
+    if (sensorIdx < 0 || sensorIdx >= NUM_AMBIENT_LIGHT_SENSORS) {
+        obj["error"] = true;
+        return;
+    }
 
+    obj["light"] = analogRead(AMBIENT_LIGHT_GPIO[sensorIdx]);
 }
 
 // this is still simulated
