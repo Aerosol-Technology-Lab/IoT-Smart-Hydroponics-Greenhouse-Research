@@ -9,5 +9,5 @@ class SensorInterface
     
     virtual float read(uint8_t idx=0);
 
-    virtual size_t write(char *buffer, const char *id=nullptr);
+    virtual size_t write(char *buffer, uint8_t idx);
 };

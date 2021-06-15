@@ -32,7 +32,7 @@ float TDS::read(uint8_t idx)
     return (133.42f * compensationVolatge * compensationVolatge * compensationVolatge - 255.86f * compensationVolatge * compensationVolatge + 857.39f * compensationVolatge ) * 0.5f; //convert voltage value to tds value
 }
 
-size_t TDS::write(char *buffer, const char *id) {
+size_t TDS::write(char *buffer, uint8_t _) {
 
     float tds = read();
     sprintf(buffer, "TDS %d", (int)(tds + 0.5f));

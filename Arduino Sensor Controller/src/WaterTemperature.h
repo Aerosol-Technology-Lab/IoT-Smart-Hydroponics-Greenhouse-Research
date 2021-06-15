@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
@@ -37,5 +38,5 @@ public:
     
     float read(uint8_t idx=0);
 
-    size_t write(char *buffer, const char *id=nullptr);
+    size_t write(char *buffer, uint8_t idx);
 };

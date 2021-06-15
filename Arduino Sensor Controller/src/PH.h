@@ -28,7 +28,7 @@ public:
      */
     float read(uint8_t _=0);
 
-    size_t write(char *buffer, const char *id=nullptr);
+    size_t write(char *buffer, uint8_t idx=0);
 
     virtual float readTemp();
 };

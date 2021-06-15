@@ -3,6 +3,7 @@
 #include "DefinableBuffer.h"
 #include "StaticBuffer.h"
 #include "sensors.h"
+#include <ArduinoJson.h>
 
 #ifndef BAUDRATE
     #define BAUDRATE 57600
@@ -13,6 +14,13 @@
     #define ALL_BUFFER 128
 #endif
 #define COMMAND_SIZE 8
+
+// Size of JSON document
+#ifndef JSON_DOCUMENT_SIZE
+    #define JSON_DOCUMENT_SIZE 4096
+#endif
+
+#define NUM_CHAMBERS 3
 
 DefinableBuffer<2048> staticBuffer;
 
@@ -55,27 +63,43 @@ void loop() {
         sprintf(tmp, "The command is [%s]", command);
         Utils::println(tmp);
     
+        // JSON Document for all returns
+        StaticJsonDocument<2048> jsonDocument;
 
         // temperature command
         if (strcmp(command, "ALL")) {
-            char buffer[ALL_BUFFER] = "ALL";
-            char *ptr = Utils::movePointer(buffer, 4);
-
-            // tracker for number of bytes written
-            size_t written = 0;
+            JsonObject sensorReadings = jsonDocument.createNestedObject("sensors");
+            JsonObject chamber = sensorReadings.createNestedObject("chamber");
             
-            // temperature
-            Sensors::waterTemperature(ptr,-1);       // get reading of all temperature sensors
-            ptr = Utils::movePointer(ptr, written);
+            for (int i = 0; i < NUM_CHAMBERS; ++i) {
+                // create nested object
+                char buffer[4];
+                sprintf(buffer, "%d", i);
+                JsonObject currentChamber = chamber.createNestedObject(buffer);
 
-            // bme280
-            Sensors::bme280(ptr, -1);
-            
-            // ends string (last character from movePointer should be ' ' instead of '\0')
-            ptr[-1] = 0;
+                // get sensor readings for each chamber
+
+                // bme
+                {
+                    JsonObject bme280 = currentChamber.createNestedObject("bme280");
+                    Sensors::bme280(bme280, i);
+                }
+                
+                // water temp
+                {
+                    JsonObject waterTemp = currentChamber.createNestedObject("water");
+                    Sensors::waterTemperature(waterTemp, i);
+                }
+
+                // ambient light
+                {
+                    JsonObject ambientLight = currentChamber.createNestedObject("light");
+                    Sensors::waterTemperature(ambientLight, i);
+                }
+            }
             
             // send via usb
-            Utils::sendSerial(buffer);
+            serializeJson(jsonDocument, Serial);
         }
         else if (strcmp(command, "TEMP") == 0) {
             Sensors::waterTemperature(inBuffer, IN_BUFFER_SIZE);

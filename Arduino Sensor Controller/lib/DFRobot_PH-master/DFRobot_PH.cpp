@@ -21,7 +21,7 @@
 
 #ifdef DUE
     #include "utils.h"
-    #define strupr(x) Utils::strupr(x)
+    #define strupr(x) UtilsDF::strupr(x)
 
     // Due does not have eeprom
     #define PHVALUEADDR 0x8000                // 32 Kib offset on the second block
