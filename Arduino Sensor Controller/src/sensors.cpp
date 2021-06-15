@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "WaterTemperature.h"
 #include "PH.h"
+#include <ArduinoJson.h>
 
 #if defined(DTOSTRF_EXT_LIB) || defined(DUE)
 char *dtostrf (double val, signed char width, unsigned char prec, char *sout) {
@@ -140,6 +141,31 @@ size_t Sensors::bme280(char *buffer, int sensorIdx, bool header)
     }
 
     return bytesWritten;
+}
+
+void Sensors::bme280(JsonObject &obj, int sensorIdx)
+{
+    // requesting all sensors
+    if (sensorIdx == -1) {
+        for (int i = 0; i < NUM_BME_SENSORS; ++i) {
+            char stringNameBuff[4];
+            sprintf(stringNameBuff, "%d", sensorIdx);
+            JsonObject currentSensorObj = obj.createNestedObject(stringNameBuff);
+            bme280(currentSensorObj, i);
+        }
+    }
+    // request only one specific sensor
+    else {
+
+        // selects i2c mux
+        i2cmux(bmeSensors[sensorIdx].first);
+
+        // reads sensor and saves it to json
+        Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
+        obj["temp"] = (bme.readTemperature() * 9.0f / 5.0f ) + 32.0f;
+        obj["pres"] = bme.readPressure() / 100.0f;
+        obj["hum"]  = bme.readHumidity();
+    }
 }
 
 // this is still simulated

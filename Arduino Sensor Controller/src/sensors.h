@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include "utils.h"
 #include "pair.h"
+#include <ArduinoJson.h>
 
 #ifndef SIMULATOR
 
@@ -73,6 +74,7 @@ namespace Sensors {
   size_t waterTemperature(int sensorIdx, char *buffer, bool header=true);
   
   /**
+   * @ deprecated
    * @brief Writes bme280 sensor reading to byte buffer
    * 
    * @param buffer buffer where sensor readings are written to
@@ -80,6 +82,8 @@ namespace Sensors {
    * @return size_t number of bytes written to sensor
    */
   size_t bme280(char *buffer, int sensorIdx, bool header=true);
+  
+  void bme280(JsonObject &obj, int sensorIdx=-1);
   
   // @deprecated
   void ph(const char *buffer, size_t buffer_size);
