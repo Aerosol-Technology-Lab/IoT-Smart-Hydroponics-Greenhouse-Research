@@ -27,3 +27,9 @@ float PH::readTemp()
 {
     return temp->read();
 }
+
+size_t PH::write(char *buffer, uint8_t idx)
+{
+    sprintf(buffer, "\"ph\": %.6f,", read());
+    return strlen(buffer);
+}

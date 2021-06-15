@@ -58,21 +58,25 @@ void loop() {
 
         // temperature command
         if (strcmp(command, "ALL")) {
-            char buffer[ALL_BUFFER] = "ALL";
-            char *ptr = Utils::movePointer(buffer, 4);
+            char buffer[ALL_BUFFER];
+            buffer[0] = '{';
+            
+            char *ptr = Utils::movePointer(buffer, 1);
 
             // tracker for number of bytes written
             size_t written = 0;
             
             // temperature
-            Sensors::waterTemperature(ptr,-1);       // get reading of all temperature sensors
-            ptr = Utils::movePointer(ptr, written);
+            written = Sensors::waterTemperature(-1, buffer);
+            Utils::movePointer(ptr, written);
 
             // bme280
-            Sensors::bme280(ptr, -1);
+            written = Sensors::bme280(ptr, -1);
+            Utils::movePointer(ptr, written);
             
             // ends string (last character from movePointer should be ' ' instead of '\0')
-            ptr[-1] = 0;
+            ptr[0] = '}';
+            ptr[1] = 0;
             
             // send via usb
             Utils::sendSerial(buffer);

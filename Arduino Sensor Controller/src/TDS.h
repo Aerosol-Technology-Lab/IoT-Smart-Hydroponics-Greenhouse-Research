@@ -57,7 +57,7 @@ public:
      * @param id sensor ID value
      * @return size_t size of bytes written to buffer
      */
-    size_t write(char *buffer, const char *id=nullptr);
+    size_t write(char *buffer, uint8_t _=0);
 
     /**
      * @brief Set the Temperature Sensor objectS

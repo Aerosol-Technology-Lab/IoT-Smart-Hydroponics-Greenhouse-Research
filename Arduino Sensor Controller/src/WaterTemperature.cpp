@@ -28,13 +28,8 @@ float WaterTemperature::read(uint8_t idx)
     return sensor.getTempFByIndex(idx);
 }
 
-size_t WaterTemperature::write(char *buffer, const char *id)
+size_t WaterTemperature::write(char *buffer, uint8_t idx)
 {
-    if (!id) {
-        id = DEFAULT_ID;
-    }
-    
-    float reading = read();
-    sprintf(buffer, "TMP:%d %.2f", id, reading);
-    return strlen(buffer) + 1;
+    sprintf(buffer, "%d:%.4f,", idx, read());
+    return strlen(buffer);
 }
