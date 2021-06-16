@@ -85,7 +85,7 @@ void loop() {
                 // ambient light
                 {
                     JsonObject ambientLight = currentChamber.createNestedObject("light");
-                    Sensors::waterTemperature(ambientLight, i);
+                    Sensors::ambientLight(ambientLight, i);
                 }
             }
             
