@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Arduino.h>
+#include <Stream.h>
+#include <ArduinoJson.h>
 
 #ifdef DUE
     #define RESOLUTION_BITS                   12
@@ -66,6 +68,8 @@ namespace Utils {
      *         added to the end of the cstring
      */
     unsigned int readSerial(char *buffer, size_t maxSize, bool nullTerminate = true);
+
+    bool readJSON(JsonObject &json, Stream &stream, size_t bufferSize=1024);
 
     size_t sendSerial(const char *cstring);
     

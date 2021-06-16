@@ -29,7 +29,9 @@ char outBuffer[OUT_BUFFER_SIZE];
 
 void setup() {
     Serial.begin(BAUDRATE);
+    #ifndef UNO
     analogReadResolution(RESOLUTION_BITS);
+    #endif
     StaticBuffer::global = &staticBuffer;
     Sensors::init();
     memset(inBuffer, 0, IN_BUFFER_SIZE);
@@ -42,32 +44,21 @@ void loop() {
     // delay(1000);
     if (Serial.available())
     {
-        Utils::println("Ready to print");
-        unsigned int bytesRead = Utils::readSerial(inBuffer, IN_BUFFER_SIZE);
-        inBuffer[bytesRead] = 0;
-        Utils::print("Bytes read: ");
-        Utils::println(inBuffer);
-        
-        char *c_str = inBuffer;
-
-        // A message starting with NULL signals the Arduino to clear
-        if (!strlen(c_str))
+        StaticJsonDocument<248> inputJSON;
         {
-            return;
+            // contain String object with RAII
+            String input = Serial.readStringUntil('\0');
+            deserializeJson(inputJSON, input);
         }
 
-        char command[COMMAND_SIZE];
-        Utils::nextWord(inBuffer, 0, IN_BUFFER_SIZE, command, COMMAND_SIZE);
-        // unsigned int bytesWritten = 0;
-        char tmp[32];
-        sprintf(tmp, "The command is [%s]", command);
-        Utils::println(tmp);
-    
+        // if no command, do nothing
+        if (!inputJSON.containsKey(F("com"))) return;
+
         // JSON Document for all returns
         StaticJsonDocument<2048> jsonDocument;
 
         // temperature command
-        if (strcmp(command, "ALL")) {
+        if (strcmp(inputJSON[F("com")], "ALL")) {
             JsonObject sensorReadings = jsonDocument.createNestedObject("sensors");
             JsonObject chamber = sensorReadings.createNestedObject("chamber");
             
@@ -101,19 +92,20 @@ void loop() {
             // send via usb
             serializeJson(jsonDocument, Serial);
         }
-        else if (strcmp(command, "TEMP") == 0) {
+        else if (strcmp(inputJSON[F("com")], "TEMP") == 0) {
             Sensors::waterTemperature(inBuffer, IN_BUFFER_SIZE);
         }
         // pH command
-        else if (strcmp(command, "PH") == 0) {
+        else if (strcmp(inputJSON[F("com")], "PH") == 0) {
             Sensors::ph(inBuffer, IN_BUFFER_SIZE);
         }
         // ping
-        else if (strcmp(command, "PING") == 0) {
-            Sensors::ping(inBuffer, IN_BUFFER_SIZE);
+        else if (strcmp(inputJSON[F("com")], "PING") == 0) {
+            jsonDocument["pong"] = "pong";
+            serializeJson(jsonDocument, Serial);
         }
         // echo
-        else if (strcmp(command, "ECHO") == 0) {
+        else if (strcmp(inputJSON[F("com")], "ECHO") == 0) {
             Sensors::echo(inBuffer, IN_BUFFER_SIZE);
         }
 

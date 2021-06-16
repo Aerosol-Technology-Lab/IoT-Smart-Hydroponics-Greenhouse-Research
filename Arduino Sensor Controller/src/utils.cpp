@@ -1,6 +1,9 @@
 
 #include "utils.h"
 #include <Arduino.h>
+#include <Stream.h>
+#include <ArduinoJson.h>
+#include <alloca.h>
 
 unsigned int Utils::nextWord(const char *buffer, 
             unsigned int pos,
@@ -62,6 +65,27 @@ unsigned int Utils::readSerial(char *buffer, size_t maxSize, bool nullTerminate)
     }
     
     return bytesRead;
+}
+
+bool readJSON(JsonDocument &json, Stream &serial, size_t bufferSize)
+{
+    char *buffer = (char*) (alloca(sizeof(char) * bufferSize));
+    bool success = false;
+
+    for (size_t i = 0; i < bufferSize; ++i) {
+        // wait for serial avaialble
+        while(!serial.available());
+        buffer[i] = serial.read();
+
+        if (buffer[i] == 0) {
+            success = true;
+            break;
+        }
+    }
+
+    // build json
+    deserializeJson(json, buffer);
+    return success;
 }
 
 size_t Utils::sendSerial(const char *cstr) {
