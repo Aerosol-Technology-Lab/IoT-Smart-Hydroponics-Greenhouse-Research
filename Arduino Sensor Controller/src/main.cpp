@@ -36,19 +36,37 @@ void setup() {
     Sensors::init();
     memset(inBuffer, 0, IN_BUFFER_SIZE);
     memset(outBuffer, 8, OUT_BUFFER_SIZE);
+    temperatureRead();
+    StaticJsonDocument<248> response;
+    response["initialized"] = true;
+    serializeJson(response, Serial);
 }
+
+// void readUntil(char *buffer, char trigger, size_t bufferLength, Stream &stream)
+// {
+//     size_t pointer = 0;
+//     while (pointer < bufferLength) {
+//         while (!Serial.available()) {
+//             vTaskDelay(100 / portTICK_PERIOD_MS)
+//         }
+//     }
+// }
 
 void loop() {
     // put your main code here, to run repeatedly:
     // Serial.println("Printing from Arduino!");
     // delay(1000);
+    // Serial.println("Loop");
+    delay(1000);
     if (Serial.available())
     {
+        // Serial.println("Reading");
         StaticJsonDocument<248> inputJSON;
         {
             // contain String object with RAII
             String input = Serial.readStringUntil('\0');
             deserializeJson(inputJSON, input);
+            Serial.println("Done!");
         }
 
         // if no command, do nothing
@@ -56,9 +74,10 @@ void loop() {
 
         // JSON Document for all returns
         StaticJsonDocument<2048> jsonDocument;
-
+        jsonDocument["response"] = inputJSON["com"];
+        
         // temperature command
-        if (strcmp(inputJSON[F("com")], "ALL")) {
+        if (strcmp(inputJSON[F("com")], "ALL") == 0) {
             JsonObject sensorReadings = jsonDocument.createNestedObject("sensors");
             JsonObject chamber = sensorReadings.createNestedObject("chamber");
             
@@ -108,6 +127,13 @@ void loop() {
         else if (strcmp(inputJSON[F("com")], "ECHO") == 0) {
             Sensors::echo(inBuffer, IN_BUFFER_SIZE);
         }
+        else {
+            jsonDocument["error"] = true;
+            serializeJson(jsonDocument, Serial);
+        }
 
+        jsonDocument["res"] = inputJSON["com"];
+        Serial.print('\0');
     }
+
 }
