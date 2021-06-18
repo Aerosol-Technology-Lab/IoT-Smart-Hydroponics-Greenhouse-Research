@@ -110,6 +110,10 @@ void loop() {
             
             // send via usb
             serializeJson(jsonDocument, Serial);
+            Serial.print('\0');
+        }
+        else if (strcmp(inputJSON[F("com")], "POINT")) {
+
         }
         else if (strcmp(inputJSON[F("com")], "TEMP") == 0) {
             Sensors::waterTemperature(inBuffer, IN_BUFFER_SIZE);
@@ -122,6 +126,7 @@ void loop() {
         else if (strcmp(inputJSON[F("com")], "PING") == 0) {
             jsonDocument["pong"] = "pong";
             serializeJson(jsonDocument, Serial);
+            Serial.print('\0');
         }
         // echo
         else if (strcmp(inputJSON[F("com")], "ECHO") == 0) {
@@ -130,10 +135,13 @@ void loop() {
         else {
             jsonDocument["error"] = true;
             serializeJson(jsonDocument, Serial);
+            Serial.print('\0');
         }
 
+        #ifdef DEBUG
         jsonDocument["res"] = inputJSON["com"];
-        Serial.print('\0');
+        #endif
+
     }
 
 }
