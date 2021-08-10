@@ -21,9 +21,8 @@ def request_repo_get(path:str, branch:str='release', project:str=PROJECT_NAME, r
 
 def get_app_version(version):
     nums = re.sub("[^0-9]", " ", version).split(' ')
-    values = len(nums)
     res = []
-    for s in values:
+    for s in nums:
         try:
             foo = int(s)
             res.append(foo)
@@ -37,7 +36,7 @@ def get_app_version(version):
     return res
             
 
-def update(branch=None):
+def update(branch=None, force=False):
 
     cfg = None
     with open('hydro-cfg/config.json', 'r') as f:
@@ -52,16 +51,17 @@ def update(branch=None):
     print('The data in the request is: {}'.format(r.text))
     repo_info = r.json()
     r.close()
-    repo_version = get_app_version(repo_info['version'])
-    this_version = get_app_version(cfg['version'])
+    repo_version = get_app_version(repo_info['app-version'])
+    this_version = get_app_version(cfg['app-version'])
 
-    if (repo_version[0] > this_version[0] or 
-            (repo_version[0] == this_version[0] and repo_version[1] > this_version[1])):
+    if (force
+        or repo_version[0] > this_version[0]
+        or (repo_version[0] == this_version[0] and repo_version[1] > this_version[1])):
         
         # do update
-        with request_repo_get('hydro-app') as r:
+        with request_repo_get('binaries/hydro-app.AppImage') as r:
             r.raise_for_status()
-            with open('hydro-app', 'w') as f:
+            with open('hydro-app.AppImage', 'w') as f:
                 for chunk in r.iter_content(chunk=8192):
                     f.write(chunk)
             
@@ -98,7 +98,7 @@ def main(args):
             print('Uh oh... I can\'t connect to the internet at the moment. Please check if there is an internet connection.')
             exit(1)
 
-        update()
+        update(force=True)
         
         with request_repo_get('hydro-core/hydro-starter.desktop') as r:
             with open(os.path.join(Path.home(), '.config', 'autostart', 'hydro-starter.desktop'), 'w') as f:
