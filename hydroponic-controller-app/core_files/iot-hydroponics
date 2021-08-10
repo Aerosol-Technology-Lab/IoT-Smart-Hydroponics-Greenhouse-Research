@@ -1,35 +1,7 @@
 #! /bin/sh
-# /etc/init.d/iot-hydroponics
+## hydroponics app start script on boot
 
-### BEGIN INIT INFO
-# Provides:          iot-hydroponics
-# Required-Start:    $network $remote_fs $syslog
-# Required-Stop:     $network $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: Simple script to start a program at boot
-# Description:       TODO
-### END INIT INFO
+# check for updates and run
+{python3_app_path} {corePath}
 
-# If you want a command to always run, put it here
-
-# Carry out specific functions when asked to by the system
-case "$1" in
-  start)
-    echo "Starting Iot Hydroponics App"
-    # run application you want to start
-    {0} {1}
-    ;;
-  stop)
-    echo "Stopping Iot Hydroponics App"
-    # kill application you want to stop
-    killall node
-    killall electron
-    ;;
-  *)
-    echo "Usage: /etc/init.d/iot-hydroponics [start|stop]"
-    exit 1
-    ;;
-esac
-
-exit 0
+# start electron

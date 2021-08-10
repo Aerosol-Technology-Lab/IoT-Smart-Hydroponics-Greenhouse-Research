@@ -10987,6 +10987,11 @@ rollup@^1.31.1:
     "@types/node" "*"
     acorn "^7.1.0"
 
+rsvp@^3.1.0:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.6.2.tgz#2e96491599a96cde1b515d5674a8f7a91452926a"
+  integrity sha512-OfWGQTb9vnwRjwtA2QwpG2ICclHC3pgXZO5xt8H2EfgDquO0qVdSb5T88L4qJVAEugbS56pAuV4XZM58UX8ulw==
+
 rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
@@ -11358,6 +11363,13 @@ simple-swizzle@^0.2.2:
   integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
   dependencies:
     is-arrayish "^0.3.1"
+
+single-instance@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/single-instance/-/single-instance-0.0.1.tgz#ef0f0673fe9800b6753445d97058d253f5d4b8ed"
+  integrity sha1-7w8Gc/6YALZ1NEXZcFjSU/XUuO0=
+  dependencies:
+    rsvp "^3.1.0"
 
 sisteransi@^1.0.5:
   version "1.0.5"
