@@ -20,6 +20,7 @@
     "react-scripts": "4.0.1",
     "react-styles-hook": "^1.1.2",
     "serialport": "^9.0.4",
+    "single-instance": "^0.0.1",
     "sqlite3": "^5.0.2",
     "usb": "^1.6.5",
     "web-vitals": "^0.2.4"
