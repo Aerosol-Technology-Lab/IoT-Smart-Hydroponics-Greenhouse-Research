@@ -15,7 +15,9 @@ PROJECT_NAME = 'hydroponic-controller-app'
 TARGET_BRANCH = 'development'
 
 def request_repo_get(path:str, branch:str='release', project:str=PROJECT_NAME, repo_url:str=REPO_URL) -> requests.Response:
-    return requests.get(repo_url.format(project=project, branch=branch, path=path))
+    final_url = repo_url.format(project=project, branch=branch, path=path)
+    print(final_url)
+    return requests.get(final_url)
 
 def get_app_version(version):
     nums = re.sub("[^0-9]", " ", version).split(' ')
@@ -44,7 +46,10 @@ def update(branch=None):
     if branch is None:
         branch = cfg['source-branch']
 
-    r = requests.get(REPO_URL.format(project=PROJECT_NAME, branch=branch, path='hydro-core/config.json'))
+    print('The branch is {}'.format(branch))
+    print(cfg['branches'])
+    r = requests.get(REPO_URL.format(project=PROJECT_NAME, branch=cfg['branches'][branch], path='hydro-core/config.json'))
+    print('The data in the request is: {}'.format(r.text))
     repo_info = r.json()
     r.close()
     repo_version = get_app_version(repo_info['version'])
@@ -83,11 +88,14 @@ def main(args):
 
 
         try:
-            r = requests.get(REPO_URL.format(project=PROJECT_NAME, branch='dev/hydroponic-controller-app', path='hydro-core/config.json'))
+            request_url = REPO_URL.format(project=PROJECT_NAME, branch='dev/hydroponic-controller-app', path='hydro-core/config.json')
+            print(request_url)
+            r = requests.get(request_url)
+            print('I am here')
             with open('hydro-cfg/config.json', 'w') as f:
-                f.write(r.text())
+                f.write(r.text)
         except:
-            print('\Uh oh... I can\'t connect to the internet at the moment. Please check if there is an internet connection.')
+            print('Uh oh... I can\'t connect to the internet at the moment. Please check if there is an internet connection.')
             exit(1)
 
         update()

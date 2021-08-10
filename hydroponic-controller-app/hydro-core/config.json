@@ -1,18 +1,9 @@
 {
-    "branches": [
-        {
-            "name": "stable",
-            "path": "main"
-        },
-        {
-            "name": "pre-release",
-            "path": "dev/all"
-        },
-        {
-            "name": "development",
-            "path": "dev/hydroponic-controller-app"
-        }
-    ],
+    "branches": {
+        "stable" : "main",
+        "pre-release": "dev/all",
+        "development": "dev/hydroponic-controller-app"
+    },
     "source-branch": "development",
     "app-version": "0"
 }
