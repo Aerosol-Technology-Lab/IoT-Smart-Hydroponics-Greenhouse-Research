@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec={exec path} {script_path} {args}
+Exec={exec_path} {script_path} {args}
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
