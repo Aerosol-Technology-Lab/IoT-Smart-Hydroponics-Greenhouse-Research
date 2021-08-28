@@ -5,6 +5,12 @@
 #include <ArduinoJson.h>
 #include <alloca.h>
 
+#ifdef DUE
+
+    // void * operator new (size_t size, void * ptr) { return ptr; }
+    
+#endif
+
 unsigned int Utils::nextWord(const char *buffer, 
             unsigned int pos,
             size_t buffer_size, 

@@ -1,9 +1,17 @@
+// #ifndef ESP32
+
+// #include "FreeRTOS.h"
+// #include "task.h"
+
+// #endif
+
 #include <Arduino.h>
 #include "utils.h"
 #include "DefinableBuffer.h"
 #include "StaticBuffer.h"
 #include "sensors.h"
 #include <ArduinoJson.h>
+
 
 #ifndef BAUDRATE
     #define BAUDRATE 57600
@@ -29,15 +37,19 @@ char outBuffer[OUT_BUFFER_SIZE];
 
 void setup() {
     Serial.begin(BAUDRATE);
-    #ifndef UNO
+    #ifdef UNO
+    Serial.println("This is the UNO code");
+    #error do not compile
     analogReadResolution(RESOLUTION_BITS);
+    #else
+    Serial.println("This is the DUE");
     #endif
+    
     StaticBuffer::global = &staticBuffer;
     Sensors::init();
     memset(inBuffer, 0, IN_BUFFER_SIZE);
     memset(outBuffer, 8, OUT_BUFFER_SIZE);
-    temperatureRead();
-    StaticJsonDocument<248> response;
+    StaticJsonDocument<512> response;
     response["initialized"] = true;
     serializeJson(response, Serial);
 }
@@ -56,7 +68,7 @@ void loop() {
     // put your main code here, to run repeatedly:
     // Serial.println("Printing from Arduino!");
     // delay(1000);
-    // Serial.println("Loop");
+    Serial.println("Loop");
     delay(1000);
     if (Serial.available())
     {
@@ -97,14 +109,12 @@ void loop() {
                 
                 // water temp
                 {
-                    JsonObject waterTemp = currentChamber.createNestedObject("water");
-                    Sensors::waterTemperature(waterTemp, i);
+                    Sensors::waterTemperature(currentChamber, i);
                 }
 
                 // ambient light
                 {
-                    JsonObject ambientLight = currentChamber.createNestedObject("light");
-                    Sensors::ambientLight(ambientLight, i);
+                    Sensors::ambientLight(currentChamber, i);
                 }
             }
             

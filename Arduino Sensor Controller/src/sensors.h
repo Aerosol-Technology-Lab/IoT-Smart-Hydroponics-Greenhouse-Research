@@ -5,7 +5,7 @@
 #include "pair.h"
 #include <ArduinoJson.h>
 
-#ifndef SIMULATOR
+#ifndef SIMULATOR_
 
 // #include <OneWire.h>
 // #include <DallasTemperature.h>
@@ -23,22 +23,26 @@
 #define NUM_AMBIENT_LIGHT_SENSORS 3
 #define SEALEVELPRESSURE_HPA (1013.25)
 
+#define AMBIENT_LIGHT_0 A0
+#define AMBIENT_LIGHT_1 A1
+#define AMBIENT_LIGHT_2 A2
+
 namespace Sensors {
   
   /**
    * Initializes sensor simulator
    */
 
-#ifndef SIMULATOR
+#ifndef SIMULATOR_
   const unsigned int TMP_PINS[NUM_TEMP_SENSORS]             = {22, 24, 26};
   const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]        = { 0x76, 0x77, 0x76};
   const I2CBUS BME280_BUS[NUM_BME_SENSORS]                  = { 0x00, 0x00, 0x01};
-  const uint8_t AMBIENT_LIGHT_GPIO[NUM_AMBIENT_LIGHT_SENSORS] = { A0, A1, A2 };
+  const uint8_t AMBIENT_LIGHT_GPIO[NUM_AMBIENT_LIGHT_SENSORS] = { AMBIENT_LIGHT_0, AMBIENT_LIGHT_1, AMBIENT_LIGHT_2 };
 
   // sensor probes pin layout
   const uint8_t PIN_SHARED_PROBE_WATERTEMP              = 28;
-  const uint8_t PIN_TDS_SENSOR                          = A2;
-  const uint8_t PIN_PH_SENSOR                           = A3;
+  const uint8_t PIN_TDS_SENSOR                          = A3;
+  const uint8_t PIN_PH_SENSOR                           = A4;
   
   // OneWire oneWire0(PIN_TMP0);
   // DallasTemperature tmp0(&oneWire0);

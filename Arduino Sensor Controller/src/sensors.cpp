@@ -1,8 +1,10 @@
-#ifndef SIMULATOR
+#ifndef SIMULATOR_
 
 #include "sensors.h"
 #include <Arduino.h>
 #include <stdlib.h>
+#include <Adafruit_BME280.h>
+#include <Wire.h>
 #include "utils.h"
 #include "WaterTemperature.h"
 #include "PH.h"
@@ -29,17 +31,27 @@ namespace Sensors {
 void Sensors::init() {
     randomSeed(analogRead(0));
 
+    // initialize I2C
+    Wire.begin();
+
     // initialize temperature sensors
     for (int i = 0; i < NUM_TEMP_SENSORS; ++i) {
+        // new(tmpSensors + i) WaterTemperature(TMP_PINS[i], true);
         tmpSensors[i] = WaterTemperature(TMP_PINS[i], true);
     }
 
     // initilize bme280 sensors
     for (int i = 0; i < NUM_BME_SENSORS; ++i) {
+        // new(bmeSensors + i) Pair<I2CBUS, Adafruit_BME280>(Sensors::BME280_BUS[i], Adafruit_BME280());
         bmeSensors[i] = Pair<I2CBUS, Adafruit_BME280>(Sensors::BME280_BUS[i], Adafruit_BME280());
         Adafruit_BME280 &bme = bmeSensors[i].second;
         i2cmux(bmeSensors[i].first);
-        bme.begin(BME280_ADDRESS_LIST[i]);
+        bool initSuccess = bme.begin(BME280_ADDRESS_LIST[i]);
+        if (!initSuccess) {
+            char buffer[64];
+            sprintf(buffer, "Failed to initialize BME280 ID:%d\n", i);
+            Serial.print(buffer);
+        }
     }
 
     // initializes water sensors
@@ -143,7 +155,7 @@ size_t Sensors::bme280(char *buffer, int sensorIdx, bool header)
         float humidity = bme.readHumidity();
         
         // write to buffer
-        sprintf(buffer, "%d:{\"temperature\":%.6f,\"pressure\":%.6f,\"humidity\":%.6f}", sensorIdx, temperature, pressure, humidity);
+        sprintf(buffer, "%d:{\"temp\":%.6f,\"pres\":%.6f,\"humd\":%.6f}", sensorIdx, temperature, pressure, humidity);
         // sprintf(buffer, "BME:%d %.4f %.4f %.4f", sensorIdx, temperature, pressure, humidity);
         bytesWritten = strlen(buffer) + 1;
     }
@@ -183,7 +195,7 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
         Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
         obj["temp"] = (bme.readTemperature() * 9.0f / 5.0f ) + 32.0f;
         obj["pres"] = bme.readPressure() / 100.0f;
-        obj["hum"]  = bme.readHumidity();
+        obj["humd"]  = bme.readHumidity();
     }
 }
 

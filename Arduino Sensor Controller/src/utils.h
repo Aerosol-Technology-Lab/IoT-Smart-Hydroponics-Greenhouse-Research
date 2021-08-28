@@ -9,6 +9,17 @@
     #define VREF                            3.3f
     #define VREF_MILLI          (VREF * 1000.0f)
     #define ANALOG_RESOLUTION            4095.0f
+
+    /**
+     * @brief
+     * 
+     * @param size 
+     * @param ptr 
+     * @return void* 
+     */
+    // void * operator new (size_t size, void * ptr);
+    // inline void* operator new (std::size_t n, void* ptr) {return ptr;};
+
 #elif UNO
     #define RESOLUTION_BITS                   10
     #define VREF                            5.0f
