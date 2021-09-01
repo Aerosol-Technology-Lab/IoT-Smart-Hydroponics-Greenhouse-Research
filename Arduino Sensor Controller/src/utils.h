@@ -28,6 +28,11 @@
 // #define DEBUG
 #ifdef DEBUG
     #pragma message "DEBUG mode is enabled!"
+    #define dev_print(x) Serial.print(x)
+    #define dev_println(x) Serial.println(x)
+#else
+    #define dev_print(x)
+    #define dev_println(x)
 #endif
 
 namespace Utils {

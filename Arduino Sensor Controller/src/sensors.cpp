@@ -29,6 +29,10 @@ namespace Sensors {
 void Sensors::init() {
     randomSeed(analogRead(0));
 
+    while (1) {
+        Serial.println("Loop!");
+    }
+
     // initialize temperature sensors
     for (int i = 0; i < NUM_TEMP_SENSORS; ++i) {
         tmpSensors[i] = WaterTemperature(TMP_PINS[i], true);

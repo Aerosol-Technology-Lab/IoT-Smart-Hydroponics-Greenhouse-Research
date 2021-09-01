@@ -29,14 +29,21 @@ char outBuffer[OUT_BUFFER_SIZE];
 
 void setup() {
     Serial.begin(BAUDRATE);
+    Serial.println("Hello world!");
+    while (1) {
+        Serial.println("LOOP");
+    }
     #ifndef UNO
     analogReadResolution(RESOLUTION_BITS);
     #endif
+    dev_println("Starting...");
     StaticBuffer::global = &staticBuffer;
+    dev_println("Initializing sensors...");
     Sensors::init();
+    dev_println("Done!");
     memset(inBuffer, 0, IN_BUFFER_SIZE);
     memset(outBuffer, 8, OUT_BUFFER_SIZE);
-    temperatureRead();
+    // temperatureRead();
     StaticJsonDocument<248> response;
     response["initialized"] = true;
     serializeJson(response, Serial);
@@ -56,7 +63,7 @@ void loop() {
     // put your main code here, to run repeatedly:
     // Serial.println("Printing from Arduino!");
     // delay(1000);
-    // Serial.println("Loop");
+    dev_println("Loop");
     delay(1000);
     if (Serial.available())
     {
