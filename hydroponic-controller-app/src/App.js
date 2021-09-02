@@ -37,6 +37,12 @@ function App() {
         window.app_globals = null;
       }
     })
+
+    window.globalIPCRenderer = ipcRenderer;
+
+    return () => {
+      window.globalIPCRenderer = undefined;
+    }
   }, []);
   
   return (

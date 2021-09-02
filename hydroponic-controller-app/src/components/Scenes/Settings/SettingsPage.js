@@ -54,19 +54,22 @@ const SettingsPage = () => {
     
     return (
         <div className='SettingsScene'>
-            <h1>About</h1>
-            <h2>IoT Hydroponics Research</h2>
-            <h3>BAEN - Biological & Agricultural Engineering</h3>
-            <h3>Aerosol Lab</h3>
-            <h3>Written by: Charlemagne Wong</h3>
-            <div className='options'>
-                <button>Turn Off Rasbperry Pi</button>
-                <button>Restart Rasbperry Pi</button>
-                <Link to={'/update/'}>
-                    <button>Update</button>
-                </Link>
-                <button onClick={ onClickShutdown }>Shutdown</button>
-                sfs
+            <div className='slideInFromRight'>
+                <h1>About</h1>
+                <h2>IoT Hydroponics Research</h2>
+                <h3>BAEN - Biological & Agricultural Engineering</h3>
+                <h3>Aerosol Lab</h3>
+                <h3>Written by: Charlemagne Wong</h3>
+                <div className='options'>
+                    <button>Turn Off Rasbperry Pi</button>
+                    <button>Restart Rasbperry Pi</button>
+                    <Link to={'/update/'}>
+                        <button>Update</button>
+                    </Link>
+                    <button onClick={ onClickShutdown }>Shutdown</button>
+                    sfs
+                </div>
+
             </div>
         </div>
     )

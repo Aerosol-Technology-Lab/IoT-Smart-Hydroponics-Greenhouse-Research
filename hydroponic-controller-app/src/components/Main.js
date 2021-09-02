@@ -4,6 +4,7 @@ import './Main.css';
 // import Clock from './Clock'
 import NotificationBar from './Notifications/NotificationBar'
 import Scene from './Scenes/Scene';
+import MainScene from './Scenes/MainScene';
 import SerialTest from './test/SerialTest'
 import Test from './Scenes/Test'
 import Settings from './Scenes/Settings/Settings'
@@ -45,7 +46,8 @@ class Main extends React.Component {
                 { this.notificationBar }
                 {/* < Scene scene={ this.state.Scene } /> */}
                 <Switch >
-                    <Route exact path='/dashboard' component={ this.Scenes.SerialTest } />
+                    {/* <Route exact path='/dashboard' component={ this.Scenes.SerialTest } /> */}
+                    <Route exact path='/dashboard' component={ MainScene } />
                     <Route exact path='/settings' component={ Settings } />
                     <Route exact path='/'>
                         <Redirect to='/dashboard' />
