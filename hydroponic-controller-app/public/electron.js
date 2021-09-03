@@ -1,7 +1,15 @@
 const { assert } = require('console');
 const SingleInstance = require('single-instance');
 const locker = new SingleInstance('Hydroponics-Touch-App');
-const DBPATH = 'hydro.db';
+const fs = require('fs');
+const { exit } = require('process');
+// const DBPATH = ':memory:';
+const DBPATH = './hydro.db';
+
+if (!fs.existsSync('./hydro.db')) {
+  console.err('Cannot find the database');
+  exit(1);
+}
 
 locker.lock().then(() => {
 
@@ -226,6 +234,26 @@ locker.lock().then(() => {
     appSettings.fullscreen = true;
     appSettings.frame = false;
     Config.runtime.cursor = false;
+
+    // if Raspberry Pi, then look for ttyACM0 to sudo
+    const checkAndEnableArduino = async() => {
+
+      let result = false;
+      try {
+        await fs.promises.stat(Config.serial_directory);
+        result = true;
+      } catch (error) {
+        result = false;
+      }
+
+      if (result) {
+        fs.exec(`sudo chmod 666 ${Config.serial_directory}`);
+        setTimeout(checkAndEnableArduino, 2 * 60 * 1000);
+      }
+      else {
+        setTimeout(checkAndEnableArduino, 10 * 1000);
+      }
+    }
   }
   else {
     Config.runtime.cursor = true;
