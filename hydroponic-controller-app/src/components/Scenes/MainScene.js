@@ -27,7 +27,7 @@ function MainScene()
         }
     }, [])
     
-    var chambers = [undefined, undefined, undefined];
+    var chambers = [null, null, null];
     if (chamberReadings !== undefined) {
         chambers = [chamberReadings[0], chamberReadings[1], chamberReadings[2]];
     }
@@ -45,7 +45,8 @@ function MainScene()
                     {/* console.log(chamberReadings); */}
 
                     if (parseInt(value) !== NaN && value !== undefined) {
-                        value.time = chamberReadings.time;
+                        if (value === null) value = undefined;
+                        else value.time = chamberReadings.time;
                         return(
                             <Chamber id={ index } object={ value }/>
                         )

@@ -175,7 +175,7 @@ locker.lock().then(() => {
       columns += `, wtemp${index}`;
       columns += `, pres${index}`;
       columns += `, humd${index}`;
-      columns += `, atmp${index}`;
+      columns += `, atemp${index}`;
       columns += `, lght${index}`;
 
       values += `, ${singleChamber.temp}`;
