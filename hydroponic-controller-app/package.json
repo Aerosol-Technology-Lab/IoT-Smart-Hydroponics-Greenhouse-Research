@@ -33,7 +33,7 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "electron-builder node-gyp-rebuild --platform linux",
     "postinstall": "electron-builder install-app-deps",
-    "elc-rebuild": "electron-rebuild -f -w serialport, fs, usb",
+    "elc-rebuild": "electron-rebuild -f -w serialport, fs, usb, sqlite3",
     "build-project": "yarn electron-builder"
   },
   "build": {
