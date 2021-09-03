@@ -30,7 +30,8 @@ char outBuffer[OUT_BUFFER_SIZE];
 void setup() {
     Serial.begin(BAUDRATE);
     Serial.println("Hello world!");
-    while (1) {
+    while (true) {
+        delay(1000);
         Serial.println("LOOP");
     }
     #ifndef UNO
