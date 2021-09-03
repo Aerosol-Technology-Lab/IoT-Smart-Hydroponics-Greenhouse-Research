@@ -115,6 +115,7 @@ locker.lock().then(() => {
     if (response.response === 'ALL') {
       response['sensors']['chamber']['time'] = new Date();
       currentReadings = response.sensors.chamber;
+      storeDataToDB(response);
     }
   };
   
@@ -146,6 +147,38 @@ locker.lock().then(() => {
   };
   
   const storeDataToDB = async (data) => {
+    
+    console.log('Storing data to db');
+    console.log(data);
+    // check if it has valid data
+    if (!('sensors' in data
+        && 'chamber' in data.sensors
+        && 'time' in data.sensors.chamber
+       ))
+    {
+      return; // nothing to process because the data is not there
+    }
+    
+    // figure out what data needs to be inserted
+    var columns = 'time';
+    var values = data.sensors.chamber.time.getTime();
+    
+    var chambers = [data.sensors.chamber[0], data.sensors.chamber[1], data.sensors.chamber[2]];
+    chambers.map((singleChamber, index) => {
+      if (singleChamber === undefined) return;
+      columns += `, wtemp${index}`;
+      columns += `, pres${index}`;
+      columns += `, humd${index}`;
+      columns += `, atmp${index}`;
+      columns += `, lght${index}`;
+
+      values += `, ${singleChamber.temp}`;
+      values += `, ${singleChamber.bme280.pres}`;
+      values += `, ${singleChamber.bme280.humd}`;
+      values += `, ${singleChamber.bme280.temp}`;
+      values += `, ${singleChamber.light}`;
+    });
+    
     let db = new sqlite3.Database(DBPATH, sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
         console.error(err.message);
@@ -155,44 +188,8 @@ locker.lock().then(() => {
       // assert(false);
     });
 
-    
-    db.run(`INSERT INTO chamber (
-      time,
-      wtmp0,
-      pres0,
-      humd0,
-      atmp0,
-      lght0,
-      wtmp1,
-      pres1,
-      humd1,
-      atmp1,
-      lght1,
-      wtmp2,
-      pres2,
-      humd2,
-      atmp2,
-      lght2
-      )
-    VALUES(
-      ${data['time'].getTime()},
-      ${data['0']['bme280']['temp']},
-      ${data['0']['bme280']['pres']},
-      ${data['0']['bme280']['humd']},
-      ${data['0']['temp']},
-      ${data['0']['light']},
-      ${data['1']['bme280']['temp']},
-      ${data['1']['bme280']['pres']},
-      ${data['1']['bme280']['humd']},
-      ${data['1']['temp']},
-      ${data['1']['light']},
-      ${data['2']['bme280']['temp']},
-      ${data['2']['bme280']['pres']},
-      ${data['2']['bme280']['humd']},
-      ${data['2']['temp']},
-      ${data['2']['light']}
-    )
-    `);
+    db.run(`INSERT INTO chamber (${columns}) VALUES(${values})`, [], (err) => console.error(err));
+  
     db.close();
   };
   
