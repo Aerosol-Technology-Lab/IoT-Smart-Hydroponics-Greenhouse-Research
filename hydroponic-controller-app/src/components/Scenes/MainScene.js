@@ -40,9 +40,9 @@ function MainScene()
             <div className="box">
                 { chambers.map((value, index) => {
 
-                    console.log(`This is the index: ${index}`);
-                    console.log(value);
-                    console.log(chamberReadings);
+                    {/* console.log(`This is the index: ${index}`); */}
+                    {/* console.log(value); */}
+                    {/* console.log(chamberReadings); */}
 
                     if (parseInt(value) !== NaN && value !== undefined) {
                         value.time = chamberReadings.time;

@@ -65,7 +65,7 @@ locker.lock().then(() => {
   var Config = configManager.load();
   console.log(Config);
   Config.runtime = {};    // runtime config variables
-  // var currentReadings = undefined;
+
   var currentReadings = {
     'time': new Date(0),
     '0': {
@@ -94,6 +94,7 @@ locker.lock().then(() => {
       }
     },
   }
+  var currentTurbidity = undefined;
   var buffer = Buffer.alloc(0);
 
   const processData = async(data) => {
@@ -115,7 +116,12 @@ locker.lock().then(() => {
     if (response.response === 'ALL') {
       response['sensors']['chamber']['time'] = new Date();
       currentReadings = response.sensors.chamber;
-      storeDataToDB(response);
+      storeChamberDataToDB(response);
+    }
+    else if (response.response === 'TURB') {
+      response.time = new Date();
+      currentTurbidity = response;
+      storeTurbidityDataToDB(response);
     }
   };
   
@@ -146,7 +152,7 @@ locker.lock().then(() => {
     }
   };
   
-  const storeDataToDB = async (data) => {
+  const storeChamberDataToDB = async (data) => {
     
     console.log('Storing data to db');
     console.log(data);
@@ -179,19 +185,47 @@ locker.lock().then(() => {
       values += `, ${singleChamber.light}`;
     });
     
+    let success = true;
     let db = new sqlite3.Database(DBPATH, sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
         console.error(err.message);
-        return;
+        success = false;
       }
 
       // assert(false);
     });
 
+    if (!success) {
+      db.close();
+      return;
+    }
+    
     db.run(`INSERT INTO chamber (${columns}) VALUES(${values})`, [], (err) => console.error(err));
   
     db.close();
   };
+  
+  const storeTurbidityDataToDB = async (data) => {
+    console.log('Storing turbidity data to db');
+    if (!('turb' in data)) return;
+
+    let success = true;
+    let db = new sqlite3.Database(DBPATH, sqlite3.OPEN_READWRITE, (err) => {
+      if (err) {
+
+        console.error(err);
+        success = false;
+      }
+    });
+
+    if (!success) {
+      db.close();
+      return;
+    }
+
+    db.run(`INSERT INTO turbidity (time, value) VALUES(${data.time.getTime()}, ${data.turb})`);
+    db.close();
+  }
   
   // main app window
   var mainWindow;
@@ -524,6 +558,18 @@ locker.lock().then(() => {
     }
     else {
       return false;
+    }
+  });
+  
+  ipcMain.handle('arduino-turbidity', async (event, _) => {
+
+    let data = {
+      com: 'TURB'
+    };
+    let sdata = JSON.stringify(data) + '\0';
+    
+    if (arduino) {
+      arduino.write(sdata);
     }
   });
   

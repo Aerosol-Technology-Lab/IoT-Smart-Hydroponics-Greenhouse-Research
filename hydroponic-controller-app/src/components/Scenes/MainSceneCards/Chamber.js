@@ -5,8 +5,8 @@ function Chamber(props) {
     
     var contents = props.object;
 
-    window.contents = contents;
-    console.log("render!");
+    // window.contents = contents;
+    // console.log("render!");
     
     return(
         <div className="Chamber">
@@ -15,7 +15,7 @@ function Chamber(props) {
                 <h2>Water</h2>
                 <div className='contents'>
                     Temperature: { contents ? contents['temp'] : '---' } &#176;F
-                    <p>Turbidity: <span>---</span> </p>
+                    {/* <p>Turbidity: <span>---</span> </p> */}
                 </div>
             </div>
             <div className="environment">
@@ -26,7 +26,7 @@ function Chamber(props) {
                     <p>Pressure: { contents ? contents['bme280']['pres'] : '---' }kPA </p>
                     <p>Humidity: { contents ? contents['bme280']['humd'] : '---' }%</p>
                     <p>Light: { contents ? contents['light'] : '---' }%</p>
-                    <p>Time: { contents ? contents['time']?.toString() : '---' }%</p>
+                    {/* <p>Time: { contents ? contents['time']?.toString() : '---' }%</p> */}
                 </div>
             </div>
             <div className='graph-box'>
