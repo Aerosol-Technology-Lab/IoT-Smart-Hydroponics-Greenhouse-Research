@@ -5,6 +5,7 @@ const fs = require('fs');
 const { exit } = require('process');
 // const DBPATH = ':memory:';
 const DBPATH = './hydro.db';
+const CSVPATH = './hydro.csv';
 
 if (!fs.existsSync('./hydro.db')) {
   console.err('Cannot find the database');
@@ -25,7 +26,7 @@ locker.lock().then(() => {
   const SerialPort = require('serialport');
   const ReadLine = require('@serialport/parser-readline');
   const usb = require('usb');
-  const sqlite3 = require('sqlite3');
+  // const sqlite3 = require('sqlite3');
 
   // App imports
   const ConfigLoader = require('./ConfigLoader');
@@ -116,7 +117,7 @@ locker.lock().then(() => {
     if (response.response === 'ALL') {
       response['sensors']['chamber']['time'] = new Date();
       currentReadings = response.sensors.chamber;
-      storeChamberDataToDB(response);
+      saveChamberData(response);
     }
     else if (response.response === 'TURB') {
       response.time = new Date();
@@ -152,7 +153,7 @@ locker.lock().then(() => {
     }
   };
   
-  const storeChamberDataToDB = async (data) => {
+  const saveChamberData = async (data) => {
     
     console.log('Storing data to db');
     console.log(data);
@@ -185,6 +186,11 @@ locker.lock().then(() => {
       values += `, ${singleChamber.light}`;
     });
     
+    return storeChamberDataToCSV(columns, values);
+    // return storeChamberDataToDB(columns, values);
+  };
+  
+  const storeChamberDataToDB = (columns, values) => {
     let success = true;
     let db = new sqlite3.Database(DBPATH, sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
@@ -197,13 +203,32 @@ locker.lock().then(() => {
 
     if (!success) {
       db.close();
-      return;
+      return false;
     }
     
     db.run(`INSERT INTO chamber (${columns}) VALUES(${values})`, [], (err) => console.error(err));
   
     db.close();
+
+    return true;
   };
+
+  const storeChamberDataToCSV = async (columns, values) => {
+
+    // checks if file exists
+    var fileExists = fs.promises.access(CSVPATH).then(() => {return true}).catch(() => {return false});
+    
+    var content = '';
+    // checks if file exists
+    if (!(await fileExists)) {
+      content += columns + '\n';
+    }
+    content += values + '\n'  ;
+
+    fs.writeFile(CSVPATH, content, {flag: 'a+'}, err => {});
+    
+    return true;
+  }
   
   const storeTurbidityDataToDB = async (data) => {
     console.log('Storing turbidity data to db');
