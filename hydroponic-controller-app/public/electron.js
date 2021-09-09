@@ -427,34 +427,6 @@ locker.lock().then(() => {
       //     currentReadings = newReadings;
       //     storeDataToDB(newReadings);
       //   }
-      //   /*
-      //   if (comms[0] === 'ALL') {
-      //     let newReadings = {};
-          
-      //     newReadings['time'] = new Date().toISOString();
-
-      //     // parse the remaining input from the arduino
-      //     for (let i = 1; i < comms.length; ++i) {
-      //       let testCommand = comms[i];
-
-      //       if (testCommand.startsWith('TMP')) {
-      //         let sensorIdx = testCommand.split(':')[1];
-      //         newReadings[sensorIdx] = comms[i + 1];
-      //         ++i;
-      //       }
-      //     }
-      //   }
-      //   else if (comms[0] === 'PHVAL') {
-      //     // console.log('Got here');
-      //     mainWindow?.webContents?.send('ph', comms[1]);
-      //   }
-      //   else if (comms[0] === 'TEMP') {
-      //     // console.log('Got TEMP');
-      //     mainWindow?.webContents?.send('tmp', comms[1]);
-      //   }
-      //   */
-      //   // mainWindow.webContents.send('ph', )
-      // });
       
       // arduino.on("data", async (data) => {
       arduino.on("readable", async () => {
@@ -496,15 +468,6 @@ locker.lock().then(() => {
       // });
       
       mainWindow?.webContents?.send('serialport', {state: 'connected'});
-      
-      // arduino.on("data", (data) => {
-      //   console.log(data);
-      // });
-
-      // arduino.on("readable", () => {
-      //   let s = arduino.read();
-      //   console.log(s.toString());
-      // });
 
       arduino.on("close", () => {
         arduino = null;
@@ -515,18 +478,12 @@ locker.lock().then(() => {
         reconnectArduino();
       });
 
-      // port.on('data', function(data) {
-      //     console.log('Data: ', data);
-      // });
-
       arduino.write(Buffer.from("HELLO"));
 
       setInterval(() => {
         if (arduino) {
           let s = JSON.stringify({com: 'ALL'}) + '\0';
           arduino.write(s);
-          // arduino.write("PH\0");
-          // arduino.write("TEMP\0");
         }
       }, 5000);
     });
