@@ -63,7 +63,7 @@ function Navigation({ id=undefined }) {
             { debugView ? <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='debug-button' href='#' icon='icon-bug'/> : null }
             <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='dashboard-button'  href='/'   icon='icon-dashboard' focus={true}/>
             <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='data-button'       href='/auxiliary'    icon='icon-stats-bars'/>
-            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='export-button'     href='#'    icon='icon-usb'       />
+            <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='export-button'     href='/export'    icon='icon-usb'       />
             <NavigationButton registerButton={ addButtonFocus } unregisterButton={ removeButtonFocus } unfocusAll={ unfocusAll } id='settings-button'   href='/settings'    icon='icon-cog'       />
         </div>
     );

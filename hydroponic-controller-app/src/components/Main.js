@@ -10,6 +10,7 @@ import Test from './Scenes/Test'
 import Settings from './Scenes/Settings/Settings'
 import App from '../App'
 import Auxiliary from './Scenes/Auxiliary/Auxiliary';
+import Export from './Scenes/Export/Export';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -50,6 +51,7 @@ class Main extends React.Component {
                     {/* <Route exact path='/dashboard' component={ this.Scenes.SerialTest } /> */}
                     <Route exact path='/dashboard' component={ MainScene } />
                     <Route exact path='/auxiliary' component={ Auxiliary } />
+                    <Route exact path='/export' component={ Export } />
                     <Route exact path='/settings' component={ Settings } />
                     <Route exact path='/'>
                         <Redirect to='/dashboard' />
