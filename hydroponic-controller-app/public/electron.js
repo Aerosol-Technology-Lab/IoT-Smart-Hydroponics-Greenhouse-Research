@@ -4,12 +4,20 @@ const locker = new SingleInstance('Hydroponics-Touch-App');
 const fs = require('fs');
 const { exit } = require('process');
 // const DBPATH = ':memory:';
+const DBFORMATPATH = './hydro.db.format';
 const DBPATH = './hydro.db';
 const CSVPATH = './hydro.csv';
 
-if (!fs.existsSync('./hydro.db')) {
-  console.error('Cannot find the database');
-  exit(1);
+
+if (!fs.existsSync(DBPATH)) {
+
+  if (!fs.existsSync(DBFORMATPATH)) {
+
+    console.error('Cannot find the database or format path');
+    exit(1);
+  }
+
+  fs.copyFileSync(DBFORMATPATH, DBPATH);
 }
 
 locker.lock().then(() => {
