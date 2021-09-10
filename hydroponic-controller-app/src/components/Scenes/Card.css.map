@@ -2,8 +2,8 @@
     "version": 3,
     "mappings": "",
     "sources": [
-        "Expost.scss"
+        "Card.scss"
     ],
     "names": [],
-    "file": "Expost.css"
+    "file": "Card.css"
 }
