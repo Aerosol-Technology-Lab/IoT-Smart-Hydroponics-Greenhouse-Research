@@ -8,7 +8,7 @@ const DBPATH = './hydro.db';
 const CSVPATH = './hydro.csv';
 
 if (!fs.existsSync('./hydro.db')) {
-  console.err('Cannot find the database');
+  console.error('Cannot find the database');
   exit(1);
 }
 
