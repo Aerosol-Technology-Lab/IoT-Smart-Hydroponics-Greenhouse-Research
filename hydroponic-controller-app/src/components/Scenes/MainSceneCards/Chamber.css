@@ -54,6 +54,7 @@ h2 {
 
 .contents p {
   font-size: 15px;
+  height: auto;
 }
 
 @-webkit-keyframes graph_shadow {
