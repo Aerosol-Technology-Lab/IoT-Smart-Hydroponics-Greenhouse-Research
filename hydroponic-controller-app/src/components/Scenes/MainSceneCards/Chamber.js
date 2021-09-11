@@ -14,7 +14,9 @@ function Chamber(props) {
             <div className="environment">
                 <h2>Water</h2>
                 <div className='contents'>
+                <p>
                     Temperature: { contents ? contents['temp'] : '---' } &#176;F
+                </p>
                     {/* <p>Turbidity: <span>---</span> </p> */}
                 </div>
             </div>
@@ -29,11 +31,11 @@ function Chamber(props) {
                     {/* <p>Time: { contents ? contents['time']?.toString() : '---' }%</p> */}
                 </div>
             </div>
-            <div className='graph-box'>
+            {/* <div className='graph-box'>
                 <div className='graph'>
                     <p>place holder</p>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

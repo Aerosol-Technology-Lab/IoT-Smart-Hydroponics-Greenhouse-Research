@@ -36,6 +36,7 @@ h1 span {
 h2 {
   font-weight: 300;
   margin: 0px 0px 0px 0px;
+  font-size: 20px;
 }
 
 .contents {
@@ -49,6 +50,10 @@ h2 {
 .contents span {
   color: red;
   margin: 10px;
+}
+
+.contents p {
+  font-size: 15px;
 }
 
 @-webkit-keyframes graph_shadow {
