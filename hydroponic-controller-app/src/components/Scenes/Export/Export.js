@@ -8,15 +8,13 @@ const path = window.require('path');
 function Export()
 {
     const ignoreDirectories = [
-        os.userInfo().username,
+        // os.userInfo().username,
         'root',
-        'veracrypt1',
-        'veracrypt2',
     ];
     const [directories, setDirectories] = useState([]);
     const watcher = useRef(null)
     const mediaPath = useRef(`/media/${os.userInfo().username}`)
-    
+
     const saveToUSB = async (file) => {
         fs.copyFile('./hydro.csv', path.join(mediaPath.current, file, 'hydro.csv'), (err) => {
             if (err) console.log('Cannot copy file');
@@ -24,11 +22,6 @@ function Export()
     };
     
     useEffect(() => {
-
-        if (os.arch() === 'arm') {
-            console.log('ARM architecture ditected, must be running on Raspberry Pi');
-            mediaPath.current = '/media/pi';
-        }
 
         watcher.current = setInterval(() => {
             
