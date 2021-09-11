@@ -256,6 +256,7 @@ locker.lock().then(() => {
     frame: true,
     fullscreen: false,
     icon: appIcon,
+    show: false,
   };
 
   // check for operating system
@@ -317,6 +318,7 @@ locker.lock().then(() => {
     mainWindow.on('closed', () => mainWindow = null);
     mainWindow.on('ready-to-show', () => {
       mainWindow.webContents.send('enable-cursor', Config.runtime.cursor);
+      mainWindow.show();
     })
   }
 

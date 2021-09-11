@@ -10,23 +10,27 @@ function Export()
     const ignoreDirectories = [
         os.userInfo().username,
         'root',
-        // 'veracrypt2'
     ];
     const [directories, setDirectories] = useState([]);
     const watcher = useRef(null)
+    const mediaPath = useRef('/media')
     
     const saveToUSB = async (file) => {
-        fs.copyFile('./hydro.csv', path.join('/media', file, 'hydro.csv'), (err) => {
+        fs.copyFile('./hydro.csv', path.join(mediaPath.current, file, 'hydro.csv'), (err) => {
             if (err) console.log('Cannot copy file');
         })
     };
     
     useEffect(() => {
 
+        if (os.arch() === 'arm') {
+            console.log('ARM architecture ditected, must be running on Raspberry Pi');
+            mediaPath.current = '/media/pi';
+        }
 
         watcher.current = setInterval(() => {
             
-            fs.readdir('/media', (err, files) => {
+            fs.readdir(mediaPath.current, (err, files) => {
                 if (!err) {
                     setDirectories(files);
                 }
