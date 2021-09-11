@@ -10,10 +10,12 @@ function Export()
     const ignoreDirectories = [
         os.userInfo().username,
         'root',
+        'veracrypt1',
+        'veracrypt2',
     ];
     const [directories, setDirectories] = useState([]);
     const watcher = useRef(null)
-    const mediaPath = useRef('/media')
+    const mediaPath = useRef(`/media/${os.userInfo().username}`)
     
     const saveToUSB = async (file) => {
         fs.copyFile('./hydro.csv', path.join(mediaPath.current, file, 'hydro.csv'), (err) => {
@@ -63,7 +65,12 @@ function Export()
                         )
                     })
                     :
-                    'no usb detected'
+                    <div className='nousb'>
+                        <div className='nousb-icon'>
+                            <img src='https://static.thenounproject.com/png/933129-200.png' />
+                        </div>
+                        <p className='nousbtext'>no usb detected</p>
+                    </div>
                 }
             </div>
         </div>
