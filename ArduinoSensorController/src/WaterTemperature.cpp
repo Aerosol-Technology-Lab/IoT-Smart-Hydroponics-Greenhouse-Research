@@ -11,6 +11,16 @@ WaterTemperature::WaterTemperature(uint8_t pin, bool initialize)
 {
     if (initialize) {
         init();
+        // sensor.requestTemperatures();
+        // Serial.println();
+        // Serial.println(sensor.getTempFByIndex(0));
+
+        //         sensor.requestTemperatures();
+        // Serial.println();
+        // Serial.println(sensor.getTempFByIndex(0));
+        //         sensor.requestTemperatures();
+        // Serial.println();
+        // Serial.println(sensor.getTempFByIndex(0));
     }
 }
 
@@ -25,7 +35,7 @@ void WaterTemperature::init()
 float WaterTemperature::read(uint8_t idx)
 {
     sensor.requestTemperatures();
-    return sensor.getTempFByIndex(idx);
+    return sensor.getTempFByIndex(0);
 }
 
 size_t WaterTemperature::write(char *buffer, uint8_t idx)

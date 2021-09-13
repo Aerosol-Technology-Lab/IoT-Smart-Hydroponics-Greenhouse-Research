@@ -11,7 +11,7 @@
 #include <ArduinoJson.h>
 
 namespace Sensors {
-    WaterTemperature tmpSensors[4];
+    WaterTemperature *tmpSensors[NUM_TEMP_SENSORS];
     Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
     WaterTemperature sharedProbeWaterTemp(PIN_TDS_SENSOR, false);
     TDS TDSSensor(PIN_TDS_SENSOR, &sharedProbeWaterTemp);
@@ -28,8 +28,9 @@ void Sensors::init() {
     Wire.setClock(I2C_BAUD);
 
     // initialize temperature sensors
-    for (int i = 0; i < NUM_TEMP_SENSORS + 1; ++i) {
-        tmpSensors[i] = WaterTemperature(TMP_PINS[i], true);
+    for (int i = 0; i < NUM_TEMP_SENSORS; ++i) {
+        tmpSensors[i] = new WaterTemperature(TMP_PINS[i], true);
+        // tmpSensors[i] = WaterTemperature(TMP_PINS[i], true);
     }
 
     // initilize bme280 sensors
@@ -58,7 +59,7 @@ void Sensors::waterTemperature(const char *buffer, size_t buffer_size, bool unus
     // char next[8];
     // Utils::nextWord(buffer, 5, 8, next, 8);
 
-    float temp = tmpSensors[0].read();
+    float temp = tmpSensors[0]->read();
     char send[64];
     char str_tmp[16];
     dtostrf(temp, 4, 2, str_tmp);
@@ -88,7 +89,7 @@ size_t Sensors::waterTemperature(int sensorIdx, char *buffer, bool header) {
     }
     // Writes value of particular sensor index to the buffer
     else if (sensorIdx >= 0 && sensorIdx < 3) {
-        WaterTemperature *temp = tmpSensors + sensorIdx;
+        WaterTemperature *temp = tmpSensors[sensorIdx];
         totalWritten = temp->write(buffer, sensorIdx);
     }
     
@@ -119,7 +120,9 @@ void Sensors::waterTemperature(JsonObject &obj, int sensorIdx)
     dev_println("Getting it now...");
     dev_printf("The water temperature index is: %d %d\n", sensorIdx, TMP_PINS[sensorIdx]);
     
-    WaterTemperature &waterTemperatureSensor = tmpSensors[sensorIdx];
+    WaterTemperature &waterTemperatureSensor = *(tmpSensors[sensorIdx]);
+    // Serial.print("Sensor Index: ");
+    // Serial.println(sensorIdx);
     
     #ifdef DEBUG
     if (prev == &waterTemperatureSensor) {

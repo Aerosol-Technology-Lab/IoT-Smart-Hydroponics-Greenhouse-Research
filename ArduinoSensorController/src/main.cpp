@@ -79,7 +79,7 @@ void loop() {
             
             dev_println("Processing all chambers");
             dev_delay(100);
-            for (int i = 0; i < NUM_CHAMBERS - 1; ++i) {
+            for (int i = 0; i < NUM_CHAMBERS; ++i) {
               dev_printf("-> Processing chamber %d\n", i);
                 // create nested object
                 char buffer[4];

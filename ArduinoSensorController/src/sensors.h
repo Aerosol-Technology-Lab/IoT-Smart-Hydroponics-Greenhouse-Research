@@ -31,8 +31,8 @@ namespace Sensors {
 
 #ifndef SIMULATOR
   const unsigned int TMP_PINS[NUM_TEMP_SENSORS + 1]             = {22, 24, 26, 26};
-  const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]        = { 0x76, 0x77, 0x76};
-  const I2CBUS BME280_BUS[NUM_BME_SENSORS]                  = { 0x00, 0x00, 0x01};
+  const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]        = { 0x76, 0x76, 0x76};
+  const I2CBUS BME280_BUS[NUM_BME_SENSORS]                  = { 0x07, 0x06, 0x05};
   const uint8_t AMBIENT_LIGHT_GPIO[NUM_AMBIENT_LIGHT_SENSORS] = { A0, A1, A2 };
   const uint8_t TURBIDITY_GPIO[1]                             = { A4 };
 
@@ -49,7 +49,7 @@ namespace Sensors {
   // temperature sensors
   // extern OneWire oneWireTMP[NUM_TEMP_SENSORS];
   // todo fix this - this is a hack. Making this 3 breaks the program
-  extern WaterTemperature tmpSensors[4];
+  extern WaterTemperature *tmpSensors[NUM_TEMP_SENSORS];
 
   // water temperature sensor for all the probes
   extern WaterTemperature sharedProbeWaterTemp;
