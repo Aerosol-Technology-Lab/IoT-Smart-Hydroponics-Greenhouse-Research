@@ -142,6 +142,18 @@ void loop() {
             delay(50);
             Serial.print(ESCAPE_SEQUENCE);
         }
+        // reset
+        else if (response == "RESET") {
+
+            // this should emulate hardware reset for Arduino Due
+            #ifdef ARDUINO_SAM_DUE
+            RSTC->RSTC_MR = 0xA5000801;
+            RSTC->RSTC_CR = 0xA5000013;
+            #else
+            #error "Define a reset functionality for an equivalent board. A hardware reset is preffered"
+            #endif
+            // rstc_start_software_reset(RSTC); // verify that this works
+        }
         // echo
         else if (response == "ECHO") {
             Sensors::echo(inBuffer, IN_BUFFER_SIZE);
