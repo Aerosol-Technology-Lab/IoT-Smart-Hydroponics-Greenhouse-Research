@@ -44,9 +44,11 @@ void setup() {
     #else
     Serial.println("This is the DUE");
     #endif
-    
+    dev_println("Starting...");
     StaticBuffer::global = &staticBuffer;
+    dev_println("Initializing sensors...");
     Sensors::init();
+    dev_println("Done!");
     memset(inBuffer, 0, IN_BUFFER_SIZE);
     memset(outBuffer, 8, OUT_BUFFER_SIZE);
     StaticJsonDocument<512> response;
@@ -68,7 +70,7 @@ void loop() {
     // put your main code here, to run repeatedly:
     // Serial.println("Printing from Arduino!");
     // delay(1000);
-    Serial.println("Loop");
+    dev_println("Loop");
     delay(1000);
     if (Serial.available())
     {

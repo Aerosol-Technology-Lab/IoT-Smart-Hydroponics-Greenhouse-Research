@@ -9,17 +9,6 @@
     #define VREF                            3.3f
     #define VREF_MILLI          (VREF * 1000.0f)
     #define ANALOG_RESOLUTION            4095.0f
-
-    /**
-     * @brief
-     * 
-     * @param size 
-     * @param ptr 
-     * @return void* 
-     */
-    // void * operator new (size_t size, void * ptr);
-    // inline void* operator new (std::size_t n, void* ptr) {return ptr;};
-
 #elif UNO
     #define RESOLUTION_BITS                   10
     #define VREF                            5.0f
@@ -36,14 +25,33 @@
     #pragma message "WARNING! This code is not tested on other boards besides the Arduino Due"
 #endif
 
+#if (defined(DTOSTRF_EXT_LIB) || defined(DUE)) && !defined(ESP32)
+char *dtostrf (double val, signed char width, unsigned char prec, char *sout);
+
+#endif
+
 // #define DEBUG
 #ifdef DEBUG
+    extern char *_devprintln;
     #pragma message "DEBUG mode is enabled!"
-    #define dev_print(x) Serial.print(x)
+
+    #define dev_print(x)
+    // #define dev_println(x)
+    // #define dev_printf(f, ...)
+    
+    // #define dev_print(x) Serial.print(x)
     #define dev_println(x) Serial.println(x)
+    #define dev_printf(f, ...) _devprintln = new char[256]; \
+                                 sprintf(_devprintln, f, ##__VA_ARGS__); \
+                                 Serial.print(_devprintln);  \
+                                 delete[] _devprintln
+    // #define dev_delay(time) delay(time)
+    #define dev_delay(time) 
 #else
     #define dev_print(x)
     #define dev_println(x)
+    #define dev_printf(f, ...)
+    #define dev_delay(time)
 #endif
 
 namespace Utils {
