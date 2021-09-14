@@ -13,6 +13,8 @@
 namespace Sensors {
     WaterTemperature *tmpSensors[NUM_TEMP_SENSORS];
     Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
+    BME280_Data bme280Data[NUM_BME_SENSORS];
+    Pair<I2CBUS, CCS811*> ccsSensors[NUM_CCS_SENSORS];
     WaterTemperature sharedProbeWaterTemp(PIN_TDS_SENSOR, false);
     TDS TDSSensor(PIN_TDS_SENSOR, &sharedProbeWaterTemp);
     PH pHSensor(PIN_PH_SENSOR, &sharedProbeWaterTemp);
@@ -33,9 +35,27 @@ void Sensors::init() {
         // tmpSensors[i] = WaterTemperature(TMP_PINS[i], true);
     }
 
+    // initializes ccs811 sensors
+    for (int i = 0; i < NUM_CCS_SENSORS; ++i) {
+
+        ccsSensors[i] = Pair<I2CBUS, CCS811*>(Sensors::CHAMBER_I2C_MUX_MAP[i], new CCS811(CCS811_ADDR));
+        i2cmux(ccsSensors[i].first);
+        if (!ccsSensors[i].second->begin()) {
+            char buffer[128];
+            sprintf(buffer, "ERROR: CO2 sensor (CCS811) at chamber #%d failed to initialize.\n"
+                            "       === Detailed Info ===\n"
+                            "       Index:             %2d\n"
+                            "       I2C MUX Address: 0x%02x\n"
+                , i + 1, i, ccsSensors[i].first
+                );
+            Serial.print(buffer);
+        }
+    }
+
+
     // initilize bme280 sensors
     for (int i = 0; i < NUM_BME_SENSORS; ++i) {
-        bmeSensors[i] = Pair<I2CBUS, Adafruit_BME280>(Sensors::BME280_BUS[i], Adafruit_BME280());
+        bmeSensors[i] = Pair<I2CBUS, Adafruit_BME280>(Sensors::CHAMBER_I2C_MUX_MAP[i], Adafruit_BME280());
         Adafruit_BME280 &bme = bmeSensors[i].second;
         i2cmux(bmeSensors[i].first);
         bool initialized = bme.begin(BME280_ADDRESS_LIST[i]);
@@ -193,7 +213,8 @@ size_t Sensors::bme280(char *buffer, int sensorIdx, bool header)
 void Sensors::bme280(JsonObject &obj, int sensorIdx)
 {
     // requesting all sensors
-    if (sensorIdx == -1) {
+    // deprecated feature
+    if (sensorIdx < 0) {
         for (int i = 0; i < NUM_BME_SENSORS; ++i) {
             char stringNameBuff[4];
             sprintf(stringNameBuff, "%d", sensorIdx);
@@ -209,15 +230,35 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
             return;
         }
         
-        // selects i2c mux
-        i2cmux(bmeSensors[sensorIdx].first);
-
-        // reads sensor and saves it to json
-        Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
-        obj["temp"] = (bme.readTemperature() * 9.0f / 5.0f ) + 32.0f;
-        obj["pres"] = bme.readPressure() / 100.0f;
-        obj["humd"]  = bme.readHumidity();
+        _pollBME280(sensorIdx);
+        obj["temp"] = (bme280Data[sensorIdx].tempetrature * 9.0f / 5.0f ) + 32.0f;
+        obj["pres"] =  bme280Data[sensorIdx].pressure     / 100.0f;
+        obj["humd"] =  bme280Data[sensorIdx].humidity;
     }
+}
+
+void Sensors::ccs811(JsonObject &obj, int sensorIdx)
+{
+    if (sensorIdx < 0 || sensorIdx >= NUM_CCS_SENSORS) {
+        obj["error"] = true;
+        char buffer[42];
+        sprintf(buffer, "CCS811 Index out of bounds at [%d].", sensorIdx, NUM_CCS_SENSORS);
+        obj["err_mess"] = buffer;
+        return;
+    }
+
+    const unsigned long staleCalibration = 30 * 1000;   // the BME280 reading at the same chamber must be 30 seconds old or new
+    if (millis() - bme280Data[sensorIdx].time > staleCalibration) _pollBME280(sensorIdx);
+
+    // switch to mux
+    i2cmux(ccsSensors[sensorIdx].first);
+
+    auto &ccs = *ccsSensors[sensorIdx].second;
+    while (!ccs.dataAvailable()); // wait until data is available
+    ccs.setEnvironmentalData(bme280Data[sensorIdx].humidity, bme280Data[sensorIdx].tempetrature);
+    ccs.readAlgorithmResults();
+    obj["CO2"]  = ccs.getCO2();
+    obj["TVOC"] = ccs.getTVOC();
 }
 
 void Sensors::ambientLight(JsonObject &obj, int sensorIdx)
@@ -268,5 +309,17 @@ void Sensors::echo(const char *buffer, size_t buffer_size) {
     Serial.println(send);
 }
 
+void Sensors::_pollBME280(unsigned int sensorIdx)
+{
+    // selects i2c mux
+    i2cmux(bmeSensors[sensorIdx].first);
+
+    // reads sensor and saves it to json
+    Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
+    bme280Data[sensorIdx].time = millis();
+    bme280Data[sensorIdx].tempetrature = bme.readTemperature();
+    bme280Data[sensorIdx].pressure = bme.readPressure();
+    bme280Data[sensorIdx].humidity = bme.readHumidity();
+}
 
 #endif

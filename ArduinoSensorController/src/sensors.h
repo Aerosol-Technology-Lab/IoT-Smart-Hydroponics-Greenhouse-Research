@@ -9,9 +9,11 @@
 
 // #include <OneWire.h>
 // #include <DallasTemperature.h>
+#include "BME280_Data.h"
 #include "i2cmux.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
+#include <SparkFunCCS811.h>
 #include "WaterTemperature.h"
 #include "TDS.h"
 #include "PH.h"
@@ -20,8 +22,12 @@
 
 #define NUM_TEMP_SENSORS 3
 #define NUM_BME_SENSORS 3
+#define NUM_CCS_SENSORS 3
 #define NUM_AMBIENT_LIGHT_SENSORS 3
 #define SEALEVELPRESSURE_HPA (1013.25)
+
+#define CCS811_ADDR 0x5b
+//#define CCS811_ADDR 0x5a  // alternate address
 
 namespace Sensors {
   
@@ -31,8 +37,8 @@ namespace Sensors {
 
 #ifndef SIMULATOR
   const unsigned int TMP_PINS[NUM_TEMP_SENSORS + 1]             = {22, 24, 26, 26};
+  const I2CBUS CHAMBER_I2C_MUX_MAP[NUM_BME_SENSORS]                  = { 0x07, 0x06, 0x05};
   const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]        = { 0x76, 0x76, 0x76};
-  const I2CBUS BME280_BUS[NUM_BME_SENSORS]                  = { 0x07, 0x06, 0x05};
   const uint8_t AMBIENT_LIGHT_GPIO[NUM_AMBIENT_LIGHT_SENSORS] = { A0, A1, A2 };
   const uint8_t TURBIDITY_GPIO[1]                             = { A4 };
 
@@ -59,6 +65,9 @@ namespace Sensors {
 
   // bme280
   extern Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
+  extern BME280_Data bme280Data[NUM_BME_SENSORS];
+
+  extern Pair<I2CBUS, CCS811*> ccsSensors[NUM_CCS_SENSORS];
 
   // pH sensor
   extern PH pHSensor;
@@ -102,6 +111,8 @@ namespace Sensors {
    */
   void bme280(JsonObject &obj, int sensorIdx=-1);
   
+  void ccs811(JsonObject &obj, int sensorIdx=-1);
+  
   /**
    * @brief Returns the raw sensor reading from the ambient light sensor
    * 
@@ -120,4 +131,14 @@ namespace Sensors {
   void  ping(const char *buffer, size_t buffer_size);
 
   void echo(const char *buffer, size_t buffer_size);
+
+  /*     --- Internal Functions - do not call */
+  /**
+   * @brief Polls BME280 and updates values according to sensor index requested
+   * @note No error handling. Make sure that sensor index is valid
+   * 
+   * @param sensorIdx sensor index requested
+   */
+  void _pollBME280(unsigned int sensorIdx);
+  
 }

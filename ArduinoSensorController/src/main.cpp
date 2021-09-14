@@ -95,6 +95,14 @@ void loop() {
                 }
                 dev_println("Done with bme280");
                 dev_delay(1000);
+
+                // ccs811
+                {
+                    JsonObject ccs811 = currentChamber.createNestedObject("ccs811");
+                    Sensors::ccs811(ccs811, i);
+                }
+                dev_println("Done with ccs811");
+                dev_delay(1000);
                 
                 // water temp
                 {
