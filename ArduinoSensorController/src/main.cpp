@@ -174,9 +174,3 @@ void loop() {
     }
 
 }
-
-// void loop() {
-//   // put your main code here, to run repeatedly:
-//   delay(1000);
-//   Serial.println("Loop");
-// }
