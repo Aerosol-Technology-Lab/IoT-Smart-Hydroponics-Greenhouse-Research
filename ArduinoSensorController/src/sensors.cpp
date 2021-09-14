@@ -274,13 +274,18 @@ void Sensors::ambientLight(JsonObject &obj, int sensorIdx)
 
 void Sensors::turbidity(JsonObject &obj)
 {
-    const uint16_t numReads = 5;
+    const uint16_t numPreReads = 5;
     const uint32_t delayTime = 20;
 
-    for (uint16_t i = 0; i < numReads - 1; ++i) {
-        analogRead(TURBIDITY_GPIO[0]);
+    for (uint16_t i = 0; i < numPreReads - 1; ++i) {
+        analogRead(PIN_TURBIDITY_SENSOR);
     }
-    obj["turb"] = analogRead(TURBIDITY_GPIO[0]);
+
+    const float CONVERSION_FACTOR = 5.0f / float(~(~0 << RESOLUTION_BITS));
+    float rawValue = analogRead(PIN_TURBIDITY_SENSOR) * CONVERSION_FACTOR;
+    float turbidity = -1120.4f * rawValue * rawValue + 5742.3f * rawValue - 4352.9f;
+    
+    obj["turb"] = turbidity;
 }
 
 // this is still simulated

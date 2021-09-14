@@ -40,12 +40,12 @@ namespace Sensors {
   const I2CBUS CHAMBER_I2C_MUX_MAP[NUM_BME_SENSORS]                  = { 0x07, 0x06, 0x05};
   const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]        = { 0x76, 0x76, 0x76};
   const uint8_t AMBIENT_LIGHT_GPIO[NUM_AMBIENT_LIGHT_SENSORS] = { A0, A1, A2 };
-  const uint8_t TURBIDITY_GPIO[1]                             = { A4 };
 
   // sensor probes pin layout
   const uint8_t PIN_SHARED_PROBE_WATERTEMP              = 28;
   const uint8_t PIN_TDS_SENSOR                          = A2;
   const uint8_t PIN_PH_SENSOR                           = A3;
+  const uint8_t PIN_TURBIDITY_SENSOR                    = A4;
   
   // OneWire oneWire0(PIN_TMP0);
   // DallasTemperature tmp0(&oneWire0);
