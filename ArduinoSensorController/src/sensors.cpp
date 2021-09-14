@@ -288,21 +288,6 @@ void Sensors::turbidity(JsonObject &obj)
     obj["turb"] = turbidity;
 }
 
-// this is still simulated
-void Sensors::ph(const char *buffer, size_t buffer_size) {
-    float rand = random(0,1401) * 0.01;
-    char send[16];
-    char cstring_rand[6];
-    dtostrf(rand, 4, 2, cstring_rand);
-    sprintf(send, "PHVAL %s", cstring_rand);
-    Utils::sendSerial(send);
-}
-
-size_t Sensors::ph(char *buffer)
-{
-    return pHSensor.write(buffer);
-}
-
 void Sensors::ping(const char *buffer, size_t buffer_size) {
     Utils::sendSerial("PONG");
 }

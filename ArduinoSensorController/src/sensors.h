@@ -123,11 +123,6 @@ namespace Sensors {
   
   void turbidity(JsonObject &obj);
   
-  // @deprecated
-  void ph(const char *buffer, size_t buffer_size);
-
-  size_t ph(char *buffer);
-
   void  ping(const char *buffer, size_t buffer_size);
 
   void echo(const char *buffer, size_t buffer_size);
