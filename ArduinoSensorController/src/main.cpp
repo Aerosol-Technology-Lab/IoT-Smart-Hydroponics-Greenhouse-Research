@@ -141,7 +141,7 @@ void loop() {
         }
         // pH command
         else if (response == "PH") {
-            Sensors::ph(inBuffer, IN_BUFFER_SIZE);
+            // Sensors::ph(inBuffer, IN_BUFFER_SIZE);
         }
         // ping
         else if (response == "PING") {
