@@ -17,7 +17,7 @@ namespace Sensors {
     Pair<I2CBUS, CCS811*> ccsSensors[NUM_CCS_SENSORS];
     WaterTemperature sharedProbeWaterTemp(PIN_TDS_SENSOR, false);
     TDS TDSSensor(PIN_TDS_SENSOR, &sharedProbeWaterTemp);
-    PH pHSensor(PIN_PH_SENSOR, &sharedProbeWaterTemp);
+    PH pHSensor(PIN_PH_SENSOR);
 }
 
 void Sensors::init() {
@@ -270,6 +270,29 @@ void Sensors::ambientLight(JsonObject &obj, int sensorIdx)
     }
 
     obj["light"] = analogRead(AMBIENT_LIGHT_GPIO[sensorIdx]);
+}
+
+void Sensors::ph(JsonObject &obj)
+{
+    obj["ph"] = pHSensor.read();
+}
+
+void Sensors::callibratePH()
+{
+    pHSensor.callibrate();
+}
+
+void Sensors::phGetCalibration(JsonObject &obj)
+{
+    float neutral, acidic;
+    pHSensor.getCallibration(neutral, acidic);
+    obj["neutral"] = neutral;
+    obj["acidic"]  = acidic;
+}
+
+void Sensors::phSetCalibration(float neutralVoltage, float acidicVoltage)
+{
+    pHSensor.setCallibration(neutralVoltage, acidicVoltage);
 }
 
 void Sensors::turbidity(JsonObject &obj)

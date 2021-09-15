@@ -121,6 +121,35 @@ namespace Sensors {
    */
   void ambientLight(JsonObject &obj, int sensorIdx);
   
+  /**
+   * @brief Returns PH from PH probe
+   * 
+   * @param obj Json Object
+   */
+  void ph(JsonObject &obj);
+  
+  /**
+   * @brief Calibrates PH Sensor. Place sensor in either 7.0 or 4.0 solution and call this function.
+   *        The software can automatically determine if solution is neutral or acidic.
+   */
+  void phCallibrate();
+  
+  /**
+   * @brief Get callibration information of the current sensor
+   * 
+   * @param obj JsonObject where PH callibration is stored. Object will contain neutral and acidic
+   *            voltage at 7.0PH and 4.0PH respectively.
+   */
+  void phGetCalibration(JsonObject &obj);
+  
+  /**
+   * @brief Sets the calibration variable for the PH sensor
+   * 
+   * @param neutralVoltage neutral voltage for 7.0PH solution
+   * @param acidicVoltage acidic voltage for 4.0PH solution
+   */
+  void phSetCalibration(float neutralVoltage, float acidicVoltage);
+  
   void turbidity(JsonObject &obj);
   
   void  ping(const char *buffer, size_t buffer_size);

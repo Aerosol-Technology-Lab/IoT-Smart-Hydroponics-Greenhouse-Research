@@ -10,15 +10,11 @@ class PH : public SensorInterface
 {
 private:
     uint8_t pin;
-    // DFRobot_PH sensor;
-    WaterTemperature *temp;
     float neutralVoltage = 1500.0f;
     float acidVoltage = 2032.44f;
     
 public:
-    PH();
-
-    PH(uint8_t pin, WaterTemperature *temp=nullptr, bool initialize=true);
+    PH(uint8_t pin);
 
     void init();
     
@@ -32,5 +28,20 @@ public:
 
     size_t write(char *buffer, uint8_t idx=0);
 
+    bool callibrate();
+
+    void getCallibration(float &neutralVoltage, float &acidicVoltage);
+
+    void setCallibration(float neutralVoltage, float acidicVoltage);
+
+    /**
+     * @brief Deprecated - non functioning
+     */
     virtual float readTemp();
+
+private:
+    inline float rawRead()
+    {
+        return analogRead(pin) / ANALOG_RESOLUTION * 5000.0f;
+    }
 };
