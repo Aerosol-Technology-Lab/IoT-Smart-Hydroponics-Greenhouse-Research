@@ -277,7 +277,7 @@ void Sensors::ph(JsonObject &obj)
     obj["ph"] = pHSensor.read();
 }
 
-void Sensors::callibratePH()
+void Sensors::phCallibrate()
 {
     pHSensor.callibrate();
 }
