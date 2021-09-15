@@ -36,6 +36,6 @@ public:
 private:
     inline float rawRead()
     {
-        return analogRead(pin) / ANALOG_RESOLUTION * 5000.0f;
+        return analogRead(pin) / ANALOG_RESOLUTION * VREF * 1000.0f;
     }
 };

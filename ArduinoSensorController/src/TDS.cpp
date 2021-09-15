@@ -3,21 +3,14 @@
 #include <stdlib.h>
 #include "utils.h"
 
-TDS::TDS(uint8_t pin, WaterTemperature *temp, bool initialize)
-    : pin(pin),
-      temp(temp)
-{
-    if (initialize) {
-        init();
-    }
-}
+TDS::TDS(uint8_t pin, WaterTemperature *temp, bool initialize):
+    pin(pin),
+    temp(temp)
+{ }
 
 void TDS::init()
 {
-    if (!initialized) {
-        pinMode(pin, INPUT);
-        initialized = true;
-    }
+    // nothing to do
 }
 
 float TDS::read(uint8_t idx)
