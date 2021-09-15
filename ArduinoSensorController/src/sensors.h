@@ -111,6 +111,13 @@ namespace Sensors {
    */
   void bme280(JsonObject &obj, int sensorIdx=-1);
   
+  /**
+   * @brief Gets CO2 and VTOC in specified chamber
+   * 
+   * @param obj JsonObject where CO2 and TVOC information is stored. CO2 is stored in ppm and
+   *            TVOC in ppb
+   * @param sensorIdx Sensor index to read
+   */
   void ccs811(JsonObject &obj, int sensorIdx=-1);
   
   /**
@@ -150,6 +157,13 @@ namespace Sensors {
    */
   void phSetCalibration(float neutralVoltage, float acidicVoltage);
   
+  /**
+   * @brief Returns the turbidity from the turbidity sensor. Units are in NTU. This must be referenced
+   *        solution to determine relationship between NTU and ppm. NTU and ppm has a linear and positive
+   *        relationship.
+   * 
+   * @param obj JsonObject where turbidity information is stored with key "turb"
+   */
   void turbidity(JsonObject &obj);
   
   void  ping(const char *buffer, size_t buffer_size);
