@@ -17,6 +17,7 @@
 #include "WaterTemperature.h"
 #include "TDS.h"
 #include "PH.h"
+#include "EC.h"
 
 #endif
 
@@ -43,9 +44,10 @@ namespace Sensors {
 
   // sensor probes pin layout
   const uint8_t PIN_SHARED_PROBE_WATERTEMP              = 28;
-  const uint8_t PIN_TDS_SENSOR                          = A2;
-  const uint8_t PIN_PH_SENSOR                           = A3;
-  const uint8_t PIN_TURBIDITY_SENSOR                    = A4;
+  const uint8_t PIN_TDS_SENSOR                          = A4;
+  const uint8_t PIN_PH_SENSOR                           = A5;
+  const uint8_t PIN_TURBIDITY_SENSOR                    = A6;
+  const uint8_t PIN_EC_SENSOR                           = A7;
   
   // OneWire oneWire0(PIN_TMP0);
   // DallasTemperature tmp0(&oneWire0);
@@ -60,17 +62,20 @@ namespace Sensors {
   // water temperature sensor for all the probes
   extern WaterTemperature sharedProbeWaterTemp;
 
-  // TDS probe
-  extern TDS TDSSensor;
-
   // bme280
   extern Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
   extern BME280_Data bme280Data[NUM_BME_SENSORS];
 
   extern Pair<I2CBUS, CCS811*> ccsSensors[NUM_CCS_SENSORS];
 
+  // TDS probe
+  extern TDS tdsSensor;
+
   // pH sensor
   extern PH pHSensor;
+
+  // EC sensor
+  extern EC ecSensor;
 
 #endif
   
@@ -165,6 +170,16 @@ namespace Sensors {
    * @param obj JsonObject where turbidity information is stored with key "turb"
    */
   void turbidity(JsonObject &obj);
+  
+  void tds(JsonObject &obj);
+  
+  void ec(JsonObject &obj);
+  
+  void ecCallibrate();
+
+  void ecSetCallibration(float kLow, float kHigh);
+
+  void ecGetCallibration(float &kLow, float &kHigh);
   
   void  ping(const char *buffer, size_t buffer_size);
 

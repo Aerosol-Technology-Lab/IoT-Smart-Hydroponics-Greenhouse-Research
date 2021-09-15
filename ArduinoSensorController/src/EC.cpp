@@ -37,7 +37,7 @@ float EC::read(uint8_t _)
     return (rawEC * kValue) / (1.0f + 0.0185f * (temperature - 25.0f));
 }
 
-size_t write(char *buffer, uint8_t idx=0)
+size_t EC::write(char *buffer, uint8_t idx)
 {
 
 }

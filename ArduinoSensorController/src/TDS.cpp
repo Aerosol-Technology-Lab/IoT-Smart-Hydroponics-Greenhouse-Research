@@ -15,6 +15,7 @@ void TDS::init()
 
 float TDS::read(uint8_t idx)
 {
+    analogRead(pin);        // clear first result
     for (int i = 0; i < SCOUNT; ++i) {
         analogBuffer[i] = analogRead(pin);
     }

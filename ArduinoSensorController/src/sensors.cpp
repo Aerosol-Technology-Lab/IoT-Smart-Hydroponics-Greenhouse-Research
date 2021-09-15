@@ -15,9 +15,10 @@ namespace Sensors {
     Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
     BME280_Data bme280Data[NUM_BME_SENSORS];
     Pair<I2CBUS, CCS811*> ccsSensors[NUM_CCS_SENSORS];
-    WaterTemperature sharedProbeWaterTemp(PIN_TDS_SENSOR, false);
-    TDS TDSSensor(PIN_TDS_SENSOR, &sharedProbeWaterTemp);
+    WaterTemperature sharedProbeWaterTemp(PIN_SHARED_PROBE_WATERTEMP, false);
+    TDS tdsSensor(PIN_TDS_SENSOR, &sharedProbeWaterTemp);
     PH pHSensor(PIN_PH_SENSOR);
+    EC ecSensor(PIN_EC_SENSOR, &sharedProbeWaterTemp);
 }
 
 void Sensors::init() {
@@ -71,8 +72,9 @@ void Sensors::init() {
 
     // initialize probes
     sharedProbeWaterTemp.init();
-    TDSSensor.init();
+    tdsSensor.init();
     pHSensor.init();
+    ecSensor.init();
 }
 
 void Sensors::waterTemperature(const char *buffer, size_t buffer_size, bool unused) {
@@ -309,6 +311,31 @@ void Sensors::turbidity(JsonObject &obj)
     float turbidity = -1120.4f * rawValue * rawValue + 5742.3f * rawValue - 4352.9f;
     
     obj["turb"] = turbidity;
+}
+
+void Sensors::tds(JsonObject &obj)
+{
+    obj["tds"] = tdsSensor.read();
+}
+
+void Sensors::ec(JsonObject &obj)
+{
+    obj["ec"] = ecSensor.read();
+}
+
+void Sensors::ecCallibrate()
+{
+    ecSensor.callibrate();
+}
+
+void Sensors::ecSetCallibration(float low, float high)
+{
+    ecSensor.setCallibration(low, high);
+}
+
+void Sensors::ecGetCallibration(float &low, float &high)
+{
+    ecSensor.getCallibration(low, high);
 }
 
 void Sensors::ping(const char *buffer, size_t buffer_size) {
