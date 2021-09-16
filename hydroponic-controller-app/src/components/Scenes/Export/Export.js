@@ -1,5 +1,7 @@
 import { React, useEffect, useState, useRef } from 'react';
-import './Export.css'
+import './Export.css';
+import './Sysinfo.js';
+import Sysinfo from './Sysinfo.js';
 const { ipcRenderer } = window.require('electron');
 const fs = window.require('fs');
 const os = window.require('os');
