@@ -51,7 +51,7 @@ locker.lock().then(() => {
    */
   const configManager = new ConfigLoader('./Config.json');
   var Config = configManager.load();
-  console.log(Config);
+
   Config.runtime = {};    // runtime config variables
 
   var currentReadings = {
@@ -85,6 +85,11 @@ locker.lock().then(() => {
   var currentTurbidity = undefined;
   var buffer = Buffer.alloc(0);
 
+  // Intervals that periodically run only when the Arduino is connected
+  var intervalsOnArduinoConnection = [];
+
+  /*   ---------- Functions ----------   */
+  
   const processData = async(data) => {
 
     console.log(`Data is processed! We have ${data.toString()}`);
@@ -460,21 +465,44 @@ locker.lock().then(() => {
 
       arduino.on("close", () => {
         arduino = null;
+        
+        // remove all intervals when Arduino is connected
+        for (let interval of intervalsOnArduinoConnection) {
+          clearInterval(interval);
+        }
+        intervalsOnArduinoConnection = [];
+        
         console.log('Arduino is closed');
         if (mainWindow) {
           mainWindow.webContents.send('serialport', {state: 'disconnected'});
         }
+
+        
         reconnectArduino();
       });
 
       arduino.write(Buffer.from("HELLO"));
 
-      setInterval(() => {
-        if (arduino) {
-          let s = JSON.stringify({com: 'ALL'}) + '\0';
-          arduino.write(s);
-        }
-      }, 5000);
+      // Requests data from each chamber every 10 seconds
+      intervalsOnArduinoConnection.push(
+
+          setInterval(() => {
+            
+            let s = JSON.stringify({com: 'ALL'}) + '\0';
+            arduino?.write(s);
+          }, 10000)
+        );
+        
+        // Resets Arduino every 5 minutes to clear error from I2C sensors
+        intervalsOnArduinoConnection.push(
+
+          setInterval(() => {
+            
+            let s = JSON.stringify({com :'RESET'}) + '\0';
+            arduino?.write(s);
+          }, 5 * 60 * 1000)
+        );
+      
     });
 
 

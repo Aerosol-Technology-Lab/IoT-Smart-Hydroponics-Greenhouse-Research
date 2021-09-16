@@ -35,7 +35,7 @@ class ConfigLoader
     }
 
     async write(data, callback=()=>{}) {
-        if (typeof data == 'object') {
+        if (typeof data === 'object') {
             data = JSON.stringify(data, null, 4);
         }
         fs.writeFile(path.join(__dirname, this.filepath), data, callback);

@@ -2714,6 +2714,11 @@ async@^2.6.2:
   dependencies:
     lodash "^4.17.14"
 
+async@~0.2.9:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/async/-/async-0.2.10.tgz#b6bbe0b0674b9d719708ca38de8c237cb526c3d1"
+  integrity sha1-trvgsGdLnXGXCMo43owjfLUmw9E=
+
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
@@ -4584,6 +4589,11 @@ dir-glob@^3.0.1:
   integrity sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==
   dependencies:
     path-type "^4.0.0"
+
+disk-space@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/disk-space/-/disk-space-1.1.0.tgz#7dee67962656f021ee132b6fd5c4bb7c6ea21dfb"
+  integrity sha1-fe5nliZW8CHuEytv1cS7fG6iHfs=
 
 dmg-builder@22.9.1:
   version "22.9.1"
@@ -8449,6 +8459,14 @@ node-addon-api@^1.6.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-1.7.2.tgz#3df30b95720b53c24e59948b49532b662444f54d"
   integrity sha512-ibPK3iA+vaY1eEjESkQkM0BbCqFOaZMiXRTtdB0u7b4djtY6JnsjvPdUHVMg6xQt3B8fpTTWHI9A+ADjM9frzg==
 
+node-diskfree@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/node-diskfree/-/node-diskfree-0.1.0.tgz#5852088a7d13ace78db63d67f0c8150f5c2d57ae"
+  integrity sha1-WFIIin0TrOeNtj1n8MgVD1wtV64=
+  dependencies:
+    async "~0.2.9"
+    numeral "~1.4.8"
+
 node-forge@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.10.0.tgz#32dea2afb3e9926f02ee5ce8794902691a676bf3"
@@ -8678,6 +8696,11 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
+
+numeral@~1.4.8:
+  version "1.4.8"
+  resolved "https://registry.yarnpkg.com/numeral/-/numeral-1.4.8.tgz#3355e175069f7b2721574126789916d02dbcd31d"
+  integrity sha1-M1XhdQafeychV0EmeJkW0C280x0=
 
 nwsapi@^2.2.0:
   version "2.2.0"
