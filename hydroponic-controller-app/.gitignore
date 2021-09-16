@@ -28,6 +28,7 @@ yarn-error.log*
 
 # Database
 **/*.db
+hydro.csv
 
 # temp dir
 tmp/
