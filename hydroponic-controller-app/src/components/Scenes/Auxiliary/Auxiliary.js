@@ -21,8 +21,8 @@ function Auxiliary()
         <div className='auxiliary'>
             <div className='content'>
                 <p>Sensor</p>
-                <button className='calibrate' onClick={ () => {} }>Calibrate</button>
-                <button onClick={ () => {} }>Record</button>
+                <button className='calibrate' onClick={ () => {} }>Do Not Press</button>
+                <button onClick={ () => {} }>Do Not Press</button>
             </div>
             {
                 PERIPHERERAL_SENSORS.map(([sensorName, sensorCommand]) => {
