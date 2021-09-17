@@ -6,7 +6,8 @@ const { exit } = require('process');
 // const DBPATH = ':memory:';
 const DBFORMATPATH = './hydro.db.format';
 const DBPATH = './hydro.db';
-const CSVPATH = './hydro.csv';
+const CSV_CHAMBER_PATH = './hydro.csv';
+const CSV_PERIPHERAL_PATH = './hydro_peripheral.csv';
 
 
 if (!fs.existsSync(DBPATH)) {
@@ -115,6 +116,23 @@ locker.lock().then(() => {
       response.time = new Date();
       currentTurbidity = response;
       storeTurbidityDataToDB(response);
+
+      storePeripheralSensorToCSV(new Date().getTime(), 'Turbidity', data.turb, 'NTU');
+    }
+    else if (response.response === 'PH') {
+      response.time = new Date();
+      currentTurbidity = response;
+      storePeripheralSensorToCSV(new Date().getTime(), 'pH', data.ph, 'pH');
+    }
+    else if (response.response === 'TDS') {
+      response.time = new Date();
+      currentTurbidity = response;
+      storePeripheralSensorToCSV(new Date().getTime(), 'Total Dissolved Solids', data.tds, 'ppm');
+    }
+    else if (response.response === 'EC') {
+      response.time = new Date();
+      currentTurbidity = response;
+      storePeripheralSensorToCSV(new Date().getTime(), 'Electrical Conductivity', data.ec, 'mS/cm');
     }
   };
   
@@ -208,7 +226,7 @@ locker.lock().then(() => {
   const storeChamberDataToCSV = async (columns, values) => {
 
     // checks if file exists
-    var fileExists = fs.promises.access(CSVPATH).then(() => {return true}).catch(() => {return false});
+    var fileExists = fs.promises.access(CSV_CHAMBER_PATH).then(() => {return true}).catch(() => {return false});
     
     var content = '';
     // checks if file exists
@@ -217,11 +235,25 @@ locker.lock().then(() => {
     }
     content += values + '\n'  ;
 
-    fs.writeFile(CSVPATH, content, {flag: 'a+'}, err => {});
+    fs.writeFile(CSV_CHAMBER_PATH, content, {flag: 'a+'}, err => {});
     
     return true;
   }
+
+  const storePeripheralSensorToCSV = async(time, sensorType, value, unit='') => {
+    
+    var fileExists = fs.promises.access(CSV_PERIPHERAL_PATH).then(() => {return true}).catch(() => {return false});
+    var content = '';
+    if (!(await fileExists)) {
+      content += 'time (Since Midnight of Jan 1 1970), sensor type, value, unit\n';
+    }
+
+    content += `${time},${sensorType},${value},${unit}\n`;
+    fs.writeFile(CSV_PERIPHERAL_PATH, content, {flag: 'a'}, err => {});
+    return true;
+  };
   
+  /*
   const storeTurbidityDataToDB = async (data) => {
     console.log('Storing turbidity data to db');
     if (!('turb' in data)) return;
@@ -243,6 +275,7 @@ locker.lock().then(() => {
     db.run(`INSERT INTO turbidity (time, value) VALUES(${data.time.getTime()}, ${data.turb})`);
     db.close();
   }
+  */
   
   // main app window
   var mainWindow;
@@ -560,10 +593,10 @@ locker.lock().then(() => {
     }
   });
   
-  ipcMain.handle('arduino-turbidity', async (event, _) => {
+  ipcMain.handle('arduino-turbidity', async (event, type) => {
 
     let data = {
-      com: 'TURB'
+      com: type
     };
     let sdata = JSON.stringify(data) + '\0';
     
