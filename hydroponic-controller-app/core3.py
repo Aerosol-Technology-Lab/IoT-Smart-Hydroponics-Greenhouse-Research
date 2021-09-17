@@ -62,6 +62,7 @@ def main(args):
             py_exec_path = sys.executable
             script_path = os.path.realpath(__file__)
             args = ''
+            Path(os.path.join(Path.home(), '.config/autostart')).mkdir(parents=True, exist_ok=True)
             with open(autostart_dir, 'w') as f:
                 f.write(file_data.format(exec_path=py_exec_path, script_path=script_path, args=args))
     
