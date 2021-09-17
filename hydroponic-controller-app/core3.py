@@ -46,6 +46,7 @@ def update(branch=None, force=False):
 def main(args):
 
     update()
+    # subprocess.run('yarn elc-rebuild'.split())
     subprocess.Popen(['yarn', 'electron-dev', '&'], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
     
     # check if installed. If not, then install
