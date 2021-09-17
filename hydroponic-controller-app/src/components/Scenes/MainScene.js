@@ -7,7 +7,6 @@ const { ipcRenderer } = window.require('electron');
 function MainScene()
 {
     const [chamberReadings, setchamberReadings] = useState(undefined);
-    const [updater, setupdater] = useState(null);
 
     useEffect(() => {
         
@@ -19,7 +18,6 @@ function MainScene()
             setchamberReadings(reading);
         }, 1000);
         
-        window.updater = setupdater;
         window.setNavName?.('Main');
         
         return () => {
