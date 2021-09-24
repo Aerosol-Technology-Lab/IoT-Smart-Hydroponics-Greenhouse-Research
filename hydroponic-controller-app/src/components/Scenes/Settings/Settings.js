@@ -5,14 +5,20 @@ import Update from './Update';
 
 const Settings = () => {
 
+    const divStyle = {
+        width: '100%',
+        height: '100%',
+        'background-color': 'red'
+    }
+    
     useEffect(() => {
     }, [])
     
     return (
-        <div>
-            <Route path='/update' exact component={Update} />
+        // <div style={ divStyle }>
+            // <Route path='/update' exact component={Update} />
             <Route path='/settings' exact component={SettingsPage} />
-        </div>
+        // </div>
     )
 }
 

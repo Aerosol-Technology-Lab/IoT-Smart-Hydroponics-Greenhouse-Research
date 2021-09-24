@@ -15,7 +15,7 @@ function Chamber(props) {
                 <h2>Water</h2>
                 <div className='contents'>
                 <p>
-                    Temperature: { contents ? contents['temp'] : '---' } &#176;F
+                    Temperature: { contents ? contents['temp'].toFixed(1) : '---' } &#176;F
                 </p>
                     {/* <p>Turbidity: <span>---</span> </p> */}
                 </div>
@@ -23,11 +23,11 @@ function Chamber(props) {
             <div className="environment">
                 <h2>Air</h2>
                 <div className='contents'>
-                    <p>Temperature: { contents ? contents['bme280']['temp'] : '---' }&#176;F</p>
+                    <p>Temperature: { contents ? contents['bme280']['temp'].toFixed(1) : '---' }&#176;F</p>
                     <p>CO2: <span>---</span> </p>
-                    <p>Pressure: { contents ? contents['bme280']['pres'] : '---' }kPA </p>
-                    <p>Humidity: { contents ? contents['bme280']['humd'] : '---' }%</p>
-                    <p>Light: { contents ? contents['light'] : '---' }%</p>
+                    <p>Pressure: { contents ? contents['bme280']['pres'].toFixed(3) : '---' }kPA </p>
+                    <p>Humidity: { contents ? contents['bme280']['humd'].toFixed(1) : '---' }%</p>
+                    <p>Light: { contents ? contents['light'].toFixed(0) : '---' }%</p>
                     {/* <p>Time: { contents ? contents['time']?.toString() : '---' }%</p> */}
                 </div>
             </div>

@@ -14,18 +14,21 @@ function Export()
         'root',
     ];
     const [directories, setDirectories] = useState([]);
-    const watcher = useRef(null)
     const mediaPath = useRef(`/media/${os.userInfo().username}`)
 
     const saveToUSB = async (file) => {
-        fs.copyFile('./hydro.csv', path.join(mediaPath.current, file, 'hydro.csv'), (err) => {
+        const directoryPath = path.join(mediaPath.current, file, 'hydro.csv');
+        await fs.unlink(directoryPath);
+        fs.copyFile('./hydro.csv', directoryPath, (err) => {
             if (err) console.log('Cannot copy file');
         })
     };
     
     useEffect(() => {
 
-        watcher.current = setInterval(() => {
+        window.setNavName?.('Export');
+        
+        var watcher = setInterval(() => {
             
             fs.readdir(mediaPath.current, (err, files) => {
                 if (!err) {
@@ -36,7 +39,7 @@ function Export()
         }, 1000);
           
         return () => {
-            clearInterval(watcher.current);
+            clearInterval(watcher);
         }
     }, [])
     
@@ -64,7 +67,7 @@ function Export()
                         <div className='nousb-icon'>
                             <img src='https://static.thenounproject.com/png/933129-200.png' />
                         </div>
-                        <p className='nousbtext'>no usb detected</p>
+                        <p className='nousbtext'>no USB drive found</p>
                     </div>
                 }
             </div>

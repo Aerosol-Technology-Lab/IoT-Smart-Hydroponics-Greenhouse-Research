@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useEffect } from 'react';
 import { render } from 'react-dom';
 import './Auxiliary.css';
 const { ipcRenderer } = window.require('electron');
@@ -17,6 +17,10 @@ function Auxiliary()
         ipcRenderer.invoke('arduino-turbidity', type);
     };
 
+    useEffect(() => {
+        window.setNavName?.('Peripheral');
+    }, [])
+    
     return (
         <div className='auxiliary'>
             <div className='content'>

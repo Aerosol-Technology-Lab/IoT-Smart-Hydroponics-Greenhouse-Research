@@ -17,13 +17,16 @@
 .SettingsScene {
     height: 100%;
     padding: 20px 30px;
-    overflow: hidden;
+    overflow-y: scroll;
     // background: rgb(52,73,94);
 // background: linear-gradient(50deg, rgb(58, 58, 58) 0%, rgb(65, 65, 65) 100%);
 }
 
 .SettingsScene .slideInFromRight {
     animation: 0.15s ease-out 0s 1 slideInFromRight;
+    width: 100%;
+    // overflow-y: scroll;
+    // overflow-x: hidden;
 }
 
 .SettingsScene .options {
