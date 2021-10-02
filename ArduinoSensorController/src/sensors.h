@@ -179,7 +179,7 @@ namespace Sensors {
 
   void ecSetCallibration(float kLow, float kHigh);
 
-  void ecGetCallibration(float &kLow, float &kHigh);
+  void ecGetCallibration(JsonObject &obj);
   
   void  ping(const char *buffer, size_t buffer_size);
 

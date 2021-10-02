@@ -1,6 +1,6 @@
 #ifndef SIMULATOR
 
-#define I2C_BAUD 10000
+#define I2C_BAUD 5000
 
 #include "sensors.h"
 #include <Arduino.h>
@@ -50,6 +50,7 @@ void Sensors::init() {
                 , i + 1, i, ccsSensors[i].first
                 );
             Serial.print(buffer);
+            ccsSensors[i].first = -1;
         }
     }
 
@@ -75,6 +76,7 @@ void Sensors::init() {
     tdsSensor.init();
     pHSensor.init();
     ecSensor.init();
+    Serial.println("-> Done initializing all sensors");
 }
 
 void Sensors::waterTemperature(const char *buffer, size_t buffer_size, bool unused) {
@@ -234,7 +236,7 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
         
         _pollBME280(sensorIdx);
         obj["temp"] = (bme280Data[sensorIdx].tempetrature * 9.0f / 5.0f ) + 32.0f;
-        obj["pres"] =  bme280Data[sensorIdx].pressure     / 100.0f;
+        obj["pres"] =  bme280Data[sensorIdx].pressure     / 1000.0f;
         obj["humd"] =  bme280Data[sensorIdx].humidity;
     }
 }
@@ -248,6 +250,16 @@ void Sensors::ccs811(JsonObject &obj, int sensorIdx)
         obj["err_mess"] = buffer;
         return;
     }
+
+    if (ccsSensors[sensorIdx].first < 0) {
+        // sensor not initialized, continue
+        obj["initialized"] = false;
+        return;
+    }
+    else {
+        obj["initialized"] = true;
+    }
+
 
     const unsigned long staleCalibration = 30 * 1000;   // the BME280 reading at the same chamber must be 30 seconds old or new
     if (millis() - bme280Data[sensorIdx].time > staleCalibration) _pollBME280(sensorIdx);
@@ -271,7 +283,7 @@ void Sensors::ambientLight(JsonObject &obj, int sensorIdx)
         return;
     }
 
-    obj["light"] = analogRead(AMBIENT_LIGHT_GPIO[sensorIdx]);
+    obj["light"] = (float) analogRead(AMBIENT_LIGHT_GPIO[sensorIdx]) / ANALOG_RESOLUTION * 100.0f;
 }
 
 void Sensors::ph(JsonObject &obj)
@@ -333,9 +345,12 @@ void Sensors::ecSetCallibration(float low, float high)
     ecSensor.setCallibration(low, high);
 }
 
-void Sensors::ecGetCallibration(float &low, float &high)
+void Sensors::ecGetCallibration(JsonObject &obj)
 {
+    float low, high;
     ecSensor.getCallibration(low, high);
+    obj["low"] = low;
+    obj["high"] = high;
 }
 
 void Sensors::ping(const char *buffer, size_t buffer_size) {
