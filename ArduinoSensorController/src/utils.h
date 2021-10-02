@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include <Stream.h>
 #include <ArduinoJson.h>
+#include <assert.h>
 
 #ifdef DUE
     #define RESOLUTION_BITS                   12
@@ -140,6 +141,23 @@ namespace Utils {
      */
     template<class T>
     void quickSort(T arr[],int l,int r);
+
+    void resetHardware()
+    {
+#ifdef ARDUINO_SAM_DUE
+        // this should emulate hardware reset for Arduino Due
+        RSTC->RSTC_MR = 0xA5000801;
+        RSTC->RSTC_CR = 0xA5000013;
+#else
+#error "Define a reset functionality for an equivalent board. A hardware reset is preffered"
+#endif
+    }
+
+    void resetSoftware()
+    {
+        // rstc_start_software_reset(RSTC); // verify that this works
+        assert(false && "Software reset not implemented");
+    }
 }
 
 #include "utils_impl.h"
