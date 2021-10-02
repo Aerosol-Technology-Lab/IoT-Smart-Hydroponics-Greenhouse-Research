@@ -7,7 +7,7 @@
 #define DEFAULT_I2C_MUX_ADDRESS 0x70
 #endif
 
-typedef uint8_t I2CBUS;
+typedef int8_t I2CBUS;
 
 /**
  * @brief Selects port to address on the i2c mux
