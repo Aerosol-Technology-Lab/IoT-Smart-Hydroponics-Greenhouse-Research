@@ -1,0 +1,6 @@
+(fp_lib_table
+  (lib (name mainboard)(type KiCad)(uri ${KIPRJMOD}/mainboard.pretty)(options "")(descr ""))
+  (lib (name MiOrigin)(type KiCad)(uri /home/charliew/Documents/pcb_MiOrigin/pcb/MiOrigin.pretty)(options "")(descr ""))
+  (lib (name PTS636SK50SMTRLFS)(type KiCad)(uri /home/charliew/Documents/pcb_MiOrigin/pcb/lib/PTS636SK50SMTRLFS/PTS636SK50SMTRLFS.pretty)(options "")(descr ""))
+  (lib (name footprint)(type KiCad)(uri ${KIPRJMOD}/footprint)(options "")(descr ""))
+)

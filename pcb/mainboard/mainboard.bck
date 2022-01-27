@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP RD3L07BAT
+D -4.1A Id, -20V Vds, P-Channel Power MOSFET, 48mOhm Ron, SC-74-6
+K P-Channel MOSFET
+F https://fscdn.rohm.com/en/products/databook/datasheet/discrete/transistor/mosfet/rd3l07battl1-e.pdf
+$ENDCMP
+#
+#End Doc Library

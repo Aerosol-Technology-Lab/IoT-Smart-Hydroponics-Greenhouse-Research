@@ -1,0 +1,7 @@
+(fp_lib_table
+  (lib (name mainboard-smallother)(type KiCad)(uri ../../mainboard)(options "")(descr "")(disabled))
+  (lib (name footprintother)(type KiCad)(uri ../../mainboard/footprint)(options "")(descr "")(disabled))
+  (lib (name mainboard-small)(type KiCad)(uri /home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard-small/mainboard.pretty)(options "")(descr ""))
+  (lib (name footprint)(type KiCad)(uri /home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard-small/footprint)(options "")(descr ""))
+  (lib (name mainboard)(type KiCad)(uri /home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard/mainboard.pretty)(options "")(descr ""))
+)
