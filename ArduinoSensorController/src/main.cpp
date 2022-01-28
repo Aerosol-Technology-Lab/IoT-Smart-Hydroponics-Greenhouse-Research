@@ -95,6 +95,14 @@ void loop() {
                 }
                 dev_println("Done with bme280");
                 dev_delay(1000);
+
+                // ccs811
+                {
+                    JsonObject ccs811 = currentChamber.createNestedObject("ccs811");
+                    Sensors::ccs811(ccs811, i);
+                }
+                dev_println("Done with ccs811");
+                dev_delay(1000);
                 
                 // water temp
                 {
@@ -133,7 +141,105 @@ void loop() {
         }
         // pH command
         else if (response == "PH") {
-            Sensors::ph(inBuffer, IN_BUFFER_SIZE);
+
+            JsonObject returnObj = jsonDocument.as<JsonObject>();
+            
+            if (inputJSON.containsKey("calibrate") && inputJSON["calibrate"].containsKey("type")) {
+
+                const char *calibrationType = inputJSON["calibrate"]["type"].as<const char *>();
+                if (calibrationType) {
+
+                    if (!strcmp(calibrationType, "calibrate")) {
+                        Sensors::phCallibrate();
+                    }
+                    else if (!strcmp(calibrationType, "get")) {
+                        
+                        /*  Creates the following json structure in the root return document:
+                        {
+                            "calibrate": {
+                                "ph": {
+                                    "type": "get",
+                                    "values": {
+                                        "neutral": <neutral voltage as a float>,
+                                        "acidic":  <acidic voltage as a float>
+                                    }
+                                }
+                            }
+                        }
+                        */
+                        if (!returnObj.containsKey("calibrate")) returnObj.createNestedObject("calibrate");
+
+                        JsonObject phJson = returnObj["calibrate"].createNestedObject("ph");
+                        phJson["type"] = "get";
+                        JsonObject values = phJson.createNestedObject("values");
+
+                        Sensors::phGetCalibration(values);
+                    }
+                    else if (!strcmp(calibrationType, "set") && inputJSON["calibrate"].containsKey("values")) {
+
+                        // gets the values object
+                        JsonObject values = inputJSON["calibrate"]["values"];
+                        // if the neutral and acidic key exists, calibrate ph sensor with those values
+                        if (values.containsKey("neutral") && values.containsKey("acidic")) Sensors::phSetCalibration(values["neutral"], values["acidic"]);
+                    }
+                }
+            }
+            
+            Sensors::ph(returnObj);
+
+        }
+        else if (response == "TDS") {
+
+            JsonObject obj = jsonDocument.as<JsonObject>();
+            Sensors::tds(obj);
+        }
+        else if (response == "EC") {
+
+
+            JsonObject returnObj = jsonDocument.as<JsonObject>();
+            
+            if (inputJSON.containsKey("calibrate") && inputJSON["calibrate"].containsKey("type")) {
+
+                const char *calibrationType = inputJSON["calibrate"]["type"].as<const char *>();
+                if (calibrationType) {
+
+                    if (!strcmp(calibrationType, "calibrate")) {
+                        Sensors::ecCallibrate();
+                    }
+                    else if (!strcmp(calibrationType, "get")) {
+                        
+                        /*  Creates the following json structure in the root return document:
+                        {
+                            "calibrate": {
+                                "ec": {
+                                    "type": "get",
+                                    "values": {
+                                        "low":  <low value as a float>,
+                                        "high": <high value as a float>
+                                    }
+                                }
+                            }
+                        }
+                        */
+                        if (!returnObj.containsKey("calibrate")) returnObj.createNestedObject("calibrate");
+
+                        JsonObject ecJson = returnObj["calibrate"].createNestedObject("ec");
+                        ecJson["type"] = "get";
+                        JsonObject values = ecJson.createNestedObject("values");
+
+                        Sensors::ecGetCallibration(values);
+                    }
+                    else if (!strcmp(calibrationType, "set") && inputJSON["calibrate"].containsKey("values")) {
+
+                        // gets the values object
+                        JsonObject values = inputJSON["calibrate"]["values"];
+                        // if the neutral and acidic key exists, calibrate ph sensor with those values
+                        if (values.containsKey("low") && values.containsKey("high")) Sensors::ecSetCallibration(values["low"], values["high"]);
+                    }
+                }
+            }
+
+            Sensors::ec(returnObj);
         }
         // ping
         else if (response == "PING") {
@@ -145,14 +251,7 @@ void loop() {
         // reset
         else if (response == "RESET") {
 
-            // this should emulate hardware reset for Arduino Due
-            #ifdef ARDUINO_SAM_DUE
-            RSTC->RSTC_MR = 0xA5000801;
-            RSTC->RSTC_CR = 0xA5000013;
-            #else
-            #error "Define a reset functionality for an equivalent board. A hardware reset is preffered"
-            #endif
-            // rstc_start_software_reset(RSTC); // verify that this works
+            Utils::resetHardware();
         }
         // echo
         else if (response == "ECHO") {
@@ -170,7 +269,7 @@ void loop() {
 
     }
     else {
-      delay(500);
+        delay(10);
     }
 
 }

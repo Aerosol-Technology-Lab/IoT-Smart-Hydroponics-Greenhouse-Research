@@ -1,0 +1,8 @@
+(sym_lib_table
+  (lib (name mainboard)(type Legacy)(uri /home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard/mainboard.lib)(options "")(descr "")(disabled))
+  (lib (name MTJ-889X1-FSE)(type Legacy)(uri /home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard/MTJ-889X1-FSE.lib)(options "")(descr "")(disabled))
+  (lib (name mainboard-small)(type Legacy)(uri /home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard-small/mainboard.lib)(options "")(descr ""))
+  (lib (name EMC2101-ACZL-TR)(type Legacy)(uri /home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard-small/EMC2101-ACZL-TR.lib)(options "")(descr ""))
+  (lib (name 2035551012)(type Legacy)(uri /home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard-small/2035551012.lib)(options "")(descr ""))
+  (lib (name duraclik-3pos)(type Legacy)(uri /home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard-small/symbol-lib/duraclik-3pos.lib)(options "")(descr ""))
+)

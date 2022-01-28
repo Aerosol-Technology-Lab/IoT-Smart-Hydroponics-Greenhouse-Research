@@ -1,0 +1,543 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr USLetter 11000 8500
+encoding utf-8
+Sheet 2 2
+Title "Power | Hydroponics System - Chamber Controller"
+Date "2021-10-20"
+Rev "1.0"
+Comp "Aerosol Technology Lab | Texas A&M University"
+Comment1 "Biological & Agricultural Engineering"
+Comment2 "Author: Charlemagne Wong | CSCE '21"
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L mainboard-small:DFRobot-3V-Regulator U?
+U 1 1 6174DBCA
+P 4250 1250
+AR Path="/6174DBCA" Ref="U?"  Part="1" 
+AR Path="/6174BEC7/6174DBCA" Ref="U1"  Part="1" 
+F 0 "U1" H 4250 1615 50  0000 C CNN
+F 1 "DFRobot-3V-Regulator" H 4250 1524 50  0000 C CNN
+F 2 "mainboard-small:DFRobot-3VRegulator" H 4300 1250 50  0001 C CNN
+F 3 "" H 4300 1250 50  0001 C CNN
+F 4 "-" H 4250 1250 50  0001 C CNN "DGK"
+F 5 "-" H 4250 1250 50  0001 C CNN "Manf#"
+	1    4250 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3650 1050 3650 1150
+Wire Wire Line
+	3650 1150 3850 1150
+$Comp
+L power:GND2 #PWR?
+U 1 1 6174DBD8
+P 3650 1400
+AR Path="/6174DBD8" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/6174DBD8" Ref="#PWR0103"  Part="1" 
+F 0 "#PWR0103" H 3650 1150 50  0001 C CNN
+F 1 "GND2" H 3655 1227 50  0000 C CNN
+F 2 "" H 3650 1400 50  0001 C CNN
+F 3 "" H 3650 1400 50  0001 C CNN
+	1    3650 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3650 1400 3650 1350
+Wire Wire Line
+	3650 1350 3850 1350
+$Comp
+L power:+3.3V #PWR?
+U 1 1 6174DBE0
+P 4800 1050
+AR Path="/6174DBE0" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/6174DBE0" Ref="#PWR0104"  Part="1" 
+F 0 "#PWR0104" H 4800 900 50  0001 C CNN
+F 1 "+3.3V" H 4815 1223 50  0000 C CNN
+F 2 "" H 4800 1050 50  0001 C CNN
+F 3 "" H 4800 1050 50  0001 C CNN
+	1    4800 1050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4800 1050 4800 1150
+Wire Wire Line
+	4800 1150 4650 1150
+$Comp
+L power:GND #PWR?
+U 1 1 6174DBE8
+P 4800 1400
+AR Path="/6174DBE8" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/6174DBE8" Ref="#PWR0105"  Part="1" 
+F 0 "#PWR0105" H 4800 1150 50  0001 C CNN
+F 1 "GND" H 4805 1227 50  0000 C CNN
+F 2 "" H 4800 1400 50  0001 C CNN
+F 3 "" H 4800 1400 50  0001 C CNN
+	1    4800 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4800 1400 4800 1350
+Wire Wire Line
+	4800 1350 4650 1350
+Wire Wire Line
+	800  950  800  1100
+$Comp
+L power:GND2 #PWR?
+U 1 1 6174DC12
+P 2550 1200
+AR Path="/6174DC12" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/6174DC12" Ref="#PWR0106"  Part="1" 
+F 0 "#PWR0106" H 2550 950 50  0001 C CNN
+F 1 "GND2" H 2450 1000 50  0000 C CNN
+F 2 "" H 2550 1200 50  0001 C CNN
+F 3 "" H 2550 1200 50  0001 C CNN
+	1    2550 1200
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 1200 2550 1100
+Wire Wire Line
+	2550 1100 2350 1100
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 61752E02
+P 1000 950
+F 0 "#FLG0101" H 1000 1025 50  0001 C CNN
+F 1 "PWR_FLAG" H 1200 1100 50  0000 C CNN
+F 2 "" H 1000 950 50  0001 C CNN
+F 3 "~" H 1000 950 50  0001 C CNN
+	1    1000 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1000 950  1000 1100
+Wire Wire Line
+	800  1100 1000 1100
+Connection ~ 1000 1100
+Wire Wire Line
+	1000 1100 1050 1100
+$Comp
+L power:PWR_FLAG #FLG0102
+U 1 1 6175375A
+P 2350 1200
+F 0 "#FLG0102" H 2350 1275 50  0001 C CNN
+F 1 "PWR_FLAG" H 2300 1400 50  0000 C CNN
+F 2 "" H 2350 1200 50  0001 C CNN
+F 3 "~" H 2350 1200 50  0001 C CNN
+	1    2350 1200
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	2350 1200 2350 1100
+Connection ~ 2350 1100
+Wire Wire Line
+	2350 1100 2050 1100
+$Comp
+L power:PWR_FLAG #FLG0103
+U 1 1 6175431D
+P 5150 1400
+F 0 "#FLG0103" H 5150 1475 50  0001 C CNN
+F 1 "PWR_FLAG" H 5150 1573 50  0000 C CNN
+F 2 "" H 5150 1400 50  0001 C CNN
+F 3 "~" H 5150 1400 50  0001 C CNN
+	1    5150 1400
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5150 1400 5150 1350
+Wire Wire Line
+	5150 1350 4800 1350
+Connection ~ 4800 1350
+$Comp
+L Connector_Generic:Conn_01x02 J3
+U 1 1 617576E5
+P 3600 3650
+F 0 "J3" H 3680 3642 50  0000 L CNN
+F 1 "Conn_01x02" H 3680 3551 50  0000 L CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical" H 3600 3650 50  0001 C CNN
+F 3 "~" H 3600 3650 50  0001 C CNN
+F 4 "-" H 3600 3650 50  0001 C CNN "DGK"
+F 5 "-" H 3600 3650 50  0001 C CNN "Manf#"
+	1    3600 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61757973
+P 3300 3550
+AR Path="/61757973" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/61757973" Ref="#PWR0113"  Part="1" 
+F 0 "#PWR0113" H 3300 3400 50  0001 C CNN
+F 1 "+3.3V" H 3315 3723 50  0000 C CNN
+F 2 "" H 3300 3550 50  0001 C CNN
+F 3 "" H 3300 3550 50  0001 C CNN
+	1    3300 3550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3300 3550 3300 3650
+Wire Wire Line
+	3300 3650 3400 3650
+$Comp
+L power:GND #PWR?
+U 1 1 61758A37
+P 3300 3850
+AR Path="/61758A37" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/61758A37" Ref="#PWR0114"  Part="1" 
+F 0 "#PWR0114" H 3300 3600 50  0001 C CNN
+F 1 "GND" H 3305 3677 50  0000 C CNN
+F 2 "" H 3300 3850 50  0001 C CNN
+F 3 "" H 3300 3850 50  0001 C CNN
+	1    3300 3850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3300 3850 3300 3750
+Wire Wire Line
+	3300 3750 3400 3750
+$Comp
+L power:+12V #PWR0115
+U 1 1 61759E1D
+P 800 950
+F 0 "#PWR0115" H 800 800 50  0001 C CNN
+F 1 "+12V" H 815 1123 50  0000 C CNN
+F 2 "" H 800 950 50  0001 C CNN
+F 3 "" H 800 950 50  0001 C CNN
+	1    800  950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR0116
+U 1 1 6175A58D
+P 3650 1050
+F 0 "#PWR0116" H 3650 900 50  0001 C CNN
+F 1 "+12V" H 3665 1223 50  0000 C CNN
+F 2 "" H 3650 1050 50  0001 C CNN
+F 3 "" H 3650 1050 50  0001 C CNN
+	1    3650 1050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0127
+U 1 1 6172B777
+P 3700 2450
+F 0 "#PWR0127" H 3700 2200 50  0001 C CNN
+F 1 "GND" H 3705 2277 50  0000 C CNN
+F 2 "" H 3700 2450 50  0001 C CNN
+F 3 "" H 3700 2450 50  0001 C CNN
+	1    3700 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND2 #PWR0128
+U 1 1 6172BBAE
+P 4200 2450
+F 0 "#PWR0128" H 4200 2200 50  0001 C CNN
+F 1 "GND2" H 4205 2277 50  0000 C CNN
+F 2 "" H 4200 2450 50  0001 C CNN
+F 3 "" H 4200 2450 50  0001 C CNN
+	1    4200 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Jumper:SolderJumper_2_Open JP4
+U 1 1 6172D077
+P 3950 2250
+F 0 "JP4" H 3950 2455 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 3950 2364 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm" H 3950 2250 50  0001 C CNN
+F 3 "~" H 3950 2250 50  0001 C CNN
+F 4 "-" H 3950 2250 50  0001 C CNN "DGK"
+F 5 "-" H 3950 2250 50  0001 C CNN "Manf#"
+	1    3950 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4100 2250 4200 2250
+Wire Wire Line
+	4200 2250 4200 2450
+Wire Wire Line
+	3700 2450 3700 2250
+Wire Wire Line
+	3700 2250 3800 2250
+$Comp
+L power:+3.3V #PWR?
+U 1 1 617506A3
+P 1150 3600
+AR Path="/617506A3" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/617506A3" Ref="#PWR0107"  Part="1" 
+F 0 "#PWR0107" H 1150 3450 50  0001 C CNN
+F 1 "+3.3V" H 1165 3773 50  0000 C CNN
+F 2 "" H 1150 3600 50  0001 C CNN
+F 3 "" H 1150 3600 50  0001 C CNN
+	1    1150 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 61750E11
+P 2550 3850
+AR Path="/61750E11" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/61750E11" Ref="#PWR0108"  Part="1" 
+F 0 "#PWR0108" H 2550 3600 50  0001 C CNN
+F 1 "GND" H 2555 3677 50  0000 C CNN
+F 2 "" H 2550 3850 50  0001 C CNN
+F 3 "" H 2550 3850 50  0001 C CNN
+	1    2550 3850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 3750 2550 3850
+Wire Wire Line
+	2450 3750 2550 3750
+$Comp
+L Mechanical:MountingHole_Pad H?
+U 1 1 6174EEC6
+P 2350 3750
+AR Path="/6174EEC6" Ref="H?"  Part="1" 
+AR Path="/6174BEC7/6174EEC6" Ref="H6"  Part="1" 
+F 0 "H6" V 2587 3753 50  0000 C CNN
+F 1 "MountingHole_Pad" V 2496 3753 50  0000 C CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4_Pad_Via" H 2350 3750 50  0001 C CNN
+F 3 "~" H 2350 3750 50  0001 C CNN
+F 4 "-" H 2350 3750 50  0001 C CNN "DGK"
+F 5 "-" H 2350 3750 50  0001 C CNN "Manf#"
+	1    2350 3750
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	1150 3750 1250 3750
+Wire Wire Line
+	1150 3600 1150 3750
+$Comp
+L Mechanical:MountingHole_Pad H?
+U 1 1 6174E09A
+P 1350 3750
+AR Path="/6174E09A" Ref="H?"  Part="1" 
+AR Path="/6174BEC7/6174E09A" Ref="H3"  Part="1" 
+F 0 "H3" V 1110 3770 50  0000 L CNN
+F 1 "MountingHole_Pad" V 1200 3650 50  0000 L CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4_Pad_Via" H 1350 3750 50  0001 C CNN
+F 3 "~" H 1350 3750 50  0001 C CNN
+F 4 "-" H 1350 3750 50  0001 C CNN "DGK"
+F 5 "-" H 1350 3750 50  0001 C CNN "Manf#"
+	1    1350 3750
+	0    1    1    0   
+$EndComp
+$Comp
+L 2035551012:CP_2035551012 J7
+U 1 1 6174A693
+P 1550 1200
+F 0 "J7" H 1550 1567 50  0000 C CNN
+F 1 "CP_2035551012" H 1550 1476 50  0000 C CNN
+F 2 "footprint:MOLEX_2035551012" H 1550 1200 50  0001 L BNN
+F 3 "" H 1550 1200 50  0001 L BNN
+F 4 "15.2 mm" H 1550 1200 50  0001 L BNN "MAXIMUM_PACKAGE_HEIGHT"
+F 5 "Molex" H 1550 1200 50  0001 L BNN "MANUFACTURER"
+F 6 "A1" H 1550 1200 50  0001 L BNN "PARTREV"
+F 7 "Manufacturer Recommendations" H 1550 1200 50  0001 L BNN "STANDARD"
+F 8 "2035551012" H 1550 1200 50  0001 C CNN "Manf#"
+F 9 "https://www.digikey.com/en/products/detail/molex/2035551012/10379544" H 1550 1200 50  0001 C CNN "DGK"
+	1    1550 1200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GNDPWR #PWR0129
+U 1 1 61758898
+P 2100 1500
+F 0 "#PWR0129" H 2100 1300 50  0001 C CNN
+F 1 "GNDPWR" H 2104 1346 50  0000 C CNN
+F 2 "" H 2100 1450 50  0001 C CNN
+F 3 "" H 2100 1450 50  0001 C CNN
+	1    2100 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2050 1300 2100 1300
+Wire Wire Line
+	2100 1300 2100 1400
+Wire Wire Line
+	2050 1400 2100 1400
+Connection ~ 2100 1400
+Wire Wire Line
+	2100 1400 2100 1500
+Wire Wire Line
+	800  2000 800  2150
+$Comp
+L power:GND2 #PWR?
+U 1 1 6175C29B
+P 2550 2250
+AR Path="/6175C29B" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/6175C29B" Ref="#PWR0130"  Part="1" 
+F 0 "#PWR0130" H 2550 2000 50  0001 C CNN
+F 1 "GND2" H 2450 2050 50  0000 C CNN
+F 2 "" H 2550 2250 50  0001 C CNN
+F 3 "" H 2550 2250 50  0001 C CNN
+	1    2550 2250
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 2250 2550 2150
+$Comp
+L power:+12V #PWR0131
+U 1 1 6175C2B6
+P 800 2000
+F 0 "#PWR0131" H 800 1850 50  0001 C CNN
+F 1 "+12V" H 815 2173 50  0000 C CNN
+F 2 "" H 800 2000 50  0001 C CNN
+F 3 "" H 800 2000 50  0001 C CNN
+	1    800  2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L 2035551012:CP_2035551012 J8
+U 1 1 6175C2C1
+P 1550 2250
+F 0 "J8" H 1550 2617 50  0000 C CNN
+F 1 "CP_2035551012" H 1550 2526 50  0000 C CNN
+F 2 "footprint:MOLEX_2035551012" H 1550 2250 50  0001 L BNN
+F 3 "" H 1550 2250 50  0001 L BNN
+F 4 "15.2 mm" H 1550 2250 50  0001 L BNN "MAXIMUM_PACKAGE_HEIGHT"
+F 5 "Molex" H 1550 2250 50  0001 L BNN "MANUFACTURER"
+F 6 "A1" H 1550 2250 50  0001 L BNN "PARTREV"
+F 7 "Manufacturer Recommendations" H 1550 2250 50  0001 L BNN "STANDARD"
+F 8 "2035551012" H 1550 2250 50  0001 C CNN "Manf#"
+F 9 "https://www.digikey.com/en/products/detail/molex/2035551012/10379544" H 1550 2250 50  0001 C CNN "DGK"
+	1    1550 2250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GNDPWR #PWR0132
+U 1 1 6175C2C7
+P 2100 2550
+F 0 "#PWR0132" H 2100 2350 50  0001 C CNN
+F 1 "GNDPWR" H 2104 2396 50  0000 C CNN
+F 2 "" H 2100 2500 50  0001 C CNN
+F 3 "" H 2100 2500 50  0001 C CNN
+	1    2100 2550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2050 2350 2100 2350
+Wire Wire Line
+	2100 2350 2100 2450
+Wire Wire Line
+	2050 2450 2100 2450
+Connection ~ 2100 2450
+Wire Wire Line
+	2100 2450 2100 2550
+Wire Wire Line
+	800  2150 1050 2150
+Wire Wire Line
+	2050 2150 2550 2150
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 617BF5AA
+P 6450 1100
+F 0 "H1" H 6550 1146 50  0000 L CNN
+F 1 "MountingHole" H 6550 1055 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad_TopBottom" H 6450 1100 50  0001 C CNN
+F 3 "~" H 6450 1100 50  0001 C CNN
+F 4 "-" H 6450 1100 50  0001 C CNN "DGK"
+F 5 "-" H 6450 1100 50  0001 C CNN "Manf#"
+	1    6450 1100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 617BF87C
+P 6450 1400
+F 0 "H2" H 6550 1446 50  0000 L CNN
+F 1 "MountingHole" H 6550 1355 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad_TopBottom" H 6450 1400 50  0001 C CNN
+F 3 "~" H 6450 1400 50  0001 C CNN
+F 4 "-" H 6450 1400 50  0001 C CNN "DGK"
+F 5 "-" H 6450 1400 50  0001 C CNN "Manf#"
+	1    6450 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 617BF9D5
+P 7300 1100
+F 0 "H4" H 7400 1146 50  0000 L CNN
+F 1 "MountingHole" H 7400 1055 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad_TopBottom" H 7300 1100 50  0001 C CNN
+F 3 "~" H 7300 1100 50  0001 C CNN
+F 4 "-" H 7300 1100 50  0001 C CNN "DGK"
+F 5 "-" H 7300 1100 50  0001 C CNN "Manf#"
+	1    7300 1100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H5
+U 1 1 617BFD05
+P 7300 1400
+F 0 "H5" H 7400 1446 50  0000 L CNN
+F 1 "MountingHole" H 7400 1355 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad_TopBottom" H 7300 1400 50  0001 C CNN
+F 3 "~" H 7300 1400 50  0001 C CNN
+F 4 "-" H 7300 1400 50  0001 C CNN "DGK"
+F 5 "-" H 7300 1400 50  0001 C CNN "Manf#"
+	1    7300 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5500 2800 5500 2700
+$Comp
+L Connector:TestPoint TP3
+U 1 1 617C9E18
+P 5500 2700
+F 0 "TP3" H 5558 2818 50  0000 L CNN
+F 1 "TestPoint" H 5558 2727 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 5700 2700 50  0001 C CNN
+F 3 "~" H 5700 2700 50  0001 C CNN
+F 4 "-" H 5500 2700 50  0001 C CNN "DGK"
+F 5 "-" H 5500 2700 50  0001 C CNN "Manf#"
+	1    5500 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND2 #PWR?
+U 1 1 617C378D
+P 5500 2800
+AR Path="/617C378D" Ref="#PWR?"  Part="1" 
+AR Path="/6174BEC7/617C378D" Ref="#PWR0165"  Part="1" 
+F 0 "#PWR0165" H 5500 2550 50  0001 C CNN
+F 1 "GND2" H 5505 2627 50  0000 C CNN
+F 2 "" H 5500 2800 50  0001 C CNN
+F 3 "" H 5500 2800 50  0001 C CNN
+	1    5500 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP1
+U 1 1 617C9724
+P 4900 2750
+F 0 "TP1" H 4842 2776 50  0000 R CNN
+F 1 "TestPoint" H 4842 2867 50  0000 R CNN
+F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 5100 2750 50  0001 C CNN
+F 3 "~" H 5100 2750 50  0001 C CNN
+F 4 "-" H 4900 2750 50  0001 C CNN "DGK"
+F 5 "-" H 4900 2750 50  0001 C CNN "Manf#"
+	1    4900 2750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4900 2600 4900 2750
+$Comp
+L power:+12V #PWR0164
+U 1 1 617C269A
+P 4900 2600
+F 0 "#PWR0164" H 4900 2450 50  0001 C CNN
+F 1 "+12V" H 4915 2773 50  0000 C CNN
+F 2 "" H 4900 2600 50  0001 C CNN
+F 3 "" H 4900 2600 50  0001 C CNN
+	1    4900 2600
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

@@ -9,19 +9,26 @@
 
 // #include <OneWire.h>
 // #include <DallasTemperature.h>
+#include "BME280_Data.h"
 #include "i2cmux.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
+#include <SparkFunCCS811.h>
 #include "WaterTemperature.h"
 #include "TDS.h"
 #include "PH.h"
+#include "EC.h"
 
 #endif
 
 #define NUM_TEMP_SENSORS 3
 #define NUM_BME_SENSORS 3
+#define NUM_CCS_SENSORS 3
 #define NUM_AMBIENT_LIGHT_SENSORS 3
 #define SEALEVELPRESSURE_HPA (1013.25)
+
+#define CCS811_ADDR 0x5b
+//#define CCS811_ADDR 0x5a  // alternate address
 
 namespace Sensors {
   
@@ -31,15 +38,16 @@ namespace Sensors {
 
 #ifndef SIMULATOR
   const unsigned int TMP_PINS[NUM_TEMP_SENSORS + 1]             = {22, 24, 26, 26};
+  const I2CBUS CHAMBER_I2C_MUX_MAP[NUM_BME_SENSORS]                  = { 0x07, 0x06, 0x05};
   const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]        = { 0x76, 0x76, 0x76};
-  const I2CBUS BME280_BUS[NUM_BME_SENSORS]                  = { 0x07, 0x06, 0x05};
   const uint8_t AMBIENT_LIGHT_GPIO[NUM_AMBIENT_LIGHT_SENSORS] = { A0, A1, A2 };
-  const uint8_t TURBIDITY_GPIO[1]                             = { A4 };
 
   // sensor probes pin layout
   const uint8_t PIN_SHARED_PROBE_WATERTEMP              = 28;
-  const uint8_t PIN_TDS_SENSOR                          = A2;
-  const uint8_t PIN_PH_SENSOR                           = A3;
+  const uint8_t PIN_TDS_SENSOR                          = A4;
+  const uint8_t PIN_PH_SENSOR                           = A5;
+  const uint8_t PIN_TURBIDITY_SENSOR                    = A6;
+  const uint8_t PIN_EC_SENSOR                           = A7;
   
   // OneWire oneWire0(PIN_TMP0);
   // DallasTemperature tmp0(&oneWire0);
@@ -54,14 +62,20 @@ namespace Sensors {
   // water temperature sensor for all the probes
   extern WaterTemperature sharedProbeWaterTemp;
 
-  // TDS probe
-  extern TDS TDSSensor;
-
   // bme280
   extern Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
+  extern BME280_Data bme280Data[NUM_BME_SENSORS];
+
+  extern Pair<I2CBUS, CCS811*> ccsSensors[NUM_CCS_SENSORS];
+
+  // TDS probe
+  extern TDS tdsSensor;
 
   // pH sensor
   extern PH pHSensor;
+
+  // EC sensor
+  extern EC ecSensor;
 
 #endif
   
@@ -103,6 +117,15 @@ namespace Sensors {
   void bme280(JsonObject &obj, int sensorIdx=-1);
   
   /**
+   * @brief Gets CO2 and VTOC in specified chamber
+   * 
+   * @param obj JsonObject where CO2 and TVOC information is stored. CO2 is stored in ppm and
+   *            TVOC in ppb
+   * @param sensorIdx Sensor index to read
+   */
+  void ccs811(JsonObject &obj, int sensorIdx=-1);
+  
+  /**
    * @brief Returns the raw sensor reading from the ambient light sensor
    * 
    * @param obj Json Object
@@ -110,14 +133,65 @@ namespace Sensors {
    */
   void ambientLight(JsonObject &obj, int sensorIdx);
   
+  /**
+   * @brief Returns PH from PH probe
+   * 
+   * @param obj Json Object
+   */
+  void ph(JsonObject &obj);
+  
+  /**
+   * @brief Calibrates PH Sensor. Place sensor in either 7.0 or 4.0 solution and call this function.
+   *        The software can automatically determine if solution is neutral or acidic.
+   */
+  void phCallibrate();
+  
+  /**
+   * @brief Get callibration information of the current sensor
+   * 
+   * @param obj JsonObject where PH callibration is stored. Object will contain neutral and acidic
+   *            voltage at 7.0PH and 4.0PH respectively.
+   */
+  void phGetCalibration(JsonObject &obj);
+  
+  /**
+   * @brief Sets the calibration variable for the PH sensor
+   * 
+   * @param neutralVoltage neutral voltage for 7.0PH solution
+   * @param acidicVoltage acidic voltage for 4.0PH solution
+   */
+  void phSetCalibration(float neutralVoltage, float acidicVoltage);
+  
+  /**
+   * @brief Returns the turbidity from the turbidity sensor. Units are in NTU. This must be referenced
+   *        solution to determine relationship between NTU and ppm. NTU and ppm has a linear and positive
+   *        relationship.
+   * 
+   * @param obj JsonObject where turbidity information is stored with key "turb"
+   */
   void turbidity(JsonObject &obj);
   
-  // @deprecated
-  void ph(const char *buffer, size_t buffer_size);
+  void tds(JsonObject &obj);
+  
+  void ec(JsonObject &obj);
+  
+  void ecCallibrate();
 
-  size_t ph(char *buffer);
+  void ecSetCallibration(float kLow, float kHigh);
 
+  void ecGetCallibration(JsonObject &obj);
+  
   void  ping(const char *buffer, size_t buffer_size);
 
   void echo(const char *buffer, size_t buffer_size);
+
+  /*     --- Internal Functions - do not call */
+  /**
+   * @brief Polls BME280 and updates values according to sensor index requested
+   * @note No error handling. Make sure that sensor index is valid
+   * 
+   * @param sensorIdx sensor index requested
+   */
+  void _pollBME280(unsigned int sensorIdx);
+  
 }

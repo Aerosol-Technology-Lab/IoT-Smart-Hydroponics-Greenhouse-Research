@@ -1,6 +1,6 @@
 #ifndef SIMULATOR
 
-#define I2C_BAUD 10000
+#define I2C_BAUD 5000
 
 #include "sensors.h"
 #include <Arduino.h>
@@ -13,9 +13,12 @@
 namespace Sensors {
     WaterTemperature *tmpSensors[NUM_TEMP_SENSORS];
     Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
-    WaterTemperature sharedProbeWaterTemp(PIN_TDS_SENSOR, false);
-    TDS TDSSensor(PIN_TDS_SENSOR, &sharedProbeWaterTemp);
-    PH pHSensor(PIN_PH_SENSOR, &sharedProbeWaterTemp);
+    BME280_Data bme280Data[NUM_BME_SENSORS];
+    Pair<I2CBUS, CCS811*> ccsSensors[NUM_CCS_SENSORS];
+    WaterTemperature sharedProbeWaterTemp(PIN_SHARED_PROBE_WATERTEMP, false);
+    TDS tdsSensor(PIN_TDS_SENSOR, &sharedProbeWaterTemp);
+    PH pHSensor(PIN_PH_SENSOR);
+    EC ecSensor(PIN_EC_SENSOR, &sharedProbeWaterTemp);
 }
 
 void Sensors::init() {
@@ -33,9 +36,28 @@ void Sensors::init() {
         // tmpSensors[i] = WaterTemperature(TMP_PINS[i], true);
     }
 
+    // initializes ccs811 sensors
+    for (int i = 0; i < NUM_CCS_SENSORS; ++i) {
+
+        ccsSensors[i] = Pair<I2CBUS, CCS811*>(Sensors::CHAMBER_I2C_MUX_MAP[i], new CCS811(CCS811_ADDR));
+        i2cmux(ccsSensors[i].first);
+        if (!ccsSensors[i].second->begin()) {
+            char buffer[128];
+            sprintf(buffer, "ERROR: CO2 sensor (CCS811) at chamber #%d failed to initialize.\n"
+                            "       === Detailed Info ===\n"
+                            "       Index:             %2d\n"
+                            "       I2C MUX Address: 0x%02x\n"
+                , i + 1, i, ccsSensors[i].first
+                );
+            Serial.print(buffer);
+            ccsSensors[i].first = -1;
+        }
+    }
+
+
     // initilize bme280 sensors
     for (int i = 0; i < NUM_BME_SENSORS; ++i) {
-        bmeSensors[i] = Pair<I2CBUS, Adafruit_BME280>(Sensors::BME280_BUS[i], Adafruit_BME280());
+        bmeSensors[i] = Pair<I2CBUS, Adafruit_BME280>(Sensors::CHAMBER_I2C_MUX_MAP[i], Adafruit_BME280());
         Adafruit_BME280 &bme = bmeSensors[i].second;
         i2cmux(bmeSensors[i].first);
         bool initialized = bme.begin(BME280_ADDRESS_LIST[i]);
@@ -51,8 +73,10 @@ void Sensors::init() {
 
     // initialize probes
     sharedProbeWaterTemp.init();
-    TDSSensor.init();
+    tdsSensor.init();
     pHSensor.init();
+    ecSensor.init();
+    Serial.println("-> Done initializing all sensors");
 }
 
 void Sensors::waterTemperature(const char *buffer, size_t buffer_size, bool unused) {
@@ -193,7 +217,8 @@ size_t Sensors::bme280(char *buffer, int sensorIdx, bool header)
 void Sensors::bme280(JsonObject &obj, int sensorIdx)
 {
     // requesting all sensors
-    if (sensorIdx == -1) {
+    // deprecated feature
+    if (sensorIdx < 0) {
         for (int i = 0; i < NUM_BME_SENSORS; ++i) {
             char stringNameBuff[4];
             sprintf(stringNameBuff, "%d", sensorIdx);
@@ -209,15 +234,45 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
             return;
         }
         
-        // selects i2c mux
-        i2cmux(bmeSensors[sensorIdx].first);
-
-        // reads sensor and saves it to json
-        Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
-        obj["temp"] = (bme.readTemperature() * 9.0f / 5.0f ) + 32.0f;
-        obj["pres"] = bme.readPressure() / 100.0f;
-        obj["humd"]  = bme.readHumidity();
+        _pollBME280(sensorIdx);
+        obj["temp"] = (bme280Data[sensorIdx].tempetrature * 9.0f / 5.0f ) + 32.0f;
+        obj["pres"] =  bme280Data[sensorIdx].pressure     / 1000.0f;
+        obj["humd"] =  bme280Data[sensorIdx].humidity;
     }
+}
+
+void Sensors::ccs811(JsonObject &obj, int sensorIdx)
+{
+    if (sensorIdx < 0 || sensorIdx >= NUM_CCS_SENSORS) {
+        obj["error"] = true;
+        char buffer[42];
+        sprintf(buffer, "CCS811 Index out of bounds at [%d].", sensorIdx, NUM_CCS_SENSORS);
+        obj["err_mess"] = buffer;
+        return;
+    }
+
+    if (ccsSensors[sensorIdx].first < 0) {
+        // sensor not initialized, continue
+        obj["initialized"] = false;
+        return;
+    }
+    else {
+        obj["initialized"] = true;
+    }
+
+
+    const unsigned long staleCalibration = 30 * 1000;   // the BME280 reading at the same chamber must be 30 seconds old or new
+    if (millis() - bme280Data[sensorIdx].time > staleCalibration) _pollBME280(sensorIdx);
+
+    // switch to mux
+    i2cmux(ccsSensors[sensorIdx].first);
+
+    auto &ccs = *ccsSensors[sensorIdx].second;
+    while (!ccs.dataAvailable()); // wait until data is available
+    ccs.setEnvironmentalData(bme280Data[sensorIdx].humidity, bme280Data[sensorIdx].tempetrature);
+    ccs.readAlgorithmResults();
+    obj["CO2"]  = ccs.getCO2();
+    obj["TVOC"] = ccs.getTVOC();
 }
 
 void Sensors::ambientLight(JsonObject &obj, int sensorIdx)
@@ -228,33 +283,74 @@ void Sensors::ambientLight(JsonObject &obj, int sensorIdx)
         return;
     }
 
-    obj["light"] = analogRead(AMBIENT_LIGHT_GPIO[sensorIdx]);
+    obj["light"] = (float) analogRead(AMBIENT_LIGHT_GPIO[sensorIdx]) / ANALOG_RESOLUTION * 100.0f;
+}
+
+void Sensors::ph(JsonObject &obj)
+{
+    obj["ph"] = pHSensor.read();
+}
+
+void Sensors::phCallibrate()
+{
+    pHSensor.callibrate();
+}
+
+void Sensors::phGetCalibration(JsonObject &obj)
+{
+    float neutral, acidic;
+    pHSensor.getCallibration(neutral, acidic);
+    obj["neutral"] = neutral;
+    obj["acidic"]  = acidic;
+}
+
+void Sensors::phSetCalibration(float neutralVoltage, float acidicVoltage)
+{
+    pHSensor.setCallibration(neutralVoltage, acidicVoltage);
 }
 
 void Sensors::turbidity(JsonObject &obj)
 {
-    const uint16_t numReads = 5;
+    const uint16_t numPreReads = 5;
     const uint32_t delayTime = 20;
 
-    for (uint16_t i = 0; i < numReads - 1; ++i) {
-        analogRead(TURBIDITY_GPIO[0]);
+    for (uint16_t i = 0; i < numPreReads - 1; ++i) {
+        analogRead(PIN_TURBIDITY_SENSOR);
     }
-    obj["turb"] = analogRead(TURBIDITY_GPIO[0]);
+
+    const float CONVERSION_FACTOR = 5.0f / float(~(~0 << RESOLUTION_BITS));
+    float rawValue = analogRead(PIN_TURBIDITY_SENSOR) * CONVERSION_FACTOR;
+    float turbidity = -1120.4f * rawValue * rawValue + 5742.3f * rawValue - 4352.9f;
+    
+    obj["turb"] = turbidity;
 }
 
-// this is still simulated
-void Sensors::ph(const char *buffer, size_t buffer_size) {
-    float rand = random(0,1401) * 0.01;
-    char send[16];
-    char cstring_rand[6];
-    dtostrf(rand, 4, 2, cstring_rand);
-    sprintf(send, "PHVAL %s", cstring_rand);
-    Utils::sendSerial(send);
-}
-
-size_t Sensors::ph(char *buffer)
+void Sensors::tds(JsonObject &obj)
 {
-    return pHSensor.write(buffer);
+    obj["tds"] = tdsSensor.read();
+}
+
+void Sensors::ec(JsonObject &obj)
+{
+    obj["ec"] = ecSensor.read();
+}
+
+void Sensors::ecCallibrate()
+{
+    ecSensor.callibrate();
+}
+
+void Sensors::ecSetCallibration(float low, float high)
+{
+    ecSensor.setCallibration(low, high);
+}
+
+void Sensors::ecGetCallibration(JsonObject &obj)
+{
+    float low, high;
+    ecSensor.getCallibration(low, high);
+    obj["low"] = low;
+    obj["high"] = high;
 }
 
 void Sensors::ping(const char *buffer, size_t buffer_size) {
@@ -268,5 +364,17 @@ void Sensors::echo(const char *buffer, size_t buffer_size) {
     Serial.println(send);
 }
 
+void Sensors::_pollBME280(unsigned int sensorIdx)
+{
+    // selects i2c mux
+    i2cmux(bmeSensors[sensorIdx].first);
+
+    // reads sensor and saves it to json
+    Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
+    bme280Data[sensorIdx].time = millis();
+    bme280Data[sensorIdx].tempetrature = bme.readTemperature();
+    bme280Data[sensorIdx].pressure = bme.readPressure();
+    bme280Data[sensorIdx].humidity = bme.readHumidity();
+}
 
 #endif
