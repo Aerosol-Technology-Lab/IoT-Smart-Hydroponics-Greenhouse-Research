@@ -39,18 +39,20 @@ class Clock extends React.Component {
     render() {
         let time;
         if (this.state === null) {
-            time = '-:--:--';
+            time = '--:--';
         }
         else {
             let hour = this.state.date.getHours() % 12;
+            hour = hour ? hour : 12;
             let minutes = this.state.date.getMinutes();
             let seconds = this.state.date.getSeconds();
+            let ampm = this.state.date.getHours() < 12 ? 'am' : 'pm';
 
             if (hour === 0) hour = 12;
             if (minutes < 10) minutes = '0' + minutes;
             if (seconds < 10) seconds = '0' + seconds;
             
-            time = `${hour}:${minutes}:${seconds}`;
+            time = `${hour}:${minutes} ${ampm}`;
             // time = this.state.date.toString();
         }
         

@@ -1,0 +1,54 @@
+.Navigation {
+    /* background: linear-gradient(#2B2B2B,#292929); */
+    background: linear-gradient(#2B2B2B, #292929);
+    height: 80vh;
+    width: 100px;
+    color: white;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow-y: auto;
+    margin: 10vh 0px 10vh 10px;
+    // border-radius: 0 50px 50px 0;
+    border-radius: 25px;
+    /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
+}
+
+.Navigation .icon {
+    font-size: 40px;
+    width: 100%;
+    // height: 60px;
+    text-align: center;
+    padding: 20px 0;
+    // background-color:#1b94578f;
+    // text-shadow: 2px 7px 5px rgba(0,0,0,0.3), 
+    // 0px -4px 10px rgba(0, 0, 0, 0.3);
+    // text-shadow: 3px 4px 7px rgba(81,67,21,0.8);
+    // text-shadow: 2px 3px 7px rgba(0,0,0,0.61);
+    text-shadow: 2px 3px 5px #000000;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

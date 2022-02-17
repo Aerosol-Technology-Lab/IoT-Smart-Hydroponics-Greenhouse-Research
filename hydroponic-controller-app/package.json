@@ -1,18 +1,28 @@
 {
   "name": "hydroponic-controller-app",
   "version": "0.1.0",
+  "author": "Charlemagne Wong <charlemagnew13@gmail.com>",
+  "description": "TODO",
   "private": true,
   "main": "public/electron.js",
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "cross-env": "^7.0.3",
+    "disk-space": "^1.1.0",
     "electron-is-dev": "^1.2.0",
+    "glob": "^7.1.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-modal": "^3.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-styles-hook": "^1.1.2",
     "serialport": "^9.0.4",
+    "single-instance": "^0.0.1",
+    "usb": "^1.6.5",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -21,7 +31,28 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "rebuild": "electron-rebuild -f -w fs"
+    "electron-build": "electron-builder node-gyp-rebuild --platform linux",
+    "postinstall": "electron-builder install-app-deps",
+    "elc-rebuild": "electron-rebuild -f -w serialport, fs, usb, diskspace",
+    "build-project": "yarn electron-builder"
+  },
+  "build": {
+    "appId": "com.cmasterx.hydroponic-greenhouse",
+    "files": [
+      "node_modules/**/*",
+      "app/**/*",
+      "package.json",
+      {
+        "from": "build/static/**/*",
+        "to": "static/**/*"
+      }
+    ],
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility"
+    }
   },
   "eslintConfig": {
     "extends": [

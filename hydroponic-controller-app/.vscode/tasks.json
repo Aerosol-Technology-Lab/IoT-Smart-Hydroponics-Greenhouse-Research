@@ -1,0 +1,27 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: React Build",
+			"detail": "react-scripts build"
+		},
+		{
+			"type": "shell",
+			// "script": "build",
+			"group": "build",
+			"label": "Start Application",
+			"detail": "yarn electron-dev",
+			"command" :"yarn",
+			"args" : [
+				"electron-dev"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}",
+			},
+		}
+	]
+}

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=sh {script_path}
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Hydroponic Application
+Name=Hydroponic Application
+Comment[en_US]=
+Comment=Starts hydroponic application
