@@ -36,11 +36,11 @@ char *dtostrf (double val, signed char width, unsigned char prec, char *sout);
     extern char *_devprintln;
     #pragma message "DEBUG mode is enabled!"
 
-    #define dev_print(x)
+    // #define dev_print(x)
     // #define dev_println(x)
     // #define dev_printf(f, ...)
     
-    // #define dev_print(x) Serial.print(x)
+    #define dev_print(x) Serial.print(x)
     #define dev_println(x) Serial.println(x)
     #define dev_printf(f, ...) _devprintln = new char[256]; \
                                  sprintf(_devprintln, f, ##__VA_ARGS__); \
@@ -142,7 +142,7 @@ namespace Utils {
     template<class T>
     void quickSort(T arr[],int l,int r);
 
-    void resetHardware()
+    static void resetHardware()
     {
 #ifdef ARDUINO_SAM_DUE
         // this should emulate hardware reset for Arduino Due
@@ -153,7 +153,7 @@ namespace Utils {
 #endif
     }
 
-    void resetSoftware()
+    static void resetSoftware()
     {
         // rstc_start_software_reset(RSTC); // verify that this works
         assert(false && "Software reset not implemented");

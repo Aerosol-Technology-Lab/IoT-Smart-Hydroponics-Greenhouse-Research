@@ -33,6 +33,8 @@ void setup() {
   StaticJsonDocument<248> response;
   response["initialized"] = true;
   serializeJson(response, Serial);
+
+  Serial.println("\nInitialized Arduino\n");
 }
 
 void loop() {
@@ -86,22 +88,28 @@ void loop() {
                 sprintf(buffer, "%d", i);
                 JsonObject currentChamber = chamber.createNestedObject(buffer);
 
+                dev_println("-> Created the json object");
+
                 // get sensor readings for each chamber
 
                 // bme
                 {
                     JsonObject bme280 = currentChamber.createNestedObject("bme280");
+                    dev_println("-> Created space in the JSON object");
                     Sensors::bme280(bme280, i);
+                    dev_println("-> Accessed BME280");
                 }
                 dev_println("Done with bme280");
                 dev_delay(1000);
 
                 // ccs811
+#ifndef DISABLE_CCS811
                 {
                     JsonObject ccs811 = currentChamber.createNestedObject("ccs811");
                     Sensors::ccs811(ccs811, i);
                 }
                 dev_println("Done with ccs811");
+#endif
                 dev_delay(1000);
                 
                 // water temp
