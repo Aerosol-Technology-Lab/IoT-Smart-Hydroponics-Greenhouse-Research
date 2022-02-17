@@ -1,7 +1,50 @@
 #pragma once
 
 #include <Arduino.h>
+#include <Stream.h>
+#include <ArduinoJson.h>
+
+#ifdef DUE
+    #define RESOLUTION_BITS                   12
+    #define VREF                            3.3f
+    #define VREF_MILLI          (VREF * 1000.0f)
+    #define ANALOG_RESOLUTION            4095.0f
+
+    /**
+     * @brief
+     * 
+     * @param size 
+     * @param ptr 
+     * @return void* 
+     */
+    // void * operator new (size_t size, void * ptr);
+    // inline void* operator new (std::size_t n, void* ptr) {return ptr;};
+
+#elif UNO
+    #define RESOLUTION_BITS                   10
+    #define VREF                            5.0f
+    #define VREF_MILLI          (VREF * 1000.0f)
+    #define ANALOG_RESOLUTION            1023.0f
+#else
+    #define RESOLUTION_BITS                   10
+    #define VREF                            5.0f
+    #define VREF_MILLI          (VREF * 1000.0f)
+    #define ANALOG_RESOLUTION            1023.0f
+#endif
+
+#ifndef DUE
+    #pragma message "WARNING! This code is not tested on other boards besides the Arduino Due"
+#endif
+
 // #define DEBUG
+#ifdef DEBUG
+    #pragma message "DEBUG mode is enabled!"
+    #define dev_print(x) Serial.print(x)
+    #define dev_println(x) Serial.println(x)
+#else
+    #define dev_print(x)
+    #define dev_println(x)
+#endif
 
 namespace Utils {
 
@@ -42,6 +85,8 @@ namespace Utils {
      */
     unsigned int readSerial(char *buffer, size_t maxSize, bool nullTerminate = true);
 
+    bool readJSON(JsonObject &json, Stream &stream, size_t bufferSize=1024);
+
     size_t sendSerial(const char *cstring);
     
     char * movePointer(char *ptr, int move);
@@ -51,4 +96,42 @@ namespace Utils {
      * This does not even work
      */
     bool equals(const char *a, const char *b);
+
+    template<class T>
+
+    void swap(T&a, T&b);
+    
+    template<class T>
+    T && move(T &t);
+
+    /**
+     * @brief Capitlaizes every character in the c-string
+     * 
+     */
+    void strupr(char *);
+    
+    /**
+     * @brief parition helper for merge sort
+     * @citation https://www.geeksforgeeks.org/quick-sort/
+     * 
+     * @param arr array to sort
+     * @param low low index
+     * @param high high index
+     * @return int location of new partition
+     */
+    template<class T>
+    int partition(T arr[], int low, int high);
+
+    /**
+     * @brief Performs quicksort on arr
+     * 
+     * @tparam T type with comparison operators
+     * @param arr array to sort
+     * @param l starting index to sort
+     * @param r ending index to sort. NOTE - this is the index, not size
+     */
+    template<class T>
+    void quickSort(T arr[],int l,int r);
 }
+
+#include "utils_impl.h"

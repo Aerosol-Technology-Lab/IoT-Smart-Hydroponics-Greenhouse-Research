@@ -1,0 +1,3 @@
+[submodule "Arduino Sensor Controller/lib/DueFreeRTOS"]
+	path = Arduino Sensor Controller/lib/DueFreeRTOS
+	url = https://github.com/bdmihai/DueFreeRTOS

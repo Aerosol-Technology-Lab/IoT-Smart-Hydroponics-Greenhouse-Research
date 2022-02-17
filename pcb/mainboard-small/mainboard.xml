@@ -1,0 +1,1930 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard-small/mainboard.sch</source>
+    <date>Sat 23 Oct 2021 03:41:17 PM CDT</date>
+    <tool>Eeschema 5.1.10-88a1d61d58~90~ubuntu20.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>Main | Hydroponics Mainboard</title>
+        <company>Aerosol Technology Lab | Texas A&amp;M University @ College Station, TX</company>
+        <rev>1.0</rev>
+        <date>2021-10-17</date>
+        <source>mainboard.sch</source>
+        <comment number="1" value="Biological and Agricultural Engineering"/>
+        <comment number="2" value="Author: Charlemagne Wong | CSCE 21'"/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/Raspberry Pi/" tstamps="/6170A1B9/">
+      <title_block>
+        <title>Raspberry Pi Connection | Hydroponics Mainboard</title>
+        <company>Aerosol Technology Lab | Texas A&amp;M University @ College Station, TX</company>
+        <rev>1.0</rev>
+        <date>2021-10-17</date>
+        <source>RaspberryPi.sch</source>
+        <comment number="1" value="Biological and Agricultural Engineering"/>
+        <comment number="2" value="Author: Charlemagne Wong | CSCE 21'"/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="3" name="/Power/" tstamps="/621819D4/">
+      <title_block>
+        <title>Power Regulator | Hydroponics Mainboard</title>
+        <company>Aerosol Technology Lab | Texas A&amp;M University @ College Station, TX</company>
+        <rev>1.0</rev>
+        <date>2021-10-17</date>
+        <source>power.sch</source>
+        <comment number="1" value="Biological and Agricultural Engineering"/>
+        <comment number="2" value="Author: Charlemagne Wong | CSCE 21'"/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="R2">
+      <value>120R</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/yageo/RC0603FR-07120RL/726920</field>
+        <field name="MANUFACTURER">RC0603FR-07120RL</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61705250</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/yageo/RC0603FR-071KL/726843</field>
+        <field name="MANUFACTURER">RC0603FR-071KL</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6171BCB7</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT10K0/1761235</field>
+        <field name="MANUFACTURER">RMCF0603FT10K0</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6171C55C</tstamp>
+    </comp>
+    <comp ref="JP4">
+      <value>RPi-Reset_EN</value>
+      <footprint>Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Jumper" part="SolderJumper_2_Open" description="Solder Jumper, 2-pole, open"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6171E13E</tstamp>
+    </comp>
+    <comp ref="J5">
+      <value>MC_PWR</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145</field>
+        <field name="MANUFACTURER">PPTC061LFBN-RC</field>
+        <field name="Manf#">PPTC061LFBN-RC</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6172CC59</tstamp>
+    </comp>
+    <comp ref="JP2">
+      <value>SCL_SELECT</value>
+      <footprint>Jumper:SolderJumper-3_P1.3mm_Bridged12_Pad1.0x1.5mm</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Jumper" part="SolderJumper_3_Bridged12" description="3-pole Solder Jumper, pins 1+2 closed/bridged"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6172F275</tstamp>
+    </comp>
+    <comp ref="JP5">
+      <value>SDA_SELECT</value>
+      <footprint>Jumper:SolderJumper-3_P1.3mm_Bridged12_Pad1.0x1.5mm</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Jumper" part="SolderJumper_3_Bridged12" description="3-pole Solder Jumper, pins 1+2 closed/bridged"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61732272</tstamp>
+    </comp>
+    <comp ref="J1">
+      <value>MC Comms Header</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145</field>
+        <field name="MANUFACTURER">PPTC061LFBN-RC</field>
+        <field name="Manf#">PPTC061LFBN-RC</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61735BE6</tstamp>
+    </comp>
+    <comp ref="JP3">
+      <value>MC 3.3V</value>
+      <footprint>Jumper:SolderJumper-2_P1.3mm_Bridged2Bar_Pad1.0x1.5mm</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Jumper" part="SolderJumper_2_Bridged" description="Solder Jumper, 2-pole, closed/bridged"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>617401E8</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT4K70/1760998</field>
+        <field name="MANUFACTURER">RMCF0603FT4K70</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61748CC6</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT4K70/1760998</field>
+        <field name="MANUFACTURER">RMCF0603FT4K70</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>617491FF</tstamp>
+    </comp>
+    <comp ref="J8">
+      <value>MC Comms Breakout</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145</field>
+        <field name="MANUFACTURER">PPTC061LFBN-RC</field>
+        <field name="Manf#">PPTC061LFBN-RC</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6175805C</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>3.3V Breakout</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x08" description="Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6175BEB6</tstamp>
+    </comp>
+    <comp ref="J4">
+      <value>5V Breakout</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x08" description="Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61768CB3</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>10uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B106KOQNNNG/3894472</field>
+        <field name="MANUFACTURER">CL21B106KOQNNNG</field>
+      </fields>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6176B413</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>10uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B106KOQNNNG/3894472</field>
+        <field name="MANUFACTURER">CL21B106KOQNNNG</field>
+      </fields>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61770BF2</tstamp>
+    </comp>
+    <comp ref="J7">
+      <value>GND Breakout</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x08" description="Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61779247</tstamp>
+    </comp>
+    <comp ref="J6">
+      <value>MC Digital GPIO</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical</footprint>
+      <datasheet>https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145</field>
+        <field name="MANUFACTURER">PPTC061LFBN-RC</field>
+        <field name="Manf#">PPTC061LFBN-RC</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>617904B0</tstamp>
+    </comp>
+    <comp ref="J3">
+      <value>MC Digital HEADER</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical</footprint>
+      <datasheet>https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145</field>
+        <field name="MANUFACTURER">PPTC061LFBN-RC</field>
+        <field name="Manf#">PPTC061LFBN-RC</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>617A871F</tstamp>
+    </comp>
+    <comp ref="J9">
+      <value>BUS Breakout</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x08" description="Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>617ABB76</tstamp>
+    </comp>
+    <comp ref="J13">
+      <value>Chamber 1</value>
+      <footprint>mainboard:MTJ-889X1-FSE(RJ45)</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/adam-tech/MTJ-889X1-FSE/9832343</field>
+        <field name="MANUFACTURER">MTJ-889X1-FSE</field>
+        <field name="Manf#">MODULAR JACK RJ45 8P8C</field>
+      </fields>
+      <libsource lib="Connector" part="RJ45_Shielded" description="RJ connector, 8P8C (8 positions 8 connected), Shielded"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>617F1F46</tstamp>
+    </comp>
+    <comp ref="R10">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT10K0/1761235</field>
+        <field name="MANUFACTURER">RMCF0603FT10K0</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>618C35E6</tstamp>
+    </comp>
+    <comp ref="R9">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT10K0/1761235</field>
+        <field name="MANUFACTURER">RMCF0603FT10K0</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>618C2F81</tstamp>
+    </comp>
+    <comp ref="U3">
+      <value>LTC4311CSC6#TRPBF</value>
+      <footprint>Package_TO_SOT_SMD:SOT-363_SC-70-6</footprint>
+      <datasheet>https://www.analog.com/media/en/technical-documentation/data-sheets/4311fa.pdf</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/analog-devices-inc/LTC4311CSC6-TRPBF/1814490</field>
+        <field name="MANUFACTURER">LTC4311CSC6#TRPBF</field>
+        <field name="Manf#">LTC4311CSC6#TRPBF</field>
+      </fields>
+      <libsource lib="mainboard" part="LTC4311CSC6#TRPBF" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>618DEFD0</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>10uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B106KOQNNNG/3894472</field>
+        <field name="MANUFACTURER">CL21B106KOQNNNG</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>618F679B</tstamp>
+    </comp>
+    <comp ref="C11">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/C0603C104J4RACTU/399-1097-1-ND/411372?utm_medium=email&amp;utm_source=oce&amp;utm_campaign=4251_OCE21RT&amp;utm_content=productdetail_US&amp;utm_cid=1005765&amp;so=70412517&amp;mkt_tok=MDI4LVNYSy01MDcAAAF944T6oiOoCzADiQ6y1NAflhHL0XtIS5Z0jP2CiGD31vy3uVidNjhrbTjQrwfvq69I8De_kxjiyezjNA5O4XmQCCiGQNm1zRnV7s3r-mnC</field>
+        <field name="MANUFACTURER">C0603C104J4RAC7867</field>
+        <field name="Manf#">C0603C104J4RAC7867</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>618F67A1</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT10K0/1761235</field>
+        <field name="MANUFACTURER">RMCF0603FT10K0</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6188761D</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>PCA9548ADB</value>
+      <footprint>Package_SO:SSOP-24_5.3x8.2mm_P0.65mm</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/pca9548a.pdf</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/texas-instruments/PCA9548ADB/13487812</field>
+        <field name="MANUFACTURER">PCA9548ADB</field>
+        <field name="Manf#">PCA9548ADB</field>
+      </fields>
+      <libsource lib="Interface_Expansion" part="PCA9548ADB" description="Low voltage 8-channel I2C switch with reset, SSOP-24"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61806DCD</tstamp>
+    </comp>
+    <comp ref="J14">
+      <value>Chamber 2</value>
+      <footprint>mainboard:MTJ-889X1-FSE(RJ45)</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/adam-tech/MTJ-889X1-FSE/9832343</field>
+        <field name="MANUFACTURER">MTJ-889X1-FSE</field>
+        <field name="Manf#">MODULAR JACK RJ45 8P8C</field>
+      </fields>
+      <libsource lib="Connector" part="RJ45_Shielded" description="RJ connector, 8P8C (8 positions 8 connected), Shielded"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B8750A</tstamp>
+    </comp>
+    <comp ref="R12">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT10K0/1761235</field>
+        <field name="MANUFACTURER">RMCF0603FT10K0</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B8752A</tstamp>
+    </comp>
+    <comp ref="R11">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT10K0/1761235</field>
+        <field name="MANUFACTURER">RMCF0603FT10K0</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B87532</tstamp>
+    </comp>
+    <comp ref="U4">
+      <value>LTC4311CSC6#TRPBF</value>
+      <footprint>Package_TO_SOT_SMD:SOT-363_SC-70-6</footprint>
+      <datasheet>https://www.analog.com/media/en/technical-documentation/data-sheets/4311fa.pdf</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/analog-devices-inc/LTC4311CSC6-TRPBF/1814490</field>
+        <field name="MANUFACTURER">LTC4311CSC6#TRPBF</field>
+        <field name="Manf#">LTC4311CSC6#TRPBF</field>
+      </fields>
+      <libsource lib="mainboard" part="LTC4311CSC6#TRPBF" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B87540</tstamp>
+    </comp>
+    <comp ref="C8">
+      <value>10uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B106KOQNNNG/3894472</field>
+        <field name="MANUFACTURER">CL21B106KOQNNNG</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B87549</tstamp>
+    </comp>
+    <comp ref="C12">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/C0603C104J4RACTU/399-1097-1-ND/411372?utm_medium=email&amp;utm_source=oce&amp;utm_campaign=4251_OCE21RT&amp;utm_content=productdetail_US&amp;utm_cid=1005765&amp;so=70412517&amp;mkt_tok=MDI4LVNYSy01MDcAAAF944T6oiOoCzADiQ6y1NAflhHL0XtIS5Z0jP2CiGD31vy3uVidNjhrbTjQrwfvq69I8De_kxjiyezjNA5O4XmQCCiGQNm1zRnV7s3r-mnC</field>
+        <field name="MANUFACTURER">C0603C104J4RAC7867</field>
+        <field name="Manf#">C0603C104J4RAC7867</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B8754F</tstamp>
+    </comp>
+    <comp ref="J15">
+      <value>Chamber 3</value>
+      <footprint>mainboard:MTJ-889X1-FSE(RJ45)</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/adam-tech/MTJ-889X1-FSE/9832343</field>
+        <field name="MANUFACTURER">MTJ-889X1-FSE</field>
+        <field name="Manf#">MODULAR JACK RJ45 8P8C</field>
+      </fields>
+      <libsource lib="Connector" part="RJ45_Shielded" description="RJ connector, 8P8C (8 positions 8 connected), Shielded"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B96526</tstamp>
+    </comp>
+    <comp ref="R14">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT10K0/1761235</field>
+        <field name="MANUFACTURER">RMCF0603FT10K0</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B96546</tstamp>
+    </comp>
+    <comp ref="R13">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT10K0/1761235</field>
+        <field name="MANUFACTURER">RMCF0603FT10K0</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B9654E</tstamp>
+    </comp>
+    <comp ref="U5">
+      <value>LTC4311CSC6#TRPBF</value>
+      <footprint>Package_TO_SOT_SMD:SOT-363_SC-70-6</footprint>
+      <datasheet>https://www.analog.com/media/en/technical-documentation/data-sheets/4311fa.pdf</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/analog-devices-inc/LTC4311CSC6-TRPBF/1814490</field>
+        <field name="MANUFACTURER">LTC4311CSC6#TRPBF</field>
+        <field name="Manf#">LTC4311CSC6#TRPBF</field>
+      </fields>
+      <libsource lib="mainboard" part="LTC4311CSC6#TRPBF" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B9655C</tstamp>
+    </comp>
+    <comp ref="C9">
+      <value>10uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B106KOQNNNG/3894472</field>
+        <field name="MANUFACTURER">CL21B106KOQNNNG</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B96565</tstamp>
+    </comp>
+    <comp ref="C13">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/C0603C104J4RACTU/399-1097-1-ND/411372?utm_medium=email&amp;utm_source=oce&amp;utm_campaign=4251_OCE21RT&amp;utm_content=productdetail_US&amp;utm_cid=1005765&amp;so=70412517&amp;mkt_tok=MDI4LVNYSy01MDcAAAF944T6oiOoCzADiQ6y1NAflhHL0XtIS5Z0jP2CiGD31vy3uVidNjhrbTjQrwfvq69I8De_kxjiyezjNA5O4XmQCCiGQNm1zRnV7s3r-mnC</field>
+        <field name="MANUFACTURER">C0603C104J4RAC7867</field>
+        <field name="Manf#">C0603C104J4RAC7867</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61B9656B</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>10uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B106KOQNNNG/3894472</field>
+        <field name="MANUFACTURER">CL21B106KOQNNNG</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61A5BF0A</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/C0603C104J4RACTU/399-1097-1-ND/411372?utm_medium=email&amp;utm_source=oce&amp;utm_campaign=4251_OCE21RT&amp;utm_content=productdetail_US&amp;utm_cid=1005765&amp;so=70412517&amp;mkt_tok=MDI4LVNYSy01MDcAAAF944T6oiOoCzADiQ6y1NAflhHL0XtIS5Z0jP2CiGD31vy3uVidNjhrbTjQrwfvq69I8De_kxjiyezjNA5O4XmQCCiGQNm1zRnV7s3r-mnC</field>
+        <field name="MANUFACTURER">C0603C104J4RAC7867</field>
+        <field name="Manf#">C0603C104J4RAC7867</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61A5BF04</tstamp>
+    </comp>
+    <comp ref="JP8">
+      <value>SolderJumper_2_Open</value>
+      <footprint>Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Jumper" part="SolderJumper_2_Open" description="Solder Jumper, 2-pole, open"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>625CF52B</tstamp>
+    </comp>
+    <comp ref="JP9">
+      <value>SolderJumper_2_Open</value>
+      <footprint>Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Jumper" part="SolderJumper_2_Open" description="Solder Jumper, 2-pole, open"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>625D0CC0</tstamp>
+    </comp>
+    <comp ref="J11">
+      <value>BUS Breakout</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x08" description="Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>617A2EE3</tstamp>
+    </comp>
+    <comp ref="JP1">
+      <value>SolderJumper_2_Open</value>
+      <footprint>Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Jumper" part="SolderJumper_2_Open" description="Solder Jumper, 2-pole, open"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6170E05F</tstamp>
+    </comp>
+    <comp ref="J17">
+      <value>RTC Module</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC061LFBN-RC/810145</field>
+        <field name="MANUFACTURER">PPTC061LFBN-RC</field>
+        <field name="Manf#">PPTC061LFBN-RC</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/Raspberry Pi/" tstamps="/6170A1B9/"/>
+      <tstamp>61714CEB</tstamp>
+    </comp>
+    <comp ref="C15">
+      <value>10uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B106KOQNNNG/3894472</field>
+        <field name="MANUFACTURER">CL21B106KOQNNNG</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/Raspberry Pi/" tstamps="/6170A1B9/"/>
+      <tstamp>61714CF7</tstamp>
+    </comp>
+    <comp ref="C16">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/C0603C104J4RACTU/399-1097-1-ND/411372?utm_medium=email&amp;utm_source=oce&amp;utm_campaign=4251_OCE21RT&amp;utm_content=productdetail_US&amp;utm_cid=1005765&amp;so=70412517&amp;mkt_tok=MDI4LVNYSy01MDcAAAF944T6oiOoCzADiQ6y1NAflhHL0XtIS5Z0jP2CiGD31vy3uVidNjhrbTjQrwfvq69I8De_kxjiyezjNA5O4XmQCCiGQNm1zRnV7s3r-mnC</field>
+        <field name="MANUFACTURER">C0603C104J4RAC7867</field>
+        <field name="Manf#">C0603C104J4RAC7867</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/Raspberry Pi/" tstamps="/6170A1B9/"/>
+      <tstamp>61714CFD</tstamp>
+    </comp>
+    <comp ref="JP6">
+      <value>PI-RTC_PWR_EN</value>
+      <footprint>Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Jumper" part="SolderJumper_2_Open" description="Solder Jumper, 2-pole, open"/>
+      <sheetpath names="/Raspberry Pi/" tstamps="/6170A1B9/"/>
+      <tstamp>61714D23</tstamp>
+    </comp>
+    <comp ref="R17">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT4K70/1760998</field>
+        <field name="MANUFACTURER">RMCF0603FT4K70</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/Raspberry Pi/" tstamps="/6170A1B9/"/>
+      <tstamp>6172223C</tstamp>
+    </comp>
+    <comp ref="R18">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT4K70/1760998</field>
+        <field name="MANUFACTURER">RMCF0603FT4K70</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/Raspberry Pi/" tstamps="/6170A1B9/"/>
+      <tstamp>61722485</tstamp>
+    </comp>
+    <comp ref="J18">
+      <value>Raspberry Pi</value>
+      <footprint>Connector_IDC:IDC-Header_2x20_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/cnc-tech/3020-20-0100-00/3441738</field>
+        <field name="MANUFACTURER">3020-20-0100-00</field>
+        <field name="Manf#">3020-20-0100-00</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_02x20_Odd_Even" description="Generic connector, double row, 02x20, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/Raspberry Pi/" tstamps="/6170A1B9/"/>
+      <tstamp>61714C61</tstamp>
+    </comp>
+    <comp ref="JP7">
+      <value>Earth Ground-Signal Groud Bridge</value>
+      <footprint>Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Jumper" part="SolderJumper_2_Open" description="Solder Jumper, 2-pole, open"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623A214E</tstamp>
+    </comp>
+    <comp ref="H3">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_Pad_Via</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623A4E2B</tstamp>
+    </comp>
+    <comp ref="H4">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_Pad_Via</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623A55A0</tstamp>
+    </comp>
+    <comp ref="H1">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_ISO7380_Pad_TopOnly</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623A65FC</tstamp>
+    </comp>
+    <comp ref="H2">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_ISO7380_Pad_TopOnly</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623A6BE9</tstamp>
+    </comp>
+    <comp ref="Q1">
+      <value>DMG3402L</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>http://www.diodes.com/assets/Datasheets/DMG3402L.pdf</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/diodes-incorporated/DMG3402L-7/4747630</field>
+        <field name="MANUFACTURER">DMG3402L-7</field>
+        <field name="Manf#">DMG3402L-7</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="DMG3402L" description="4A Id, 30V Vds, N-Channel MOSFET, SOT-23"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623AAD43</tstamp>
+    </comp>
+    <comp ref="R22">
+      <value>100R</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100RL/726888</field>
+        <field name="MANUFACTURER">RC0603FR-07100RL</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623B3AEF</tstamp>
+    </comp>
+    <comp ref="R20">
+      <value>100R</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100RL/726888</field>
+        <field name="MANUFACTURER">RC0603FR-07100RL</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623B42A6</tstamp>
+    </comp>
+    <comp ref="R19">
+      <value>100k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889</field>
+        <field name="MANUFACTURER">RC0603FR-07100KL</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623B52AA</tstamp>
+    </comp>
+    <comp ref="R21">
+      <value>100k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889</field>
+        <field name="MANUFACTURER">RC0603FR-07100KL</field>
+      </fields>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623B1C3C</tstamp>
+    </comp>
+    <comp ref="Q2">
+      <value>RD3L07BAT</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <datasheet>https://fscdn.rohm.com/en/products/databook/datasheet/discrete/transistor/mosfet/rd3l07battl1-e.pdf</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/rohm-semiconductor/RD3L03BATTL1/13687903</field>
+        <field name="MANUFACTURER">RD3L03BATTL1</field>
+        <field name="Manf#">RD3L03BATTL1</field>
+      </fields>
+      <libsource lib="mainboard" part="RD3L07BAT" description="-4.1A Id, -20V Vds, P-Channel Power MOSFET, 48mOhm Ron, SC-74-6"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>623D30D6</tstamp>
+    </comp>
+    <comp ref="H5">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_Pad_Via</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>624D0E8E</tstamp>
+    </comp>
+    <comp ref="U7">
+      <value>DFRobot-5V-Regulator</value>
+      <footprint>mainboard:DFRobot-5V-Regulator</footprint>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="mainboard" part="DFRobot-5V-Regulator" description=""/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>624DA9F2</tstamp>
+    </comp>
+    <comp ref="J10">
+      <value>5V Fan Header</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>617062B4</tstamp>
+    </comp>
+    <comp ref="H7">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_4.3mm_M4_Pad_Via</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>617188D2</tstamp>
+    </comp>
+    <comp ref="H6">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_4.3mm_M4_Pad_Via</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="MANUFACTURER">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>61719ABA</tstamp>
+    </comp>
+    <comp ref="S1">
+      <value>PTS636-SMG25J-SMTR-LFS</value>
+      <footprint>PTS636SK50SMTRLFS:PTS636SK50SMTRLFS</footprint>
+      <datasheet>https://www.ckswitches.com/media/2779/pts636.pdf</datasheet>
+      <fields>
+        <field name="DGK">-</field>
+        <field name="Manf#">-</field>
+      </fields>
+      <libsource lib="MiOrigin" part="PTS636-SMG25J-SMTR-LFS" description=""/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>616F6420</tstamp>
+    </comp>
+    <comp ref="J12">
+      <value>CP_2035551012</value>
+      <footprint>footprint:MOLEX_2035551012</footprint>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/molex/2035551012/10379544</field>
+        <field name="MANUFACTURER">2035551012</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">15.2 mm</field>
+        <field name="Manf#">2035551012</field>
+        <field name="PARTREV">A1</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+      </fields>
+      <libsource lib="2035551012" part="CP_2035551012" description=""/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>617396C3</tstamp>
+    </comp>
+    <comp ref="J21">
+      <value>+12V In</value>
+      <footprint>mainboard:YK7010223000G(2POS-Terminal-Block)</footprint>
+      <datasheet>https://www.digikey.com/en/htmldatasheets/production/1638528/0/0/1/yk701xx2x0j0g-drawing.html?site=US&amp;lang=en&amp;cur=USD</datasheet>
+      <fields>
+        <field name="DGK">https://www.digikey.com/en/products/detail/amphenol-anytek/YK7010223000G/4962588</field>
+        <field name="MANUFACTURER">YK7010223000G</field>
+        <field name="Manf#">YK7010223000G</field>
+      </fields>
+      <libsource lib="mainboard" part="YK7010223000G(2POS-Terminal-Block)" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/Power/" tstamps="/621819D4/"/>
+      <tstamp>624A3F08</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="2035551012" part="CP_2035551012">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">CP_2035551012</field>
+        <field name="Footprint">footprint:MOLEX_2035551012</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">15.2 mm</field>
+        <field name="MANUFACTURER">Molex</field>
+        <field name="PARTREV">A1</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="Manf#">2035551012</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="S1" name="SHIELD1" type="passive"/>
+        <pin num="S2" name="SHIELD2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="8P8C_Shielded">
+      <aliases>
+        <alias>RJ31_Shielded</alias>
+        <alias>RJ32_Shielded</alias>
+        <alias>RJ33_Shielded</alias>
+        <alias>RJ34_Shielded</alias>
+        <alias>RJ35_Shielded</alias>
+        <alias>RJ41_Shielded</alias>
+        <alias>RJ45_Shielded</alias>
+        <alias>RJ49_Shielded</alias>
+        <alias>RJ61_Shielded</alias>
+      </aliases>
+      <description>RJ connector, 8P8C (8 positions 8 connected), RJ31/RJ32/RJ33/RJ34/RJ35/RJ41/RJ45/RJ49/RJ61, Shielded</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>8P8C*</fp>
+        <fp>RJ31*</fp>
+        <fp>RJ32*</fp>
+        <fp>RJ33*</fp>
+        <fp>RJ34*</fp>
+        <fp>RJ35*</fp>
+        <fp>RJ41*</fp>
+        <fp>RJ45*</fp>
+        <fp>RJ49*</fp>
+        <fp>RJ61*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">8P8C_Shielded</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+        <pin num="3" name="~" type="passive"/>
+        <pin num="4" name="~" type="passive"/>
+        <pin num="5" name="~" type="passive"/>
+        <pin num="6" name="~" type="passive"/>
+        <pin num="7" name="~" type="passive"/>
+        <pin num="8" name="~" type="passive"/>
+        <pin num="SH" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x02">
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x06">
+      <description>Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x06</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x08">
+      <description>Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x08</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_02x20_Odd_Even">
+      <description>Generic connector, double row, 02x20, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_2x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_02x20_Odd_Even</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+        <pin num="13" name="Pin_13" type="passive"/>
+        <pin num="14" name="Pin_14" type="passive"/>
+        <pin num="15" name="Pin_15" type="passive"/>
+        <pin num="16" name="Pin_16" type="passive"/>
+        <pin num="17" name="Pin_17" type="passive"/>
+        <pin num="18" name="Pin_18" type="passive"/>
+        <pin num="19" name="Pin_19" type="passive"/>
+        <pin num="20" name="Pin_20" type="passive"/>
+        <pin num="21" name="Pin_21" type="passive"/>
+        <pin num="22" name="Pin_22" type="passive"/>
+        <pin num="23" name="Pin_23" type="passive"/>
+        <pin num="24" name="Pin_24" type="passive"/>
+        <pin num="25" name="Pin_25" type="passive"/>
+        <pin num="26" name="Pin_26" type="passive"/>
+        <pin num="27" name="Pin_27" type="passive"/>
+        <pin num="28" name="Pin_28" type="passive"/>
+        <pin num="29" name="Pin_29" type="passive"/>
+        <pin num="30" name="Pin_30" type="passive"/>
+        <pin num="31" name="Pin_31" type="passive"/>
+        <pin num="32" name="Pin_32" type="passive"/>
+        <pin num="33" name="Pin_33" type="passive"/>
+        <pin num="34" name="Pin_34" type="passive"/>
+        <pin num="35" name="Pin_35" type="passive"/>
+        <pin num="36" name="Pin_36" type="passive"/>
+        <pin num="37" name="Pin_37" type="passive"/>
+        <pin num="38" name="Pin_38" type="passive"/>
+        <pin num="39" name="Pin_39" type="passive"/>
+        <pin num="40" name="Pin_40" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C_Small">
+      <description>Unpolarized capacitor, small symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Small</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R_Small_US">
+      <description>Resistor, small US symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R_Small_US</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Interface_Expansion" part="PCA9548ADB">
+      <description>Low voltage 8-channel I2C switch with reset, SSOP-24</description>
+      <docs>http://www.ti.com/lit/ds/symlink/pca9548a.pdf</docs>
+      <footprints>
+        <fp>SSOP*5.3x8.2mm*P0.65mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">PCA9548ADB</field>
+        <field name="Footprint">Package_SO:SSOP-24_5.3x8.2mm_P0.65mm</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A0" type="input"/>
+        <pin num="2" name="A1" type="input"/>
+        <pin num="3" name="~RESET" type="input"/>
+        <pin num="4" name="SD0" type="BiDi"/>
+        <pin num="5" name="SC0" type="output"/>
+        <pin num="6" name="SD1" type="BiDi"/>
+        <pin num="7" name="SC1" type="output"/>
+        <pin num="8" name="SD2" type="BiDi"/>
+        <pin num="9" name="SC2" type="output"/>
+        <pin num="10" name="SD3" type="BiDi"/>
+        <pin num="11" name="SC3" type="output"/>
+        <pin num="12" name="GND" type="power_in"/>
+        <pin num="13" name="SD4" type="BiDi"/>
+        <pin num="14" name="SC4" type="output"/>
+        <pin num="15" name="SD5" type="BiDi"/>
+        <pin num="16" name="SC5" type="output"/>
+        <pin num="17" name="SD6" type="BiDi"/>
+        <pin num="18" name="SC6" type="output"/>
+        <pin num="19" name="SD7" type="BiDi"/>
+        <pin num="20" name="SC7" type="output"/>
+        <pin num="21" name="A2" type="input"/>
+        <pin num="22" name="SCL" type="input"/>
+        <pin num="23" name="SDA" type="BiDi"/>
+        <pin num="24" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Jumper" part="SolderJumper_2_Bridged">
+      <description>Solder Jumper, 2-pole, closed/bridged</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>SolderJumper*Bridged*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">JP</field>
+        <field name="Value">SolderJumper_2_Bridged</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="B" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Jumper" part="SolderJumper_2_Open">
+      <description>Solder Jumper, 2-pole, open</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>SolderJumper*Open*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">JP</field>
+        <field name="Value">SolderJumper_2_Open</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="B" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Jumper" part="SolderJumper_3_Bridged12">
+      <description>3-pole Solder Jumper, pins 1+2 closed/bridged</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>SolderJumper*Bridged12*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">JP</field>
+        <field name="Value">SolderJumper_3_Bridged12</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="C" type="input"/>
+        <pin num="3" name="B" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Mechanical" part="MountingHole">
+      <description>Mounting Hole without connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole</field>
+      </fields>
+    </libpart>
+    <libpart lib="Mechanical" part="MountingHole_Pad">
+      <description>Mounting Hole with connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*Pad*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole_Pad</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="MiOrigin" part="PTS636-SMG25J-SMTR-LFS">
+      <fields>
+        <field name="Reference">S</field>
+        <field name="Value">PTS636-SMG25J-SMTR-LFS</field>
+        <field name="Footprint">PTS636SK50SMTRLFS:PTS636SK50SMTRLFS</field>
+        <field name="Datasheet">https://www.ckswitches.com/media/2779/pts636.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="BiDi"/>
+        <pin num="2" name="2" type="BiDi"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_FET" part="BSS138">
+      <aliases>
+        <alias>2N7002</alias>
+        <alias>2N7002E</alias>
+        <alias>2N7002H</alias>
+        <alias>2N7002K</alias>
+        <alias>BS170F</alias>
+        <alias>BS870</alias>
+        <alias>BSN20</alias>
+        <alias>BSS123</alias>
+        <alias>BSS127S</alias>
+        <alias>DMG2302U</alias>
+        <alias>DMG3402L</alias>
+        <alias>DMG3404L</alias>
+        <alias>DMG3406L</alias>
+        <alias>DMG3414U</alias>
+        <alias>DMG3418L</alias>
+        <alias>DMN10H220L</alias>
+        <alias>DMN10H700S</alias>
+        <alias>DMN13H750S</alias>
+        <alias>DMN2041L</alias>
+        <alias>DMN2050L</alias>
+        <alias>DMN2056U</alias>
+        <alias>DMN2058U</alias>
+        <alias>DMN2075U</alias>
+        <alias>DMN2230U</alias>
+        <alias>DMN24H11DS</alias>
+        <alias>DMN24H3D5L</alias>
+        <alias>DMN3042L</alias>
+        <alias>DMN3051L</alias>
+        <alias>DMN30H4D0L</alias>
+        <alias>DMN3110S</alias>
+        <alias>DMN3150L</alias>
+        <alias>DMN3300U</alias>
+        <alias>DMN3404L</alias>
+        <alias>DMN6075S</alias>
+        <alias>DMN6140L</alias>
+        <alias>DMN67D7L</alias>
+        <alias>DMN67D8L</alias>
+        <alias>MMBF170</alias>
+        <alias>VN10LF</alias>
+        <alias>ZVN3306F</alias>
+        <alias>ZVN3310F</alias>
+        <alias>ZVN3320F</alias>
+        <alias>ZVN4106F</alias>
+        <alias>ZXM61N02F</alias>
+        <alias>ZXM61N03F</alias>
+        <alias>ZXMN10A07F</alias>
+        <alias>ZXMN2A01F</alias>
+        <alias>ZXMN2A14F</alias>
+        <alias>ZXMN2B01F</alias>
+        <alias>ZXMN2B14FH</alias>
+        <alias>ZXMN2F30FH</alias>
+        <alias>ZXMN2F34FH</alias>
+        <alias>ZXMN3A01F</alias>
+        <alias>ZXMN3A14F</alias>
+        <alias>ZXMN3B01F</alias>
+        <alias>ZXMN3B14F</alias>
+        <alias>ZXMN3F30FH</alias>
+        <alias>ZXMN6A07F</alias>
+        <alias>IRLML0030</alias>
+        <alias>IRLML2060</alias>
+        <alias>TSM2302CX</alias>
+        <alias>AO3400A</alias>
+      </aliases>
+      <description>50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23</description>
+      <docs>https://www.onsemi.com/pub/Collateral/BSS138-D.PDF</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">BSS138</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="D" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="mainboard" part="DFRobot-5V-Regulator">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">DFRobot-5V-Regulator</field>
+        <field name="Footprint">mainboard:DFRobot-5V-Regulator</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="VOUT" type="power_out"/>
+        <pin num="4" name="THR" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="mainboard" part="LTC4311CSC6#TRPBF">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LTC4311CSC6#TRPBF</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-363_SC-70-6</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VCC" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="BUS2" type="BiDi"/>
+        <pin num="5" name="GND" type="power_in"/>
+        <pin num="6" name="BUS1" type="BiDi"/>
+      </pins>
+    </libpart>
+    <libpart lib="mainboard" part="RD3L07BAT">
+      <description>-4.1A Id, -20V Vds, P-Channel Power MOSFET, 48mOhm Ron, SC-74-6</description>
+      <docs>https://fscdn.rohm.com/en/products/databook/datasheet/discrete/transistor/mosfet/rd3l07battl1-e.pdf</docs>
+      <footprints>
+        <fp>TSOP*1.65x3.05mm*P0.95mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">RD3L07BAT</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="DGK">https://www.digikey.com/en/products/detail/rohm-semiconductor/RD3L03BATTL1/13687903</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="passive"/>
+        <pin num="2" name="D" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="mainboard" part="YK7010223000G(2POS-Terminal-Block)">
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">YK7010223000G(2POS-Terminal-Block)</field>
+        <field name="Footprint">mainboard:YK7010223000G(2POS-Terminal-Block)</field>
+        <field name="Datasheet">https://www.digikey.com/en/htmldatasheets/production/1638528/0/0/1/yk701xx2x0j0g-drawing.html?site=US&amp;lang=en&amp;cur=USD</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="2035551012">
+      <uri>/home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard-small/2035551012.lib</uri>
+    </library>
+    <library logical="Connector">
+      <uri>/usr/share/kicad/library/Connector.lib</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>/usr/share/kicad/library/Connector_Generic.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>/usr/share/kicad/library/Device.lib</uri>
+    </library>
+    <library logical="Interface_Expansion">
+      <uri>/usr/share/kicad/library/Interface_Expansion.lib</uri>
+    </library>
+    <library logical="Jumper">
+      <uri>/usr/share/kicad/library/Jumper.lib</uri>
+    </library>
+    <library logical="Mechanical">
+      <uri>/usr/share/kicad/library/Mechanical.lib</uri>
+    </library>
+    <library logical="MiOrigin">
+      <uri>/home/charliew/Documents/pcb_MiOrigin/pcb/MiOrigin.lib</uri>
+    </library>
+    <library logical="Transistor_FET">
+      <uri>/usr/share/kicad/library/Transistor_FET.lib</uri>
+    </library>
+    <library logical="mainboard">
+      <uri>/home/charliew/Documents/dev/ArduinoIoTHydro/pcb/mainboard-small/mainboard.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="GND">
+      <node ref="C9" pin="2"/>
+      <node ref="U5" pin="5"/>
+      <node ref="J11" pin="6"/>
+      <node ref="C13" pin="2"/>
+      <node ref="U5" pin="2"/>
+      <node ref="H7" pin="1"/>
+      <node ref="C15" pin="2"/>
+      <node ref="J18" pin="9"/>
+      <node ref="J17" pin="6"/>
+      <node ref="C16" pin="2"/>
+      <node ref="J5" pin="5"/>
+      <node ref="J5" pin="4"/>
+      <node ref="J7" pin="2"/>
+      <node ref="J7" pin="3"/>
+      <node ref="J7" pin="4"/>
+      <node ref="J7" pin="5"/>
+      <node ref="J7" pin="6"/>
+      <node ref="J7" pin="7"/>
+      <node ref="J7" pin="8"/>
+      <node ref="C11" pin="2"/>
+      <node ref="J13" pin="7"/>
+      <node ref="J13" pin="8"/>
+      <node ref="J9" pin="6"/>
+      <node ref="C7" pin="2"/>
+      <node ref="U3" pin="2"/>
+      <node ref="U3" pin="5"/>
+      <node ref="J7" pin="1"/>
+      <node ref="J18" pin="25"/>
+      <node ref="J18" pin="20"/>
+      <node ref="J18" pin="14"/>
+      <node ref="J18" pin="34"/>
+      <node ref="J18" pin="39"/>
+      <node ref="J18" pin="30"/>
+      <node ref="J18" pin="6"/>
+      <node ref="C5" pin="2"/>
+      <node ref="C3" pin="2"/>
+      <node ref="C1" pin="2"/>
+      <node ref="C2" pin="2"/>
+      <node ref="Q1" pin="2"/>
+      <node ref="J12" pin="1"/>
+      <node ref="S1" pin="2"/>
+      <node ref="U4" pin="5"/>
+      <node ref="J14" pin="8"/>
+      <node ref="C12" pin="2"/>
+      <node ref="C8" pin="2"/>
+      <node ref="JP7" pin="2"/>
+      <node ref="U2" pin="1"/>
+      <node ref="J14" pin="7"/>
+      <node ref="U2" pin="12"/>
+      <node ref="U7" pin="2"/>
+      <node ref="J10" pin="2"/>
+      <node ref="J21" pin="2"/>
+      <node ref="U2" pin="21"/>
+      <node ref="J15" pin="8"/>
+      <node ref="J15" pin="7"/>
+      <node ref="U2" pin="2"/>
+      <node ref="U4" pin="2"/>
+    </net>
+    <net code="2" name="+3V3">
+      <node ref="J2" pin="4"/>
+      <node ref="R10" pin="1"/>
+      <node ref="C3" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="C1" pin="1"/>
+      <node ref="R12" pin="1"/>
+      <node ref="R9" pin="1"/>
+      <node ref="R4" pin="1"/>
+      <node ref="J2" pin="1"/>
+      <node ref="J2" pin="2"/>
+      <node ref="J2" pin="3"/>
+      <node ref="J2" pin="5"/>
+      <node ref="J2" pin="6"/>
+      <node ref="J2" pin="7"/>
+      <node ref="J2" pin="8"/>
+      <node ref="R3" pin="1"/>
+      <node ref="U3" pin="3"/>
+      <node ref="U2" pin="24"/>
+      <node ref="C7" pin="1"/>
+      <node ref="R19" pin="1"/>
+      <node ref="R11" pin="1"/>
+      <node ref="U4" pin="1"/>
+      <node ref="H6" pin="1"/>
+      <node ref="U4" pin="3"/>
+      <node ref="C12" pin="1"/>
+      <node ref="C8" pin="1"/>
+      <node ref="R14" pin="1"/>
+      <node ref="U5" pin="3"/>
+      <node ref="R1" pin="1"/>
+      <node ref="R13" pin="1"/>
+      <node ref="U5" pin="1"/>
+      <node ref="R6" pin="2"/>
+      <node ref="U3" pin="1"/>
+      <node ref="C9" pin="1"/>
+      <node ref="C13" pin="1"/>
+      <node ref="C11" pin="1"/>
+      <node ref="JP3" pin="1"/>
+    </net>
+    <net code="3" name="Earth">
+      <node ref="J13" pin="SH"/>
+      <node ref="H5" pin="1"/>
+      <node ref="J14" pin="SH"/>
+      <node ref="H4" pin="1"/>
+      <node ref="J12" pin="S1"/>
+      <node ref="J12" pin="S2"/>
+      <node ref="H3" pin="1"/>
+      <node ref="JP7" pin="1"/>
+      <node ref="J15" pin="SH"/>
+    </net>
+    <net code="4" name="TMP_1">
+      <node ref="J14" pin="2"/>
+      <node ref="J14" pin="1"/>
+      <node ref="J3" pin="2"/>
+      <node ref="J6" pin="2"/>
+    </net>
+    <net code="5" name="TMP_2">
+      <node ref="J3" pin="3"/>
+      <node ref="J15" pin="1"/>
+      <node ref="J15" pin="2"/>
+      <node ref="J6" pin="3"/>
+    </net>
+    <net code="6" name="MUX_SCL2">
+      <node ref="U5" pin="6"/>
+      <node ref="U2" pin="9"/>
+      <node ref="R13" pin="2"/>
+      <node ref="J15" pin="3"/>
+      <node ref="J15" pin="6"/>
+    </net>
+    <net code="7" name="MUX_SDA2">
+      <node ref="R14" pin="2"/>
+      <node ref="U2" pin="8"/>
+      <node ref="J15" pin="4"/>
+      <node ref="J15" pin="5"/>
+      <node ref="U5" pin="4"/>
+    </net>
+    <net code="8" name="Net-(R6-Pad1)">
+      <node ref="R6" pin="1"/>
+      <node ref="U2" pin="3"/>
+    </net>
+    <net code="9" name="SDA">
+      <node ref="J9" pin="2"/>
+      <node ref="JP5" pin="2"/>
+      <node ref="U2" pin="23"/>
+      <node ref="J11" pin="2"/>
+    </net>
+    <net code="10" name="SCL">
+      <node ref="J11" pin="1"/>
+      <node ref="JP2" pin="2"/>
+      <node ref="J9" pin="1"/>
+      <node ref="U2" pin="22"/>
+    </net>
+    <net code="11" name="Net-(U2-Pad10)">
+      <node ref="U2" pin="10"/>
+    </net>
+    <net code="12" name="Net-(U2-Pad11)">
+      <node ref="U2" pin="11"/>
+    </net>
+    <net code="13" name="Net-(U2-Pad13)">
+      <node ref="U2" pin="13"/>
+    </net>
+    <net code="14" name="MUX_SCL0">
+      <node ref="U3" pin="6"/>
+      <node ref="U2" pin="5"/>
+      <node ref="J13" pin="6"/>
+      <node ref="R9" pin="2"/>
+      <node ref="J13" pin="3"/>
+    </net>
+    <net code="15" name="Net-(U2-Pad14)">
+      <node ref="U2" pin="14"/>
+    </net>
+    <net code="16" name="MUX_SDA0">
+      <node ref="R10" pin="2"/>
+      <node ref="U2" pin="4"/>
+      <node ref="U3" pin="4"/>
+      <node ref="J13" pin="4"/>
+      <node ref="J13" pin="5"/>
+    </net>
+    <net code="17" name="MUX_SDA1">
+      <node ref="R12" pin="2"/>
+      <node ref="J14" pin="5"/>
+      <node ref="U2" pin="6"/>
+      <node ref="J14" pin="4"/>
+      <node ref="U4" pin="4"/>
+    </net>
+    <net code="18" name="MUX_SCL1">
+      <node ref="J14" pin="6"/>
+      <node ref="U4" pin="6"/>
+      <node ref="R11" pin="2"/>
+      <node ref="J14" pin="3"/>
+      <node ref="U2" pin="7"/>
+    </net>
+    <net code="19" name="Net-(U2-Pad15)">
+      <node ref="U2" pin="15"/>
+    </net>
+    <net code="20" name="Net-(U2-Pad16)">
+      <node ref="U2" pin="16"/>
+    </net>
+    <net code="21" name="Net-(U2-Pad17)">
+      <node ref="U2" pin="17"/>
+    </net>
+    <net code="22" name="Net-(U2-Pad18)">
+      <node ref="U2" pin="18"/>
+    </net>
+    <net code="23" name="Net-(U2-Pad19)">
+      <node ref="U2" pin="19"/>
+    </net>
+    <net code="24" name="Net-(U2-Pad20)">
+      <node ref="U2" pin="20"/>
+    </net>
+    <net code="25" name="PI_SCL1">
+      <node ref="J17" pin="3"/>
+      <node ref="R18" pin="1"/>
+      <node ref="J18" pin="5"/>
+      <node ref="JP2" pin="3"/>
+    </net>
+    <net code="26" name="PI_SDA1">
+      <node ref="JP5" pin="3"/>
+      <node ref="J18" pin="3"/>
+      <node ref="R17" pin="1"/>
+      <node ref="J17" pin="4"/>
+    </net>
+    <net code="27" name="MC_TX1">
+      <node ref="JP8" pin="1"/>
+      <node ref="J1" pin="3"/>
+      <node ref="J8" pin="3"/>
+    </net>
+    <net code="28" name="MC_RX1">
+      <node ref="JP9" pin="1"/>
+      <node ref="J8" pin="4"/>
+      <node ref="J1" pin="4"/>
+    </net>
+    <net code="29" name="PI_RX">
+      <node ref="J18" pin="10"/>
+      <node ref="JP8" pin="2"/>
+    </net>
+    <net code="30" name="PI_TX">
+      <node ref="JP9" pin="2"/>
+      <node ref="J18" pin="8"/>
+    </net>
+    <net code="31" name="MISO">
+      <node ref="J9" pin="5"/>
+      <node ref="J11" pin="5"/>
+    </net>
+    <net code="32" name="SCLK">
+      <node ref="J11" pin="3"/>
+      <node ref="J9" pin="3"/>
+    </net>
+    <net code="33" name="MOSI">
+      <node ref="J9" pin="4"/>
+      <node ref="J11" pin="4"/>
+    </net>
+    <net code="34" name="CAN+">
+      <node ref="R2" pin="1"/>
+      <node ref="J11" pin="7"/>
+      <node ref="J9" pin="7"/>
+    </net>
+    <net code="35" name="CAN-">
+      <node ref="J11" pin="8"/>
+      <node ref="J9" pin="8"/>
+      <node ref="R2" pin="2"/>
+    </net>
+    <net code="36" name="TMP_0">
+      <node ref="J3" pin="1"/>
+      <node ref="J13" pin="2"/>
+      <node ref="J13" pin="1"/>
+      <node ref="J6" pin="1"/>
+    </net>
+    <net code="37" name="MC_RX2">
+      <node ref="J1" pin="2"/>
+      <node ref="J8" pin="2"/>
+    </net>
+    <net code="38" name="MC_SDA">
+      <node ref="R1" pin="2"/>
+      <node ref="JP5" pin="1"/>
+      <node ref="J8" pin="5"/>
+      <node ref="J1" pin="5"/>
+    </net>
+    <net code="39" name="MC_SCL">
+      <node ref="J1" pin="6"/>
+      <node ref="R3" pin="2"/>
+      <node ref="JP2" pin="1"/>
+      <node ref="J8" pin="6"/>
+    </net>
+    <net code="40" name="MC_TX2">
+      <node ref="J1" pin="1"/>
+      <node ref="J8" pin="1"/>
+    </net>
+    <net code="41" name="PI_GPIO0">
+      <node ref="J18" pin="11"/>
+      <node ref="JP4" pin="2"/>
+    </net>
+    <net code="42" name="Net-(JP4-Pad1)">
+      <node ref="R4" pin="2"/>
+      <node ref="JP4" pin="1"/>
+      <node ref="R5" pin="1"/>
+    </net>
+    <net code="43" name="Net-(J5-Pad1)">
+      <node ref="J5" pin="1"/>
+      <node ref="R5" pin="2"/>
+    </net>
+    <net code="44" name="Net-(J5-Pad3)">
+      <node ref="J5" pin="3"/>
+      <node ref="JP1" pin="1"/>
+    </net>
+    <net code="45" name="Net-(J5-Pad6)">
+      <node ref="J5" pin="6"/>
+    </net>
+    <net code="46" name="+5V">
+      <node ref="J4" pin="6"/>
+      <node ref="J4" pin="7"/>
+      <node ref="J4" pin="8"/>
+      <node ref="C2" pin="1"/>
+      <node ref="J10" pin="1"/>
+      <node ref="C15" pin="1"/>
+      <node ref="C16" pin="1"/>
+      <node ref="J18" pin="2"/>
+      <node ref="U7" pin="3"/>
+      <node ref="J4" pin="4"/>
+      <node ref="J4" pin="3"/>
+      <node ref="J4" pin="2"/>
+      <node ref="J4" pin="1"/>
+      <node ref="J4" pin="5"/>
+      <node ref="J18" pin="4"/>
+      <node ref="JP1" pin="2"/>
+    </net>
+    <net code="47" name="Net-(J5-Pad2)">
+      <node ref="JP3" pin="2"/>
+      <node ref="J5" pin="2"/>
+    </net>
+    <net code="48" name="CHAMBER_RESET">
+      <node ref="R20" pin="2"/>
+      <node ref="J3" pin="6"/>
+      <node ref="R19" pin="2"/>
+      <node ref="J6" pin="6"/>
+    </net>
+    <net code="49" name="TMP_4">
+      <node ref="J3" pin="5"/>
+      <node ref="J6" pin="5"/>
+    </net>
+    <net code="50" name="TMP_3">
+      <node ref="J3" pin="4"/>
+      <node ref="J6" pin="4"/>
+    </net>
+    <net code="51" name="Net-(J18-Pad19)">
+      <node ref="J18" pin="19"/>
+    </net>
+    <net code="52" name="Net-(J18-Pad18)">
+      <node ref="J18" pin="18"/>
+    </net>
+    <net code="53" name="Net-(J18-Pad17)">
+      <node ref="J18" pin="17"/>
+    </net>
+    <net code="54" name="Net-(J18-Pad16)">
+      <node ref="J18" pin="16"/>
+    </net>
+    <net code="55" name="Net-(J18-Pad15)">
+      <node ref="J18" pin="15"/>
+    </net>
+    <net code="56" name="Net-(J18-Pad13)">
+      <node ref="J18" pin="13"/>
+    </net>
+    <net code="57" name="Net-(J18-Pad12)">
+      <node ref="J18" pin="12"/>
+    </net>
+    <net code="58" name="Net-(J18-Pad21)">
+      <node ref="J18" pin="21"/>
+    </net>
+    <net code="59" name="Net-(J18-Pad22)">
+      <node ref="J18" pin="22"/>
+    </net>
+    <net code="60" name="Net-(J18-Pad23)">
+      <node ref="J18" pin="23"/>
+    </net>
+    <net code="61" name="Net-(J18-Pad24)">
+      <node ref="J18" pin="24"/>
+    </net>
+    <net code="62" name="Net-(J18-Pad26)">
+      <node ref="J18" pin="26"/>
+    </net>
+    <net code="63" name="Net-(J18-Pad27)">
+      <node ref="J18" pin="27"/>
+    </net>
+    <net code="64" name="Net-(J18-Pad28)">
+      <node ref="J18" pin="28"/>
+    </net>
+    <net code="65" name="Net-(J18-Pad29)">
+      <node ref="J18" pin="29"/>
+    </net>
+    <net code="66" name="~">
+      <node ref="JP6" pin="1"/>
+      <node ref="J18" pin="1"/>
+      <node ref="R17" pin="2"/>
+      <node ref="R18" pin="2"/>
+    </net>
+    <net code="67" name="Net-(J18-Pad38)">
+      <node ref="J18" pin="38"/>
+    </net>
+    <net code="68" name="Net-(J18-Pad37)">
+      <node ref="J18" pin="37"/>
+    </net>
+    <net code="69" name="Net-(J18-Pad35)">
+      <node ref="J18" pin="35"/>
+    </net>
+    <net code="70" name="Net-(J18-Pad33)">
+      <node ref="J18" pin="33"/>
+    </net>
+    <net code="71" name="Net-(J18-Pad31)">
+      <node ref="J18" pin="31"/>
+    </net>
+    <net code="72" name="Net-(J18-Pad40)">
+      <node ref="J18" pin="40"/>
+    </net>
+    <net code="73" name="Net-(J18-Pad36)">
+      <node ref="J18" pin="36"/>
+    </net>
+    <net code="74" name="Net-(J18-Pad32)">
+      <node ref="J18" pin="32"/>
+    </net>
+    <net code="75" name="Net-(J18-Pad7)">
+      <node ref="J18" pin="7"/>
+    </net>
+    <net code="76" name="Net-(J17-Pad1)">
+      <node ref="J17" pin="1"/>
+    </net>
+    <net code="77" name="Net-(J17-Pad2)">
+      <node ref="J17" pin="2"/>
+    </net>
+    <net code="78" name="Net-(J17-Pad5)">
+      <node ref="J17" pin="5"/>
+      <node ref="JP6" pin="2"/>
+    </net>
+    <net code="79" name="Net-(Q1-Pad1)">
+      <node ref="R20" pin="1"/>
+      <node ref="Q1" pin="1"/>
+      <node ref="S1" pin="1"/>
+    </net>
+    <net code="80" name="Net-(J12-Pad2)">
+      <node ref="Q2" pin="3"/>
+      <node ref="J12" pin="2"/>
+    </net>
+    <net code="81" name="Net-(Q2-Pad1)">
+      <node ref="R22" pin="1"/>
+      <node ref="Q2" pin="1"/>
+    </net>
+    <net code="82" name="Net-(Q1-Pad3)">
+      <node ref="R22" pin="2"/>
+      <node ref="Q1" pin="3"/>
+      <node ref="R21" pin="2"/>
+    </net>
+    <net code="83" name="Net-(U7-Pad4)">
+      <node ref="U7" pin="4"/>
+    </net>
+    <net code="84" name="+12V">
+      <node ref="Q2" pin="2"/>
+      <node ref="R21" pin="1"/>
+      <node ref="U7" pin="1"/>
+      <node ref="J21" pin="1"/>
+    </net>
+  </nets>
+</export>

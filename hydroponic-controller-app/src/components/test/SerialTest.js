@@ -76,6 +76,7 @@ class SerialTest extends React.Component {
                 <p>PH: { this.state.ph }</p>
                 <p>Water TEMP-1: { this.state.ph }</p>
                 <p>Air TEMP-1: { this.state.tmp }</p>
+                <p id="special_text">Special text</p>
                 </div>
             </div>
         );

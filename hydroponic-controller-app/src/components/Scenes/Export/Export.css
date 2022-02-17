@@ -1,0 +1,120 @@
+.Export {
+  height: calc(100% - 40px);
+  width: 95%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  background: white;
+  margin: 20px 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 20px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#292929), to(#2C2B2B));
+  background: linear-gradient(#292929, #2C2B2B);
+  color: white;
+  overflow: auto;
+}
+
+.Export .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 10px;
+  height: 100%;
+}
+
+.Export .drive {
+  height: 80px;
+  background: linear-gradient(45deg, #a816a8, #a100a1);
+  margin: 0 0 15px 0;
+  border-radius: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Export .nousb {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.Export .nousb-icon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: rgba(128, 128, 128, 0.493);
+  height: 195px;
+  width: 195px;
+  margin-bottom: 5px;
+  border-radius: 50%;
+  border: red;
+}
+
+.nousb img {
+  -webkit-filter: invert(99%) sepia(5%) saturate(0%) hue-rotate(238deg) brightness(116%) contrast(100%);
+          filter: invert(99%) sepia(5%) saturate(0%) hue-rotate(238deg) brightness(116%) contrast(100%);
+  margin: 15px 0px 0px 15px;
+  height: 150px;
+}
+
+.nousbtext {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.drive .filename {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding-left: 20px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.drive .usb {
+  width: 60px;
+  margin-left: 10px;
+  color: #ffffff;
+  -webkit-filter: invert(100%) sepia(72%) saturate(2%) hue-rotate(211deg) brightness(107%) contrast(100%);
+          filter: invert(100%) sepia(72%) saturate(2%) hue-rotate(211deg) brightness(107%) contrast(100%);
+}
+/*# sourceMappingURL=Export.css.map */

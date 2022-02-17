@@ -1,0 +1,89 @@
+.Chamber {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 5px 10px;
+    overflow: hidden;
+}
+
+.Chamber .environment {
+    margin: 5px 0 0 0;
+}
+
+.environment .contents {
+    padding: 0px 5px;
+}
+
+h1 {
+    font-weight: 200;
+    text-align: center;
+    margin: 3px 0 0 0;
+    padding: 0px 0 0 0;
+}
+
+h1 span {
+    color: rgb(179, 56, 179);
+    font-weight: 600;
+}
+
+h2 {
+    font-weight: 300;
+    margin: 0px 0px 0px 0px;
+    font-size: 22px
+}
+
+.contents {
+    font-weight: 400;
+}
+
+.contents div {
+    color: green;
+}
+
+.contents span{
+    color: red;
+    margin: 10px;
+}
+
+.contents p {
+    font-size: 17px;
+    height: auto;
+}
+
+@keyframes graph_shadow {
+    0% {
+        box-shadow: rgb(0, 0, 0) 0px 0px 0px, rgb(0, 0, 0) 0px 0px 0px;
+        transform: translateY(0px);
+    }
+    100% {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+        transform: translateY(-2px);
+    }
+}
+
+.Chamber .graph-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px 0px;
+    width: 100%;
+    height: 75px;
+    
+}
+
+.graph-box .graph {
+    width: 100%;
+    // background: linear-gradient(45deg, rgb(19, 209, 209), rgb(0, 212, 212));
+    background: linear-gradient(45deg, rgb(168, 22, 168), rgb(161, 0, 161));
+    justify-content: center;
+    border-radius: 10px;
+    // padding: 5px 10px;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    padding-left: auto;
+    padding-right: auto;
+    display: table-cell;
+    vertical-align: middle;
+    // box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    animation: 0.5s ease-out 0.4s forwards graph_shadow;
+}
