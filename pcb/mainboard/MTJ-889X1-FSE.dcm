@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP MTJ-889X1-FSE
+D MODULAR JACK RJ45 8P8C
+K
+F http://www.adam-tech.com/downloader.php?p=mtj-889x1.pdf
+$ENDCMP
+#
+#End Doc Library

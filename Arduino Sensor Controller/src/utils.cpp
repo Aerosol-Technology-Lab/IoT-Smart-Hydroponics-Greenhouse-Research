@@ -1,5 +1,15 @@
+
 #include "utils.h"
 #include <Arduino.h>
+#include <Stream.h>
+#include <ArduinoJson.h>
+#include <alloca.h>
+
+#ifdef DUE
+
+    // void * operator new (size_t size, void * ptr) { return ptr; }
+    
+#endif
 
 unsigned int Utils::nextWord(const char *buffer, 
             unsigned int pos,
@@ -17,7 +27,7 @@ unsigned int Utils::nextWord(const char *buffer,
         out[i] = buffer[pos];
     }
 
-    out[i] = NULL;      // sets the end of the string. This will still work if command size is 0
+    out[i] = 0;      // sets the end of the string. This will still work if command size is 0
     return i;
 }
 
@@ -55,12 +65,33 @@ unsigned int Utils::readSerial(char *buffer, size_t maxSize, bool nullTerminate)
         }
     } while(bytesRead < maxSize - 1 && *lastByteRead != 0 && *lastByteRead != '\n' && *lastByteRead != '\r');
 
-    if (nullTerminate && (*lastByteRead == '\n' || *lastByteRead == '\r')) *lastByteRead = 0;
+    if (nullTerminate && lastByteRead && (*lastByteRead == '\n' || *lastByteRead == '\r')) *lastByteRead = 0;
     else if (bytesRead == maxSize - 1) {
         buffer[maxSize - 1] = 0;
     }
     
     return bytesRead;
+}
+
+bool readJSON(JsonDocument &json, Stream &serial, size_t bufferSize)
+{
+    char *buffer = (char*) (alloca(sizeof(char) * bufferSize));
+    bool success = false;
+
+    for (size_t i = 0; i < bufferSize; ++i) {
+        // wait for serial avaialble
+        while(!serial.available());
+        buffer[i] = serial.read();
+
+        if (buffer[i] == 0) {
+            success = true;
+            break;
+        }
+    }
+
+    // build json
+    deserializeJson(json, buffer);
+    return success;
 }
 
 size_t Utils::sendSerial(const char *cstr) {
@@ -74,6 +105,13 @@ size_t Utils::sendSerial(const char *cstr) {
     return count + 1;
 }
 
+char * Utils::movePointer(char *ptr, int move) {
+    if (move) {
+        ptr[move - 1] = ' ';
+        return ptr + move;
+    }
+}
+
 bool Utils::equals(const char *a, const char *b) {
     
     while (true) {
@@ -81,5 +119,12 @@ bool Utils::equals(const char *a, const char *b) {
         else if (*a == 0) return true;
         ++a;
         ++b;
+    }
+}
+
+void Utils::strupr(char *str)
+{
+    for (size_t i = 0; i < strlen(str); ++i) {
+        str[i] = toupper(str[i]);
     }
 }
