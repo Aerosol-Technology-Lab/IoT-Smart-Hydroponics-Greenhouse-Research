@@ -1,0 +1,86 @@
+.Export {
+    // animation: 0.15s ease-out 0s 1 slideInFromRight;
+    height: calc(100% - 40px);
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background: rgb(255, 255, 255);
+    // padding: 15px 20px;
+    margin: 20px 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    // background: #ac0b33;
+    // background: #444d63;
+    // background: linear-gradient(#2C2B2B, #292929);
+    // background: linear-gradient(#292929,#363535);
+    background: linear-gradient(#292929,#2C2B2B);
+
+    color: white;
+    overflow: auto;
+}
+
+.Export .content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: 100%;
+}
+
+.Export .drive {
+    height: 80px;
+    background: linear-gradient(45deg, rgb(168, 22, 168), rgb(161, 0, 161));
+    margin: 0 0 15px 0;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Export .nousb
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+}
+
+.Export .nousb-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(128, 128, 128, 0.493);
+    height: 195px;
+    width: 195px;
+    margin-bottom: 5px;
+    border-radius: 50%;
+    border: red;
+}
+
+.nousb img {
+    filter: invert(99%) sepia(5%) saturate(0%) hue-rotate(238deg) brightness(116%) contrast(100%);
+    margin: 15px 0px 0px 15px;
+    height: 150px;
+}
+
+.nousbtext {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.drive .filename {
+    flex-grow: 1;
+    padding-left: 20px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.drive .usb {
+    width: 60px;
+    margin-left: 10px;
+    color: #ffffff;
+    filter: invert(100%) sepia(72%) saturate(2%) hue-rotate(211deg) brightness(107%) contrast(100%);
+}
