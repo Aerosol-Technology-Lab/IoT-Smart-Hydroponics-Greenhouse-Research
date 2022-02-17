@@ -14,7 +14,9 @@ namespace Sensors {
     WaterTemperature *tmpSensors[NUM_TEMP_SENSORS];
     Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
     BME280_Data bme280Data[NUM_BME_SENSORS];
+#ifndef DISABLE_CCS811
     Pair<I2CBUS, CCS811*> ccsSensors[NUM_CCS_SENSORS];
+#endif
     WaterTemperature sharedProbeWaterTemp(PIN_SHARED_PROBE_WATERTEMP, false);
     TDS tdsSensor(PIN_TDS_SENSOR, &sharedProbeWaterTemp);
     PH pHSensor(PIN_PH_SENSOR);
@@ -37,22 +39,22 @@ void Sensors::init() {
     }
 
     // initializes ccs811 sensors
-    for (int i = 0; i < NUM_CCS_SENSORS; ++i) {
+    // for (int i = 0; i < NUM_CCS_SENSORS; ++i) {
 
-        ccsSensors[i] = Pair<I2CBUS, CCS811*>(Sensors::CHAMBER_I2C_MUX_MAP[i], new CCS811(CCS811_ADDR));
-        i2cmux(ccsSensors[i].first);
-        if (!ccsSensors[i].second->begin()) {
-            char buffer[128];
-            sprintf(buffer, "ERROR: CO2 sensor (CCS811) at chamber #%d failed to initialize.\n"
-                            "       === Detailed Info ===\n"
-                            "       Index:             %2d\n"
-                            "       I2C MUX Address: 0x%02x\n"
-                , i + 1, i, ccsSensors[i].first
-                );
-            Serial.print(buffer);
-            ccsSensors[i].first = -1;
-        }
-    }
+    //     ccsSensors[i] = Pair<I2CBUS, CCS811*>(Sensors::CHAMBER_I2C_MUX_MAP[i], new CCS811(CCS811_ADDR));
+    //     i2cmux(ccsSensors[i].first);
+    //     if (!ccsSensors[i].second->begin()) {
+    //         char buffer[128];
+    //         sprintf(buffer, "ERROR: CO2 sensor (CCS811) at chamber #%d failed to initialize.\n"
+    //                         "       === Detailed Info ===\n"
+    //                         "       Index:             %2d\n"
+    //                         "       I2C MUX Address: 0x%02x\n"
+    //             , i + 1, i, ccsSensors[i].first
+    //             );
+    //         Serial.print(buffer);
+    //         ccsSensors[i].first = -1;
+    //     }
+    // }
 
 
     // initilize bme280 sensors
@@ -63,7 +65,7 @@ void Sensors::init() {
         bool initialized = bme.begin(BME280_ADDRESS_LIST[i]);
         if (!initialized) {
             char buff[64];
-            sprintf(buff, "Failed to initialized BME ID: %d", i);
+            sprintf(buff, "Failed to initialized BME ID: %d\n", i);
             Serial.print(buff);
         }
     }
@@ -218,6 +220,7 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
 {
     // requesting all sensors
     // deprecated feature
+    dev_println("--> Inside bme280 function");
     if (sensorIdx < 0) {
         for (int i = 0; i < NUM_BME_SENSORS; ++i) {
             char stringNameBuff[4];
@@ -229,18 +232,26 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
     // request only one specific sensor
     else {
         // error handling
+        dev_println("--> In else statement");
         if (sensorIdx >= NUM_BME_SENSORS) {
+
+            dev_println("--> Sensor is an error");
             obj["error"] = true;
             return;
         }
         
         _pollBME280(sensorIdx);
+        dev_println("--> Polling BME280");
         obj["temp"] = (bme280Data[sensorIdx].tempetrature * 9.0f / 5.0f ) + 32.0f;
+        dev_println("--> Setting temp");
         obj["pres"] =  bme280Data[sensorIdx].pressure     / 1000.0f;
+        dev_println("--> Setting pres");
         obj["humd"] =  bme280Data[sensorIdx].humidity;
+        dev_println("--> Setting humid");
     }
 }
 
+#ifndef DISABLE_CCS811
 void Sensors::ccs811(JsonObject &obj, int sensorIdx)
 {
     if (sensorIdx < 0 || sensorIdx >= NUM_CCS_SENSORS) {
@@ -274,6 +285,7 @@ void Sensors::ccs811(JsonObject &obj, int sensorIdx)
     obj["CO2"]  = ccs.getCO2();
     obj["TVOC"] = ccs.getTVOC();
 }
+#endif
 
 void Sensors::ambientLight(JsonObject &obj, int sensorIdx)
 {
@@ -375,6 +387,20 @@ void Sensors::_pollBME280(unsigned int sensorIdx)
     bme280Data[sensorIdx].tempetrature = bme.readTemperature();
     bme280Data[sensorIdx].pressure = bme.readPressure();
     bme280Data[sensorIdx].humidity = bme.readHumidity();
+
+    // check and validate data
+    // if (  bme280Data[sensorIdx].tempetrature <    0.0f
+    //    || bme280Data[sensorIdx].tempetrature >   49.0f
+    //    || bme280Data[sensorIdx].pressure     <  500.0f
+    //    || bme280Data[sensorIdx].pressure     > 2000.0f
+    //    || bme280Data[sensorIdx].humidity     <   10.0f
+    //    || bme280Data[sensorIdx].humidity     <   95.0f
+    // ) {
+    //     char buffer[72] = { 0 };
+    //     sprintf(buffer, "ERROR: BME280 at index [%d] failed. Restarting...\0", sensorIdx);
+    //     Serial.print(buffer);
+    //     Utils::resetHardware();
+    // }
 }
 
 #endif

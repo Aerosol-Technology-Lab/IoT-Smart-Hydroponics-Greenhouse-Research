@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "pair.h"
 #include <ArduinoJson.h>
+#include "config.h"
 
 #ifndef SIMULATOR
 
@@ -13,7 +14,9 @@
 #include "i2cmux.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
+#ifndef DISABLE_CCS811
 #include <SparkFunCCS811.h>
+#endif
 #include "WaterTemperature.h"
 #include "TDS.h"
 #include "PH.h"
@@ -38,7 +41,7 @@ namespace Sensors {
 
 #ifndef SIMULATOR
   const unsigned int TMP_PINS[NUM_TEMP_SENSORS + 1]             = {22, 24, 26, 26};
-  const I2CBUS CHAMBER_I2C_MUX_MAP[NUM_BME_SENSORS]                  = { 0x07, 0x06, 0x05};
+  const I2CBUS CHAMBER_I2C_MUX_MAP[NUM_BME_SENSORS]                  = { 0x00, 0x01, 0x02};
   const uint8_t BME280_ADDRESS_LIST[NUM_BME_SENSORS]        = { 0x76, 0x76, 0x76};
   const uint8_t AMBIENT_LIGHT_GPIO[NUM_AMBIENT_LIGHT_SENSORS] = { A0, A1, A2 };
 
@@ -66,7 +69,9 @@ namespace Sensors {
   extern Pair<I2CBUS, Adafruit_BME280> bmeSensors[NUM_BME_SENSORS];
   extern BME280_Data bme280Data[NUM_BME_SENSORS];
 
+#ifndef DISABLE_CCS811
   extern Pair<I2CBUS, CCS811*> ccsSensors[NUM_CCS_SENSORS];
+#endif
 
   // TDS probe
   extern TDS tdsSensor;
