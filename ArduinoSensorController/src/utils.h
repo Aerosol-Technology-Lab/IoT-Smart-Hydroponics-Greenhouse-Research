@@ -6,10 +6,10 @@
 #include <assert.h>
 
 #ifdef DUE
-    #define RESOLUTION_BITS                   12
-    #define VREF                            3.3f
-    #define VREF_MILLI          (VREF * 1000.0f)
-    #define ANALOG_RESOLUTION            4095.0f
+    #define RESOLUTION_BITS                   12        // bit resolution of target device
+    #define VREF                            3.3f        // maximum voltage readable by device in volts
+    #define VREF_MILLI          (VREF * 1000.0f)        // maximum voltage readable by device in millivolts
+    #define ANALOG_RESOLUTION            4095.0f        // maimum resolution of target device in float (2^RESOLUTION_BITS - 1)
 #elif UNO
     #define RESOLUTION_BITS                   10
     #define VREF                            5.0f
@@ -31,7 +31,19 @@ char *dtostrf (double val, signed char width, unsigned char prec, char *sout);
 
 #endif
 
+/**
+ * @brief Uncommenting the DEBUG macro below enabled debug mode.
+ *        Debug enables debug prints via UART
+ */
 // #define DEBUG
+
+/**
+ * @brief If enabled along with DEBUG, dev_delay(x) will delay at that point in the program for
+ *        x seconds. If DEBUG_DELAY_ENABLE is enabled while DEBUG is not enabled, dev_delay
+ *        will not delay and will run as normal.
+ */
+#define DEBUG_DELAY_ENABLE
+
 #ifdef DEBUG
     extern char *_devprintln;
     #pragma message "DEBUG mode is enabled!"
@@ -46,8 +58,12 @@ char *dtostrf (double val, signed char width, unsigned char prec, char *sout);
                                  sprintf(_devprintln, f, ##__VA_ARGS__); \
                                  Serial.print(_devprintln);  \
                                  delete[] _devprintln
-    // #define dev_delay(time) delay(time)
+
+#ifdef DEBUG_DELAY_ENABLE
+    #define dev_delay(time) delay(time)
+#else
     #define dev_delay(time) 
+#endif
 #else
     #define dev_print(x)
     #define dev_println(x)
