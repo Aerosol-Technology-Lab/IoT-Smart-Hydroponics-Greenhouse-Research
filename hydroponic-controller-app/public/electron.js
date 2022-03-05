@@ -1,4 +1,3 @@
-const { assert } = require('console');
 const SingleInstance = require('single-instance');
 const locker = new SingleInstance('Hydroponics-Touch-App');
 const fs = require('fs');
@@ -345,9 +344,7 @@ locker.lock().then(() => {
 
   configManager.write(Config);
 
-  // current sensor reading
-  var readings = {};
-
+  
   // Arduino
   var arduino = null;
   var parser = null;
