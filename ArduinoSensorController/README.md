@@ -50,4 +50,8 @@ Example successful reading:
 }
 ```
 
-NOTE: If too many requests are sent to the Arduino at once or if a new request is sent while the Arduino is in the middle of an ongoing request, the new or most recent requests may be ignored until the Arduino completes its current request.
+### Note
+- Horizontal ellipsis represnt similar content pattern to the item above.
+- Veritcal ellipsis represent repeated pattern between the top and bottom items. The key for repeated items increments by one.
+- The value of `n` for the current hydroponics system is `n = 3`.
+- If too many requests are sent to the Arduino at once or if a new request is sent while the Arduino is in the middle of an ongoing request, the new or most recent requests may be ignored until the Arduino completes its current request.
