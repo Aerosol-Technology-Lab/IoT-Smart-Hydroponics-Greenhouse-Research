@@ -153,7 +153,7 @@ bool Sensors::init_bme280()
     for (int i = 0; i < NUM_BME_SENSORS; ++i) {
         bmeSensors[i] = Pair<I2CBUS, Adafruit_BME280>(Sensors::CHAMBER_I2C_MUX_MAP[i], Adafruit_BME280());
         Adafruit_BME280 &bme = bmeSensors[i].second;
-        i2cmux(bmeSensors[i].first);
+        i2cmux_access_chamber(bmeSensors[i].first);
 
         bool initialized = bme.begin(BME280_ADDRESS_LIST[i]);
         if (!initialized) {
@@ -202,7 +202,7 @@ size_t Sensors::bme280(char *buffer, int sensorIdx, bool header)
     //else if 0 <= sensorIdx < MAX_NUMBER_SENSORS, return only that selected sensor
     else if (sensorIdx >= 0 && sensorIdx < NUM_BME_SENSORS) {
         // selects i2c mux
-        i2cmux(bmeSensors[sensorIdx].first);
+        i2cmux_access_chamber(bmeSensors[sensorIdx].first);
 
         // reads sensor
         Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
@@ -270,7 +270,7 @@ bool Sensors::init_ccs811()
     // initialize each sensor
     for (int i = 0; i < NUM_CCS_SENSORS; ++i) {
 
-        i2cmux(ccsSensors[i].first);
+        i2cmux_access_chamber(ccsSensors[i].first);
         ccsSensors[i] = Pair<I2CBUS, CCS811*>(Sensors::CHAMBER_I2C_MUX_MAP[i], new CCS811(CCS811_ADDR));
         sensorsInitialized[i] = ccsSensors[i].second->begin();
         
@@ -342,7 +342,7 @@ void Sensors::ccs811(JsonObject &obj, int sensorIdx)
     if (millis() - bme280Data[sensorIdx].time > staleCalibration) _pollBME280(sensorIdx);
 
     // switch to mux
-    i2cmux(ccsSensors[sensorIdx].first);
+    i2cmux_access_chamber(ccsSensors[sensorIdx].first);
 
     auto &ccs = *ccsSensors[sensorIdx].second;
     while (!ccs.dataAvailable()); // wait until data is available
@@ -445,7 +445,7 @@ void Sensors::echo(const char *buffer, size_t buffer_size) {
 void Sensors::_pollBME280(unsigned int sensorIdx)
 {
     // selects i2c mux
-    i2cmux(bmeSensors[sensorIdx].first);
+    i2cmux_access_chamber(bmeSensors[sensorIdx].first);
 
     // reads sensor and saves it to json
     Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
