@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Arduino.h>
+// #include <Arduino.h>
 #include "utils.h"
 #include "pair.h"
 #include <ArduinoJson.h>
@@ -129,6 +129,8 @@ namespace Sensors {
    */
   void bme280(JsonObject &obj, int sensorIdx=-1);
   
+#ifndef DISABLE_CCS811
+
   /**
    * @brief Initialize ccs811 sensors
    * 
@@ -145,6 +147,8 @@ namespace Sensors {
    * @param sensorIdx Sensor index to read
    */
   void ccs811(JsonObject &obj, int sensorIdx=-1);
+  
+#endif
   
   /**
    * @brief Returns the raw sensor reading from the ambient light sensor
