@@ -71,6 +71,10 @@ char *dtostrf (double val, signed char width, unsigned char prec, char *sout);
     #define dev_delay(time)
 #endif
 
+/** MACROS **/
+#define NOTE_SUCCESS(x) "SUCCESS: "  x
+#define NOTE_ERROR(x)   "ERROR: "    x
+
 namespace Utils {
 
     /**
