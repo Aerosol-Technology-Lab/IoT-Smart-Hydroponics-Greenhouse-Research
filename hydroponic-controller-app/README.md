@@ -17,7 +17,7 @@ The following are optional but may improve workflow
 # To run
 
 ## Setup
-Perform the following steps in order to setup the development environment:
+These steps must be performed before developing or building the project:
 1. `$ yarn` to install all Node dependencies
 1. `$ yarn elc-rebuild` to rebuild the front-end electron application with system access dependencies
 1. Enable "Watch Sass" in VS Code and make sure each Sass file is watched and compiled to CSS. This button is found in the bottom bar, to the right side of VS Code.
@@ -42,7 +42,9 @@ TODO
 - [Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass)
 
 ## Optional
-- [Sass](https://marketplace.visualstudio.com/items?itemName=Syler.sass-indented)
+- [Sass](https://marketplace.visualstudio.com/items?itemName=Syler.sass-indented) - Sass syntax highlighter
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - Linting for JavaScript, TypeScript, HTML, and CSS
+
 # Notes
 - Not tested on non-Unix OS. Config.js needs to be changed to access the serialport
 - If using MacOS with ARM CPU, the application will misassume the machine is a Raspberry Pi. The application determines if the host machine is a Raspberry Pi by checking the CPU architecture.
