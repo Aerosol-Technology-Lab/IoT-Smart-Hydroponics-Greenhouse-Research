@@ -1,3 +1,3 @@
 #pragma once
 
-#define DISABLE_CCS811
+// #define DISABLE_CCS811
