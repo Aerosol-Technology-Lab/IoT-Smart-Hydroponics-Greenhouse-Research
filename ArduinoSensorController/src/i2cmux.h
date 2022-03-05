@@ -15,4 +15,4 @@ typedef int8_t I2CBUS;
  * @param bus bus index to communicate on the i2c mux
  * @param muxAddress address of the mux. Default is 0x70
  */
-void i2cmux(I2CBUS bus, unsigned char muxAddress=DEFAULT_I2C_MUX_ADDRESS);
+void i2cmux_access_chamber(I2CBUS bus, unsigned char muxAddress=DEFAULT_I2C_MUX_ADDRESS);

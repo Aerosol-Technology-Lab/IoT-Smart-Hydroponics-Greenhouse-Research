@@ -2,7 +2,7 @@
 #include "WaterTemperature.h"
 #include "utils.h"
 
-EC::EC(uint8_t pin, WaterTemperature *WaterTemperature):
+EC::EC(uint8_t pin, WaterTemperature *waterTemperature):
     pin(pin),
     waterTemperature(waterTemperature)
 {

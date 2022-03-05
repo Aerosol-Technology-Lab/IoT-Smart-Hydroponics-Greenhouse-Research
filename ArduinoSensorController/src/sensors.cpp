@@ -38,37 +38,13 @@ void Sensors::init() {
         // tmpSensors[i] = WaterTemperature(TMP_PINS[i], true);
     }
 
-    // initializes ccs811 sensors
-    // for (int i = 0; i < NUM_CCS_SENSORS; ++i) {
-
-    //     ccsSensors[i] = Pair<I2CBUS, CCS811*>(Sensors::CHAMBER_I2C_MUX_MAP[i], new CCS811(CCS811_ADDR));
-    //     i2cmux(ccsSensors[i].first);
-    //     if (!ccsSensors[i].second->begin()) {
-    //         char buffer[128];
-    //         sprintf(buffer, "ERROR: CO2 sensor (CCS811) at chamber #%d failed to initialize.\n"
-    //                         "       === Detailed Info ===\n"
-    //                         "       Index:             %2d\n"
-    //                         "       I2C MUX Address: 0x%02x\n"
-    //             , i + 1, i, ccsSensors[i].first
-    //             );
-    //         Serial.print(buffer);
-    //         ccsSensors[i].first = -1;
-    //     }
-    // }
-
-
     // initilize bme280 sensors
-    for (int i = 0; i < NUM_BME_SENSORS; ++i) {
-        bmeSensors[i] = Pair<I2CBUS, Adafruit_BME280>(Sensors::CHAMBER_I2C_MUX_MAP[i], Adafruit_BME280());
-        Adafruit_BME280 &bme = bmeSensors[i].second;
-        i2cmux(bmeSensors[i].first);
-        bool initialized = bme.begin(BME280_ADDRESS_LIST[i]);
-        if (!initialized) {
-            char buff[64];
-            sprintf(buff, "Failed to initialized BME ID: %d\n", i);
-            Serial.print(buff);
-        }
-    }
+    init_bme280();
+
+    // initialize ccs811 (C02) sensors
+#ifndef DISABLE_CCS811
+    init_ccs811();
+#endif
 
     // initializes water sensors
     // nothing because there is no setup needed for analog pins
@@ -168,6 +144,39 @@ void Sensors::waterTemperature(JsonObject &obj, int sensorIdx)
     #endif
 }
 
+bool Sensors::init_bme280()
+{
+    Serial.println("Initalizing CO2 sensors...");
+    size_t sensorsInitialized = 0;
+    
+    // go by each chamber one by one
+    for (int i = 0; i < NUM_BME_SENSORS; ++i) {
+        bmeSensors[i] = Pair<I2CBUS, Adafruit_BME280>(Sensors::CHAMBER_I2C_MUX_MAP[i], Adafruit_BME280());
+        Adafruit_BME280 &bme = bmeSensors[i].second;
+        i2cmux_access_chamber(bmeSensors[i].first);
+
+        bool initialized = bme.begin(BME280_ADDRESS_LIST[i]);
+        if (!initialized) {
+
+            char buff[128];
+            sprintf(buff, "  Cannot initialized CO2 sensor at chamber: %2d  - [ID: %2d , Bus: %02x]\n",
+                i + 1,
+                i,
+                bmeSensors[i].first);
+            Serial.print(buff);
+        }
+        else {
+            ++sensorsInitialized;
+        }
+    }
+
+    char buff[32];
+    sprintf(buff, "CO2 sensors running: %d/%d\n", sensorsInitialized, SMCCS_NUMBER_NUMBER);
+    Serial.print(buff);
+
+    return sensorsInitialized == NUM_BME_SENSORS;
+}
+
 size_t Sensors::bme280(char *buffer, int sensorIdx, bool header)
 {
     size_t bytesWritten = 0;    // bytes written to buffer
@@ -193,7 +202,7 @@ size_t Sensors::bme280(char *buffer, int sensorIdx, bool header)
     //else if 0 <= sensorIdx < MAX_NUMBER_SENSORS, return only that selected sensor
     else if (sensorIdx >= 0 && sensorIdx < NUM_BME_SENSORS) {
         // selects i2c mux
-        i2cmux(bmeSensors[sensorIdx].first);
+        i2cmux_access_chamber(bmeSensors[sensorIdx].first);
 
         // reads sensor
         Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
@@ -252,6 +261,63 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
 }
 
 #ifndef DISABLE_CCS811
+
+bool Sensors::init_ccs811()
+{
+    unsigned int failedSensors = 0;
+    bool sensorsInitialized[NUM_CCS_SENSORS] = { false };
+    
+    // initialize each sensor
+    for (int i = 0; i < NUM_CCS_SENSORS; ++i) {
+
+        i2cmux_access_chamber(ccsSensors[i].first);
+        ccsSensors[i] = Pair<I2CBUS, CCS811*>(Sensors::CHAMBER_I2C_MUX_MAP[i], new CCS811(CCS811_ADDR));
+        sensorsInitialized[i] = ccsSensors[i].second->begin();
+        
+        if (!sensorsInitialized[i]) {
+
+            delete ccsSensors[i].second;
+            ccsSensors[i].second = nullptr;
+            ++failedSensors;
+        }
+    }
+
+    // print all failed sensors
+    if (failedSensors > 0) {
+
+        char buff[64];
+        sprintf(buff, NOTE_ERROR("C02 Sensors failed to initialized: [%d/%d Failed]\n"), failedSensors, NUM_CCS_SENSORS);
+        Serial.print(buff);
+
+        for (int i = 0; i < NUM_CCS_SENSORS; ++i) {
+
+            /* Lists all sensors and their status
+             * ex:
+             * - CCS811 index 0 failed:
+             *      "*   Chamber  1 - Index ID: 0 ->     FAIL"
+             * - CCS811 index 2 success:
+             *      "    Chamber  3 - Index ID: 2 ->  SUCCESS"
+             * 
+             * - All but index 1 succeeded:
+             *      "    Chamber  1 - Index ID: 0 ->  SUCCESS
+             *       *   Chamber  2 - Index ID: 1 ->     FAIL
+             *           Chamber  3 - Index ID: 2 ->  SUCCESS" sdf
+             */
+            const char reference[] = "%c   Chamber %2d - Index ID: %2d -> %8s";
+            sprintf(buff, reference, (sensorsInitialized[i] ? ' ' : '*'),
+                                     i + 1,
+                                     i,
+                                     (sensorsInitialized[i] ? "SUCCESS" : "FAIL")
+                                     );
+        }
+    }
+    else {
+        dev_println(NOTE_SUCCESS("C02 Sensors all initialized"));
+    }
+
+    return failedSensors == 0;
+}
+
 void Sensors::ccs811(JsonObject &obj, int sensorIdx)
 {
     if (sensorIdx < 0 || sensorIdx >= NUM_CCS_SENSORS) {
@@ -276,7 +342,7 @@ void Sensors::ccs811(JsonObject &obj, int sensorIdx)
     if (millis() - bme280Data[sensorIdx].time > staleCalibration) _pollBME280(sensorIdx);
 
     // switch to mux
-    i2cmux(ccsSensors[sensorIdx].first);
+    i2cmux_access_chamber(ccsSensors[sensorIdx].first);
 
     auto &ccs = *ccsSensors[sensorIdx].second;
     while (!ccs.dataAvailable()); // wait until data is available
@@ -379,7 +445,7 @@ void Sensors::echo(const char *buffer, size_t buffer_size) {
 void Sensors::_pollBME280(unsigned int sensorIdx)
 {
     // selects i2c mux
-    i2cmux(bmeSensors[sensorIdx].first);
+    i2cmux_access_chamber(bmeSensors[sensorIdx].first);
 
     // reads sensor and saves it to json
     Adafruit_BME280 &bme = bmeSensors[sensorIdx].second;
