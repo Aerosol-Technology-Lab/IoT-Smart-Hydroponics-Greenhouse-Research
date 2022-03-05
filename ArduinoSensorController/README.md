@@ -21,7 +21,7 @@ When requesting data via UART, ensure there is at least a 500ms delay between th
 ### Sendable Requests
 The following requests can be sent to the Arduino:
 
-- Request for all sensor readings (reffer to (Data Format)[#Data-Format])
+- Request for all sensor readings (reffer to [Data Format](#Data-Format))
 ```sdds
 // Request for all sensor readings (reffer )
 {
