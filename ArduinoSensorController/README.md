@@ -15,6 +15,26 @@ The Arduino polls the following values from each sensor:
     - CO2 (TODO: add units)
     - TVOC (sent over UART but unused)
 
+## Requests
+When requesting data via UART, ensure there is at least a 500ms delay between the previous request and the new request.
+
+### Sendable Requests
+The following requests can be sent to the Arduino:
+
+- Request for all sensor readings (reffer to (Data Format)[#Data-Format])
+```sdds
+// Request for all sensor readings (reffer )
+{
+    com: 'ALL'
+}
+```
+- Ping -> verify Arduino is alive and can process requests
+```
+{
+    com: 'PING'
+}
+```
+
 ## Data Format
 If the Arduino received a request to send sensor readings over UART, the Arduino 
 
