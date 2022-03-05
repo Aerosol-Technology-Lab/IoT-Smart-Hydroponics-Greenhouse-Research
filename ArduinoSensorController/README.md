@@ -11,7 +11,7 @@ This codebase is for the Arduino component of the hydroponics system. The Arduin
     - [Important](#important)
     - [Stretch Goals](#stretch-goals)
 
-## Data Polled [^](#table-of-contents)
+## Data Polled[^](#table-of-contents)
 The Arduino polls the following values from each sensor:
 - Waterproof Temperature Sensor [1-Wire]
     - Water temperature (°F)
@@ -28,7 +28,7 @@ The Arduino polls the following values from each sensor:
 ## Requests[^](#table-of-contents)
 When requesting data via UART, ensure there is at least a 500ms delay between the previous request and the new request.
 
-### Sendable Requests [^](#table-of-contents)
+### Sendable Requests[^](#table-of-contents)
 The following requests can be sent to the Arduino:
 
 - Request for all sensor readings (reffer to [Data Format](#Data-Format))
@@ -45,7 +45,7 @@ The following requests can be sent to the Arduino:
 }
 ```
 
-## Data Format [^](#table-of-contents)
+## Data Format[^](#table-of-contents)
 If the Arduino received a request to send sensor readings over UART, the Arduino 
 
 Example successful reading:
@@ -80,16 +80,16 @@ Example successful reading:
 }
 ```
 
-### Note [^^](#data-format)
+### Note[^^](#data-format)
 - Horizontal ellipsis represnt similar content pattern to the item above.
 - Veritcal ellipsis represent repeated pattern between the top and bottom items. The key for repeated items increments by one.
 - The value of `n` for the current hydroponics system is `n = 3`.
 - If too many requests are sent to the Arduino at once or if a new request is sent while the Arduino is in the middle of an ongoing request, the new or most recent requests may be ignored until the Arduino completes its current request.
 
-## Pipeline (todo) [^](#table-of-contents)
-### Important [^^](#pipeline-todo)
+## Pipeline (todo)[^](#table-of-contents)
+### Important[^^](#pipeline-todo)
 - [ ] Integrate CO2 sensor during data acquisition
 - [ ] Remove unused sensors (these were moved to a separate box)
 
-### Stretch Goals [^^](#pipeline-todo)
+### Stretch Goals[^^](#pipeline-todo)
 - [ ] Integrate TVOC sensor during data acquisition
