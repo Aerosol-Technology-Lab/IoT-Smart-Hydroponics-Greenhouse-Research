@@ -348,8 +348,8 @@ void Sensors::ccs811(JsonObject &obj, int sensorIdx)
     while (!ccs.dataAvailable()); // wait until data is available
     ccs.setEnvironmentalData(bme280Data[sensorIdx].humidity, bme280Data[sensorIdx].tempetrature);
     ccs.readAlgorithmResults();
-    obj["CO2"]  = ccs.getCO2();
-    obj["TVOC"] = ccs.getTVOC();
+    obj["co2"]  = ccs.getCO2();
+    obj["tvoc"] = ccs.getTVOC();
 }
 #endif
 
