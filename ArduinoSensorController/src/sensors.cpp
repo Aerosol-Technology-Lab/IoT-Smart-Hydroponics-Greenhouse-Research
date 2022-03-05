@@ -42,7 +42,9 @@ void Sensors::init() {
     init_bme280();
 
     // initialize ccs811 (C02) sensors
+#ifndef DISABLE_CCS811
     init_ccs811();
+#endif
 
     // initializes water sensors
     // nothing because there is no setup needed for analog pins
@@ -260,7 +262,7 @@ void Sensors::bme280(JsonObject &obj, int sensorIdx)
 
 #ifndef DISABLE_CCS811
 
-bool Sensors::init_bme280()
+bool Sensors::init_ccs811()
 {
     unsigned int failedSensors = 0;
     bool sensorsInitialized[NUM_CCS_SENSORS] = { false };
