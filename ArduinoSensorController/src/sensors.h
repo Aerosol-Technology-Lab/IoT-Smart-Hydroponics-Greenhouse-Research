@@ -103,6 +103,14 @@ namespace Sensors {
   void waterTemperature(JsonObject &obj, int sensorIndex);
   
   /**
+   * @brief Initialized BME280 sensors
+   * 
+   * @return true initialized successuflly
+   * @return false failed to initialize
+   */
+  bool init_bme280();
+  
+  /**
    * @deprecated
    * @brief Writes bme280 sensor reading to byte buffer
    * 
@@ -120,6 +128,14 @@ namespace Sensors {
    *  inserted to obj with key as the sensor index and all readings pertaining for that sensor
    */
   void bme280(JsonObject &obj, int sensorIdx=-1);
+  
+  /**
+   * @brief Initialize ccs811 sensors
+   * 
+   * @return true Succesfully initalized ccs811 sensors
+   * @return false Failed to initialize ccs811 sensors
+   */
+  bool init_ccs811();
   
   /**
    * @brief Gets CO2 and VTOC in specified chamber
