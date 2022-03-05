@@ -328,7 +328,7 @@ void Sensors::ccs811(JsonObject &obj, int sensorIdx)
         return;
     }
 
-    if (ccsSensors[sensorIdx].first < 0) {
+    if (ccsSensors[sensorIdx].second == nullptr) {
         // sensor not initialized, continue
         obj["initialized"] = false;
         return;
@@ -338,6 +338,11 @@ void Sensors::ccs811(JsonObject &obj, int sensorIdx)
     }
 
 
+    // The CCS811 sensor requires humidity and temperature data to accurately take C02 information. The
+    // following lines check if the BME280 readings from the current chamber is not 30 seconds or older.
+    // If the last reading from the BME280 sensor is older than 30 seconds (a.k.a. stale data), the program
+    // reads the BME280 sensor and acquires new humidity and temperature readings. If the readings are 
+    //younger than 30 seconds, the program will proceed and use the existing values.
     const unsigned long staleCalibration = 30 * 1000;   // the BME280 reading at the same chamber must be 30 seconds old or new
     if (millis() - bme280Data[sensorIdx].time > staleCalibration) _pollBME280(sensorIdx);
 
