@@ -1,0 +1,41 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: arm-none-eabi-gcc build active file",
+			"command": "/home/charliew/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"${file}",
+				"-o",
+				"${fileDirname}/${fileBasenameNoExtension}",
+				"-mcpu=cortex-m3",
+				"-mthumb",
+				""
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: ~/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc",
+		},
+		{
+			"type": "shell",
+			"label": "CPPCheck - Run C/C++ static analyzer",
+			"command": "cppcheck",
+			"args": [
+				"${workspaceFolder}/src",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}",
+			},
+			"group": "none",
+			"detail": "cppcheck",
+		},
+	]
+}
