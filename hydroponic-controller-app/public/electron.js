@@ -115,7 +115,7 @@ locker.lock().then(() => {
     else if (response.response === 'TURB') {
       response.time = new Date();
       currentTurbidity = response;
-      storeTurbidityDataToDB(response);
+      // storeTurbidityDataToDB(response);
 
       storePeripheralSensorToCSV(new Date().getTime(), 'Turbidity', data.turb, 'NTU');
     }
@@ -141,7 +141,7 @@ locker.lock().then(() => {
     let termination = -1;
     for (let i = 0; i < buffer.length; ++i) {
       // console.log(`${buffer[i]} `);
-      if (buffer[i] == 0) {
+      if (buffer[i] === 0) {
         // console.log('-> I found the terminator');
         termination = i;
         break;
@@ -199,29 +199,31 @@ locker.lock().then(() => {
     return storeChamberDataToCSV(columns, values);
     // return storeChamberDataToDB(columns, values);
   };
-  
-  const storeChamberDataToDB = (columns, values) => {
-    let success = true;
+
+  /** Deprecated
+   const storeChamberDataToDB = (columns, values) => {
+     let success = true;
     let db = new sqlite3.Database(DBPATH, sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
         console.error(err.message);
         success = false;
       }
-
+      
       // assert(false);
     });
-
+    
     if (!success) {
       db.close();
       return false;
     }
     
     db.run(`INSERT INTO chamber (${columns}) VALUES(${values})`, [], (err) => console.error(err));
-  
+    
     db.close();
-
+    
     return true;
   };
+  */
 
   const storeChamberDataToCSV = async (columns, values) => {
 
@@ -460,7 +462,7 @@ locker.lock().then(() => {
         // console.log('Data event');
         // console.log(data);
 
-        data = arduino.read();
+        let data = arduino.read();
         buffer = Buffer.concat([buffer, data]);
         await processBuffer();
         // check if null terminator is found in data
