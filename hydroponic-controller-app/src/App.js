@@ -3,7 +3,7 @@ import './App.css';
 import Navigation from './components/Navigation';
 import Main from './components/Main';
 import Modal from './components/GlobalModal';
-import { initializeAppGlobals, getGlobals } from './AppGlobals';
+import initializeAppGlobals from './AppGlobals';
 
 const { ipcRenderer } = window.require('electron');
 // const serialport = window.require('serialport');
@@ -18,10 +18,9 @@ function App() {
 
     // default globals that can be used by all React components
     initializeAppGlobals();
-    const AppGlobal = getGlobals();
     
     // initialize default app globals
-    AppGlobal.app = document.getElementById('App');
+    window.AppGlobal.app = document.getElementById('App');
     
     ipcRenderer.invoke('enable-cursor').then((res) => {
       if (!res) {
