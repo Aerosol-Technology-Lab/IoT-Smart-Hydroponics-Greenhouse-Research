@@ -12,8 +12,6 @@ import App from '../App'
 import Auxiliary from './Scenes/Auxiliary/Auxiliary';
 import Export from './Scenes/Export/Export';
 
-const { ipcRenderer } = window.require('electron');
-
 class Main extends React.Component {
     constructor(props) {
         super(props);
