@@ -18,6 +18,7 @@ function NavigationButton({ id=undefined, href, icon, focus=false, registerButto
         return () => {
             if (unregisterButton) unregisterButton(id);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     return (

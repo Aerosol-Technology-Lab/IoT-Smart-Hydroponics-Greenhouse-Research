@@ -3,7 +3,6 @@ import './Navigation.css';
 import '../style.css'
 import './NavigationButton'
 import NavigationButton from './NavigationButton';
-const { ipcRenderer } = window.require('electron');
 
 function Navigation({ id=undefined }) {
     const [debugView, setDebugView] = useState(false);
