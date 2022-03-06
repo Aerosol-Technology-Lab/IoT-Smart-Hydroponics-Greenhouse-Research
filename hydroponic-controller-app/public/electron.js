@@ -30,6 +30,9 @@ locker.lock().then(main)
   console.log(err);
 });
 
+/**
+ * Program entry point
+ */
 function main() {
 
     const { app, BrowserWindow, ipcMain, nativeImage } = require('electron');
@@ -447,6 +450,10 @@ function main() {
       });
   
       
+      /**
+       * When there is a connection to the Arduino, attach these actions when there
+       * is a response from UART.
+       */
       port.on("open", () => {
         arduino = port;
         
@@ -503,24 +510,35 @@ function main() {
   
         // });
         
-        mainWindow?.webContents?.send('serialport', {state: 'connected'});
+        // if the frontend exists and is open, send a message to the frontend indicating there is
+        // a connection to the serial port
+        mainWindow?.webContents?.send('serialport', {state: 'connected'});    // The question mark '?' following the object means that
+                                                                              // actions following the period '.' will not be performed
+                                                                              // if the current object is nullish
   
+        /**
+         * Action performed when the serial port is closed
+         */
         arduino.on("close", () => {
-          arduino = null;
+          arduino = null;     // set this null so programs depending on the arduino variable
+                              // will know not to use this variable because the previous
+                              // serial port connection has closed
           
-          // remove all intervals when Arduino is connected
+          // intervals are actions performed periodically at fixed intervals.
+          // because the serial port connection is closed, these intervals
+          // are stopped and deleted.
           for (let interval of intervalsOnArduinoConnection) {
             clearInterval(interval);
           }
           intervalsOnArduinoConnection = [];
           
+          // notify to terminal and the frontend (if exists and open) that connection to the
+          // serial port is closed
           console.log('Arduino is closed');
-          if (mainWindow) {
-            mainWindow.webContents.send('serialport', {state: 'disconnected'});
-          }
+          mainWindow?.webContents?.send('serialport', {state: 'disconnected'});
   
           
-          reconnectArduino();
+          reconnectArduino();   // attempt to reconnect Arduino
         });
   
         arduino.write(Buffer.from("HELLO"));
@@ -550,7 +568,9 @@ function main() {
   
     }
   
-    reconnectArduino();
+    
+    reconnectArduino();       // first time reconnectArduino() is called, this starts the attempt
+                              // to establish a serial port connection
   
     app.allowRendererProcessReuse = false;
     app.on('ready', createWindow);
@@ -568,19 +588,26 @@ function main() {
       }
     });
   
-    /*** IPC ***/
+    /******************* IPC - Inter Process Communication *******************/
+    // This backend will respond to various requests sent by the frontend //
+
+    // request for time
     ipcMain.handle('get-time', async (event, ...args) => {
-      // if (Config.runtime.arch == 'x64')
       return new Date();
     });
   
+    // return most-recent readings from the hydroponics system
     ipcMain.handle('read-chamber', async(event, ...args) => {
       return currentReadings;
     });
     
+    // frontend requests to send a string to the serialport
     ipcMain.handle('arduino', async(event, obj) => {
+      
+      // add ending null terminator to string
       let s = JSON.stringify(obj) + '\0';
-      console.log(s);
+      console.log("Frontend is sending the message to the serial port: \"{0}\"".format(s));
+
       if (arduino) {
         arduino.write(s);
         return true;
