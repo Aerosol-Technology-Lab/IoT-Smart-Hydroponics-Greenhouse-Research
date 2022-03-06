@@ -76,6 +76,10 @@ function main() {
           'temp': 76,
           'humd': 78,
           'pres': 103.23,
+        },
+        'ccs811': {
+          'co2': 0,
+          'tvoc': 0,
         }
       },'1': {
         'temp': 76,
@@ -84,6 +88,10 @@ function main() {
           'temp': 70,
           'humd': 68,
           'pres': 103.76,
+        },
+        'ccs811': {
+          'co2': 0,
+          'tvoc': 0,
         }
       },'2': {
         'temp': 81,
@@ -92,6 +100,10 @@ function main() {
           'temp': 63,
           'humd': 41,
           'pres': 103.56,
+        },
+        'ccs811': {
+          'co2': 0,
+          'tvoc': 0,
         }
       },
     }
@@ -148,12 +160,13 @@ function main() {
       }
     };
     
+    // TODO Address this issue! The termination is having massive problems
     const processBuffer = async () => {
       // console.log(`-> All data is: ${buffer.toString()}`);
       let termination = -1;
       for (let i = 0; i < buffer.length; ++i) {
         // console.log(`${buffer[i]} `);
-        if (buffer[i] === 0) {
+        if (buffer[i] === 0) {      // FIXME: Fix this bug! This should be checking for '\0' 
           // console.log('-> I found the terminator');
           termination = i;
           break;
